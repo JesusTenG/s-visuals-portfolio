@@ -83,6 +83,7 @@ export function HeroMetricCard({
 }: HeroMetricCardProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
+  const startTimeoutRef = useRef<number | null>(null);
   const sparklineRef = useRef<SVGPathElement | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
   const [displayValue, setDisplayValue] = useState(0);
@@ -111,23 +112,42 @@ export function HeroMetricCard({
 
     let didRun = false;
 
+    const getHeroRevealDelayMs = () => {
+      try {
+        const value = window.getComputedStyle(node).getPropertyValue("--hero-enter-delay").trim();
+        if (!value) return 0;
+        if (value.endsWith("ms")) return Math.max(0, Math.round(Number.parseFloat(value)));
+        if (value.endsWith("s")) return Math.max(0, Math.round(Number.parseFloat(value) * 1000));
+        const asNum = Number.parseFloat(value);
+        return Number.isFinite(asNum) ? Math.max(0, Math.round(asNum)) : 0;
+      } catch {
+        return 0;
+      }
+    };
+
     const start = () => {
       if (didRun) return;
       didRun = true;
-      setHasStarted(true);
 
-      const durationMs = 1100;
-      const startAt = performance.now();
+      const heroRevealDelayMs = getHeroRevealDelayMs();
+      const delayMs = heroRevealDelayMs + Math.max(0, animationDelayMs);
 
-      const tick = (now: number) => {
-        const t = Math.min(1, (now - startAt) / durationMs);
-        const eased = easeOutCubic(t);
-        setDisplayValue(targetValue * eased);
-        if (t < 1) rafRef.current = requestAnimationFrame(tick);
-        else setDisplayValue(targetValue);
-      };
+      startTimeoutRef.current = window.setTimeout(() => {
+        setHasStarted(true);
 
-      rafRef.current = requestAnimationFrame(tick);
+        const durationMs = 1100;
+        const startAt = performance.now();
+
+        const tick = (now: number) => {
+          const t = Math.min(1, (now - startAt) / durationMs);
+          const eased = easeOutCubic(t);
+          setDisplayValue(targetValue * eased);
+          if (t < 1) rafRef.current = requestAnimationFrame(tick);
+          else setDisplayValue(targetValue);
+        };
+
+        rafRef.current = requestAnimationFrame(tick);
+      }, delayMs);
     };
 
     if (typeof IntersectionObserver === "undefined") {
@@ -150,9 +170,13 @@ export function HeroMetricCard({
 
     return () => {
       io.disconnect();
+      if (startTimeoutRef.current != null) {
+        window.clearTimeout(startTimeoutRef.current);
+        startTimeoutRef.current = null;
+      }
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [targetValue]);
+  }, [targetValue, animationDelayMs]);
 
   useEffect(() => {
     const pathEl = sparklineRef.current;

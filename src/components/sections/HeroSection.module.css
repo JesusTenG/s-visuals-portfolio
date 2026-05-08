@@ -26,26 +26,47 @@
 }
 
 .hero-enter-d1 {
-  animation-delay: 0.04s;
+  --hero-enter-delay: 0.4s;
+  animation-delay: var(--hero-enter-delay);
 }
 .hero-enter-d2 {
-  animation-delay: 0.1s;
+  --hero-enter-delay: 0.6s;
+  animation-delay: var(--hero-enter-delay);
 }
 .hero-enter-d3 {
-  animation-delay: 0.16s;
+  --hero-enter-delay: 0.8s;
+  animation-delay: var(--hero-enter-delay);
 }
 .hero-enter-d4 {
-  animation-delay: 0.22s;
+  --hero-enter-delay: 0.92s;
+  animation-delay: var(--hero-enter-delay);
 }
 .hero-enter-d5 {
-  animation-delay: 0.28s;
+  --hero-enter-delay: 1.02s;
+  animation-delay: var(--hero-enter-delay);
 }
 .hero-enter-d6 {
-  animation-delay: 0.38s;
+  --hero-enter-delay: 1.12s;
+  animation-delay: var(--hero-enter-delay);
+}
+.hero-enter-d7 {
+  --hero-enter-delay: 1.22s;
+  animation-delay: var(--hero-enter-delay);
+}
+.hero-enter-d8 {
+  --hero-enter-delay: 1.34s;
+  animation-delay: var(--hero-enter-delay);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-enter {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero-platform-stagger-label,
+  .hero-platform-stagger-item {
     animation: none;
     opacity: 1;
     transform: none;
@@ -101,6 +122,13 @@
 
 .hero-catchphrase-line {
   display: block;
+  white-space: nowrap;
+}
+
+.hero-catchphrase--de {
+  /* Dezent kleiner + etwas mehr Breite, damit jede Phrase in 1 Zeile bleibt */
+  max-width: 14ch;
+  font-size: clamp(2.35rem, 4.8vw, 5.15rem);
 }
 
 .hero-catchphrase-accent {
@@ -221,6 +249,11 @@
     max-width: 14ch;
     font-size: clamp(2.25rem, 9.8vw, 3.6rem);
   }
+
+  .hero-catchphrase--de {
+    max-width: 16ch;
+    font-size: clamp(2.05rem, 9.2vw, 3.35rem);
+  }
 }
 
 /* Floating metric cards */
@@ -285,6 +318,30 @@
   gap: var(--sv-space-3);
   padding: 0;
   margin: 0;
+}
+
+.hero-platform-stagger-label,
+.hero-platform-stagger-item {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  will-change: transform, opacity;
+  animation: hero-platform-item-enter 0.52s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--hero-enter-delay, 0s) + 0.08s);
+}
+
+.hero-platform-stagger-item {
+  animation-delay: calc(var(--hero-enter-delay, 0s) + 0.16s + (var(--platform-i, 0) * 0.06s));
+}
+
+@keyframes hero-platform-item-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 .hero-platform-item {

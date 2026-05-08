@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { Dictionary } from "@/i18n/dictionaries";
 import SVisualsButton from "@/components/ui/SVisualsButton";
 import { HeroMetricCard } from "@/components/sections/HeroMetricCard";
@@ -19,31 +20,35 @@ export function HeroSection({ dict, locale }: Props) {
         <div className={styles["hero-container"]}>
           <div className={styles["hero-content"]}>
             <p
-              className={`${styles["hero-eyebrow"]} ${styles["hero-enter"]} ${styles["hero-enter-d1"]}`}
+              className={`${styles["hero-eyebrow"]} ${styles["hero-enter"]} ${styles["hero-enter-d4"]}`}
             >
               {dict.hero.eyebrow}
             </p>
 
             <div
-              className={`${styles["hero-catchphrase"]} ${styles["hero-enter"]} ${styles["hero-enter-d2"]}`}
+              className={`${styles["hero-catchphrase"]} ${locale === "de" ? styles["hero-catchphrase--de"] : ""}`}
             >
-              <span className={styles["hero-catchphrase-line"]}>{dict.hero.catchphraseLines[0]}</span>
-              <span className={styles["hero-catchphrase-line"]}>{dict.hero.catchphraseLines[1]}</span>
+              <span className={`${styles["hero-catchphrase-line"]} ${styles["hero-enter"]} ${styles["hero-enter-d1"]}`}>
+                {dict.hero.catchphraseLines[0]}
+              </span>
+              <span className={`${styles["hero-catchphrase-line"]} ${styles["hero-enter"]} ${styles["hero-enter-d2"]}`}>
+                {dict.hero.catchphraseLines[1]}
+              </span>
               <span
-                className={`${styles["hero-catchphrase-line"]} ${styles["hero-catchphrase-accent"]}`}
+                className={`${styles["hero-catchphrase-line"]} ${styles["hero-catchphrase-accent"]} ${styles["hero-enter"]} ${styles["hero-enter-d3"]}`}
               >
                 {dict.hero.catchphraseLines[2]}
               </span>
             </div>
 
             <h1
-              className={`${styles["hero-seo-title"]} ${styles["hero-enter"]} ${styles["hero-enter-d3"]}`}
+              className={`${styles["hero-seo-title"]} ${styles["hero-enter"]} ${styles["hero-enter-d5"]}`}
             >
               {dict.hero.seoTitle}
             </h1>
 
             <div
-              className={`${styles["hero-actions"]} ${styles["hero-enter"]} ${styles["hero-enter-d4"]}`}
+              className={`${styles["hero-actions"]} ${styles["hero-enter"]} ${styles["hero-enter-d6"]}`}
             >
               <SVisualsButton href="#contact" showIcon={false}>
                 {dict.hero.primaryCta}
@@ -55,7 +60,7 @@ export function HeroSection({ dict, locale }: Props) {
           </div>
 
           <div
-            className={`${styles["hero-media"]} ${styles["hero-enter"]} ${styles["hero-enter-d5"]}`}
+            className={`${styles["hero-media"]} ${styles["hero-enter"]} ${styles["hero-enter-d7"]}`}
             aria-label="Hero media"
           >
             <HeroParallaxLayer className={styles["hero-media-parallax"]}>
@@ -129,15 +134,21 @@ export function HeroSection({ dict, locale }: Props) {
         </div>
 
         <div
-          className={`${styles["hero-platform-strip"]} ${styles["hero-enter"]} ${styles["hero-enter-d6"]}`}
+          className={`${styles["hero-platform-strip"]} ${styles["hero-enter"]} ${styles["hero-enter-d8"]}`}
           aria-label={dict.hero.platformStripLabel}
         >
           <div className={styles["hero-platform-line"]} aria-hidden="true" />
-          <div className={styles["hero-platform-label"]}>{dict.hero.platformStripLabel}</div>
+          <div className={`${styles["hero-platform-label"]} ${styles["hero-platform-stagger-label"]}`}>
+            {dict.hero.platformStripLabel}
+          </div>
           <div className={styles["hero-platform-line"]} aria-hidden="true" />
           <ul className={styles["hero-platform-items"]} aria-label="Platforms">
-            {dict.hero.platformStripItems.map((item) => (
-              <li key={item} className={styles["hero-platform-item"]}>
+            {dict.hero.platformStripItems.map((item, index) => (
+              <li
+                key={item}
+                className={`${styles["hero-platform-item"]} ${styles["hero-platform-stagger-item"]}`}
+                style={{ ["--platform-i" as string]: index } as CSSProperties}
+              >
                 <span className={styles["hero-platform-dot"]} aria-hidden="true" />
                 <span>{item}</span>
               </li>

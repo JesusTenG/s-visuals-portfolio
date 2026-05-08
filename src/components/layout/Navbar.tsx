@@ -15,6 +15,8 @@ type Props = Readonly<{
 
 export function Navbar({ locale, dict }: Props) {
   const switchTo = otherLocale(locale);
+  const switchLabel =
+    switchTo === "en" ? "Switch language to English" : "Sprache auf Deutsch wechseln";
 
   return (
     <header className={styles["site-nav"]}>
@@ -45,17 +47,35 @@ export function Navbar({ locale, dict }: Props) {
           </nav>
 
           <div className={styles.actions}>
-            <Link
-              href={`/${switchTo}`}
-              className={styles["lang-switch"]}
-              aria-label={`Switch language to ${switchTo}`}
-            >
-              <Globe className={styles["lang-switch-icon"]} aria-hidden="true" focusable="false" />
-              <span className={styles["lang-switch-label"]}>{dict.nav.langSwitchLabel}</span>
-            </Link>
             <SVisualsButton href="#contact" className={`${styles.cta} ${styles["cta-button"]}`}>
               {dict.nav.cta}
             </SVisualsButton>
+            <Link
+              href={`/${switchTo}`}
+              className={styles["lang-toggle"]}
+              data-active-locale={locale}
+              aria-label={switchLabel}
+            >
+              <span
+                className={styles["lang-toggle-label"]}
+                data-active={locale === "de" ? "true" : "false"}
+                aria-hidden="true"
+              >
+                DE
+              </span>
+              <span className={styles["lang-toggle-pill"]} aria-hidden="true">
+                <span className={styles["lang-toggle-knob"]}>
+                  <Globe className={styles["lang-toggle-icon"]} aria-hidden="true" focusable="false" />
+                </span>
+              </span>
+              <span
+                className={styles["lang-toggle-label"]}
+                data-active={locale === "en" ? "true" : "false"}
+                aria-hidden="true"
+              >
+                EN
+              </span>
+            </Link>
           </div>
         </div>
         </div>
