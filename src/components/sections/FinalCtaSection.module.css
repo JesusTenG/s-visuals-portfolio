@@ -1,0 +1,46 @@
+/*//////////////CTA SECTION//////////////////*/
+.section {
+  padding: var(--sv-section-padding) 0;
+}
+
+.panel {
+  padding: var(--sv-space-6);
+}
+
+.inner {
+  max-width: 42rem;
+}
+
+.title {
+  font-size: clamp(1.5rem, 2.2vw, 1.875rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--sv-text);
+  text-wrap: balance;
+}
+
+.description {
+  margin-top: var(--sv-space-4);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--sv-text-muted);
+  text-wrap: pretty;
+}
+
+.cta-row {
+  margin-top: var(--sv-space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sv-space-3);
+}
+
+/*//////////////RESPONSIVE//////////////////*/
+@media (min-width: 520px) {
+  .panel {
+    padding: var(--sv-space-10);
+  }
+  .cta-row {
+    flex-direction: row;
+  }
+}
+

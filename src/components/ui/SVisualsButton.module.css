@@ -1,0 +1,170 @@
+/*//////////////S-VISUALS BUTTON//////////////////*/
+.svisuals-button {
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid color-mix(in srgb, var(--sv-border) 75%, transparent);
+  border-radius: var(--sv-radius-button);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 0.75rem 1.1rem;
+
+  color: color-mix(in srgb, var(--sv-text) 95%, transparent);
+  font-weight: 750;
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  letter-spacing: 0.01em;
+  line-height: 1;
+
+  overflow: hidden;
+  text-decoration: none;
+
+  background: transparent;
+  box-shadow:
+    0 10px 20px color-mix(in srgb, var(--sv-black) 35%, transparent),
+    0 0 18px color-mix(in srgb, var(--sv-button-secondary-glow) 55%, transparent);
+
+  transform-origin: center;
+  will-change: transform;
+
+  transition:
+    transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 180ms ease,
+    filter 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.svisuals-button--primary {
+  background: var(--sv-button-primary-fill);
+  background-color: var(--sv-button-primary-fill);
+  color: var(--sv-on-accent);
+  border-color: color-mix(in srgb, var(--sv-button-primary-glow) 62%, var(--sv-white));
+  box-shadow:
+    0 12px 30px color-mix(in srgb, var(--sv-black) 44%, transparent),
+    0 0 28px color-mix(in srgb, var(--sv-button-primary-glow) 38%, transparent),
+    0 0 52px color-mix(in srgb, var(--sv-button-primary-glow) 20%, transparent);
+}
+
+.svisuals-button--quiet {
+  background: var(--sv-button-secondary-fill);
+  background-color: var(--sv-button-secondary-fill);
+  color: var(--sv-button-secondary-fg);
+  border-color: var(--sv-button-secondary-border);
+  box-shadow:
+    0 10px 20px color-mix(in srgb, var(--sv-black) 32%, transparent),
+    0 0 14px color-mix(in srgb, var(--sv-button-secondary-glow) 70%, transparent);
+}
+
+.svisuals-button--quiet:hover {
+  filter: brightness(1.03);
+  background-color: var(--sv-button-secondary-fill-hover);
+  box-shadow:
+    0 10px 22px color-mix(in srgb, var(--sv-black) 38%, transparent),
+    0 0 16px color-mix(in srgb, var(--sv-button-secondary-glow) 85%, transparent);
+}
+
+.svisuals-button:focus-visible {
+  outline: 2px solid var(--sv-button-focus-ring);
+  outline-offset: 3px;
+}
+
+.svisuals-button__label {
+  white-space: nowrap;
+}
+
+/*//////////////S-VISUALS BUTTON ICON//////////////////*/
+.svisuals-button__icon {
+  width: 32px;
+  height: 32px;
+  transition: transform 180ms ease;
+  transform: translateZ(0);
+}
+
+/*//////////////HOVER//////////////////*/
+.svisuals-button:hover {
+  transform: translateY(-1px) scale(1.02);
+  border-color: color-mix(in srgb, var(--sv-border) 100%, transparent);
+  filter: brightness(1.05) saturate(1.01);
+}
+
+.svisuals-button--primary:hover {
+  background-color: var(--sv-button-primary-fill-hover);
+  border-color: color-mix(in srgb, var(--sv-button-primary-glow) 78%, var(--sv-white));
+  box-shadow:
+    0 14px 34px color-mix(in srgb, var(--sv-black) 46%, transparent),
+    0 0 36px color-mix(in srgb, var(--sv-button-primary-glow) 48%, transparent),
+    0 0 64px color-mix(in srgb, var(--sv-button-primary-glow) 26%, transparent);
+}
+
+.svisuals-button:hover .svisuals-button__icon {
+  transform: translateX(0px) scale(1.02);
+}
+
+/*//////////////SHINE//////////////////*/
+.svisuals-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -140px;
+  width: 140px;
+  height: 100%;
+  opacity: 0.4;
+  pointer-events: none;
+  background-image: linear-gradient(
+    120deg,
+    color-mix(in srgb, var(--sv-white) 0%, transparent) 28%,
+    color-mix(in srgb, var(--sv-white) 50%, transparent),
+    color-mix(in srgb, var(--sv-white) 0%, transparent) 72%
+  );
+}
+
+.svisuals-button:hover::before {
+  animation: svisuals-button-shine 1.6s ease-out infinite;
+}
+
+.svisuals-button--quiet:hover::before {
+  animation: none;
+}
+
+@keyframes svisuals-button-shine {
+  0% {
+    left: -140px;
+  }
+  60% {
+    left: 110%;
+  }
+  100% {
+    left: 110%;
+  }
+}
+
+/*//////////////RESPONSIVE//////////////////*/
+@media (max-width: 520px) {
+  .svisuals-button {
+    padding: 0.7rem 1rem;
+  }
+  .svisuals-button__icon {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+/*//////////////REDUCED MOTION//////////////////*/
+@media (prefers-reduced-motion: reduce) {
+  .svisuals-button {
+    transition: none;
+  }
+  .svisuals-button:hover {
+    transform: none;
+  }
+  .svisuals-button__icon {
+    transition: none;
+  }
+  .svisuals-button:hover::before {
+    animation: none;
+  }
+}
+

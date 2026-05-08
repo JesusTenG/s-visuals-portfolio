@@ -1,0 +1,25 @@
+/*//////////////WORK SECTION//////////////////*/
+.section {
+  padding: var(--sv-section-padding) 0;
+}
+
+.grid {
+  margin-top: var(--sv-space-8);
+  display: grid;
+  gap: var(--sv-space-4);
+}
+
+.work-preview {
+  height: 11rem;
+  width: 100%;
+  border-bottom: 1px solid var(--sv-border);
+  background: var(--sv-gradient-soft);
+}
+
+/*//////////////RESPONSIVE//////////////////*/
+@media (min-width: 980px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+

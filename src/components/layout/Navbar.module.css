@@ -1,0 +1,212 @@
+/*//////////////NAVBAR//////////////////*/
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--sv-border);
+  background: color-mix(in oklch, var(--sv-bg) 5%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+/* Load-in auf inner: sticky/header bleibt ohne transform (Layout/Sticky-sicher) */
+.site-nav-inner {
+  animation: site-nav-enter 0.62s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes site-nav-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav-inner {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.nav-row {
+  display: flex;
+  height: 4rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sv-space-4);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--sv-text);
+  transition: color var(--sv-transition-fast);
+  text-decoration: none;
+}
+
+.wordmark:hover {
+  color: color-mix(in oklch, var(--sv-text) 92%, transparent);
+}
+
+/* Single white logo: mask + solid background; hover swaps background to brand gradient (no second image / no flash). */
+.navbar-brand-logo {
+  display: block;
+  height: 2.3rem;
+  aspect-ratio: 1170 / 310;
+  width: auto;
+
+  /* Light: white card bg; dark: light foreground on glass bar */
+  background-color: var(--card);
+  -webkit-mask-image: url("/assets/logo/s-visuals-logo-black.svg");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-image: url("/assets/logo/s-visuals-logo-black.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+
+  transition: background 220ms ease;
+}
+
+.wordmark:hover .navbar-brand-logo {
+  background: var(--sv-gradient-brand);
+}
+
+:global(.dark) .navbar-brand-logo {
+  background-color: var(--foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar-brand-logo {
+    transition: none;
+  }
+}
+
+.nav-links {
+  display: none;
+  align-items: center;
+  gap: var(--sv-space-4);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sv-text-muted);
+}
+
+.nav-links a {
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+  padding: 0.25rem 0;
+  transition: color var(--sv-transition-fast);
+}
+
+.nav-links a:hover {
+  color: var(--sv-text);
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  opacity: 0;
+  transform: scaleX(0.7);
+  transform-origin: center;
+  transition:
+    opacity var(--sv-transition-fast),
+    transform var(--sv-transition-fast);
+}
+
+.nav-links a:hover::after {
+  opacity: 0.6;
+  transform: scaleX(1);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sv-space-2);
+}
+
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  height: 2.25rem;
+  padding: 0 0.6rem;
+  border-radius: var(--sv-radius-pill);
+  border: 1px solid color-mix(in srgb, var(--sv-border) 70%, transparent);
+  background: color-mix(in srgb, var(--sv-surface) 72%, transparent);
+  color: var(--sv-text-muted);
+  text-decoration: none;
+  transition:
+    color var(--sv-transition-fast),
+    border-color var(--sv-transition-fast),
+    background var(--sv-transition-fast),
+    transform var(--sv-transition-fast);
+}
+
+.lang-switch:hover {
+  color: var(--sv-text);
+  border-color: color-mix(in srgb, var(--sv-border) 90%, transparent);
+  background: color-mix(in srgb, var(--sv-surface-strong) 78%, transparent);
+}
+
+.lang-switch:focus-visible {
+  outline: 2px solid var(--sv-cta-focus-ring);
+  outline-offset: 3px;
+}
+
+.lang-switch-icon {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.lang-switch-label {
+  font-size: 0.8rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.cta {
+  display: none;
+}
+
+.cta-button {
+  font-size: 0.9rem;
+  padding: 0.6rem 0.9rem;
+}
+
+.cta-button :global(svg) {
+  width: 26px;
+  height: 26px;
+}
+
+@media (min-width: 768px) {
+  .nav-links {
+    display: flex;
+  }
+}
+
+/*//////////////RESPONSIVE//////////////////*/
+@media (min-width: 520px) {
+  .cta {
+    display: inline-flex;
+  }
+}
+

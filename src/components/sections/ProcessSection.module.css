@@ -1,0 +1,38 @@
+/*//////////////PROCESS SECTION//////////////////*/
+.section {
+  padding: var(--sv-section-padding) 0;
+}
+
+.grid {
+  margin-top: var(--sv-space-8);
+  display: grid;
+  gap: var(--sv-space-4);
+}
+
+.step-number {
+  display: inline-flex;
+  height: 1.75rem;
+  min-width: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--sv-border);
+  background: color-mix(in oklch, var(--sv-bg-soft) 60%, transparent);
+  padding: 0 0.5rem;
+  font-size: 0.75rem;
+  color: var(--sv-text-muted);
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/*//////////////RESPONSIVE//////////////////*/
+@media (min-width: 980px) {
+  .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+

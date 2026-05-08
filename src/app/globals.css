@@ -1,26 +1,451 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
+@custom-variant dark (&:is(.dark *));
+
+/*//////////////DESIGN TOKENS//////////////////*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /*
+   * Markenfarben = Logo-Verlauf (public/assets/logo/s-visuals-logo-gradient.svg).
+   * Primär-UI (Buttons, Sparkline, Fokus): Stop Ende (Rot); Sekundär: Stop Start (Violett).
+   */
+  --sv-brand-stop-start: #9639d7;
+  --sv-brand-stop-mid: #dc3471;
+  --sv-brand-stop-end: #ff3a65;
+  --sv-gradient-brand: linear-gradient(
+    135deg,
+    var(--sv-brand-stop-start) 0%,
+    var(--sv-brand-stop-mid) 45%,
+    var(--sv-brand-stop-end) 100%
+  );
+
+  --background: rgb(247, 249, 243);
+  --foreground: rgb(0, 0, 0);
+  --card: rgb(255, 255, 255);
+  --card-foreground: rgb(0, 0, 0);
+  --popover: rgb(255, 255, 255);
+  --popover-foreground: rgb(0, 0, 0);
+  --primary: var(--sv-brand-stop-end);
+  --primary-foreground: rgb(255, 255, 255);
+  --secondary: var(--sv-brand-stop-start);
+  --secondary-foreground: rgb(255, 255, 255);
+  --muted: rgb(240, 240, 240);
+  --muted-foreground: rgb(51, 51, 51);
+  --accent: var(--sv-brand-stop-start);
+  --accent-foreground: rgb(255, 255, 255);
+  --destructive: var(--sv-brand-stop-mid);
+  --destructive-foreground: rgb(255, 255, 255);
+  --border: rgb(0, 0, 0);
+  --input: rgb(115, 115, 115);
+  --ring: color-mix(in srgb, var(--sv-brand-stop-end) 55%, transparent);
+  --chart-1: var(--sv-brand-stop-end);
+  --chart-2: var(--sv-brand-stop-start);
+  --chart-3: var(--sv-brand-stop-mid);
+  --chart-4: color-mix(in srgb, var(--sv-brand-stop-mid) 55%, var(--sv-brand-stop-end));
+  --chart-5: color-mix(in srgb, var(--sv-brand-stop-start) 40%, white);
+  --sidebar: rgb(247, 249, 243);
+  --sidebar-foreground: rgb(0, 0, 0);
+  --sidebar-primary: var(--sv-brand-stop-end);
+  --sidebar-primary-foreground: rgb(255, 255, 255);
+  --sidebar-accent: var(--sv-brand-stop-start);
+  --sidebar-accent-foreground: rgb(255, 255, 255);
+  --sidebar-border: rgb(0, 0, 0);
+  --sidebar-ring: color-mix(in srgb, var(--sv-brand-stop-end) 45%, transparent);
+  --font-sans: DM Sans, sans-serif;
+  --font-serif: DM Sans, sans-serif;
+  --font-mono: Space Mono, monospace;
+  --radius: 1rem;
+  --shadow-x: 0px;
+  --shadow-y: 0px;
+  --shadow-blur: 0px;
+  --shadow-spread: 0px;
+  --shadow-opacity: 0.05;
+  --shadow-color: #1a1a1a;
+  --shadow-2xs: 0px 0px 0px 0px hsl(0 0% 10.1961% / 0.03);
+  --shadow-xs: 0px 0px 0px 0px hsl(0 0% 10.1961% / 0.03);
+  --shadow-sm: 0px 0px 0px 0px hsl(0 0% 10.1961% / 0.05), 0px 1px 2px -1px hsl(0 0% 10.1961% / 0.05);
+  --shadow: 0px 0px 0px 0px hsl(0 0% 10.1961% / 0.05), 0px 1px 2px -1px hsl(0 0% 10.1961% / 0.05);
+  --shadow-md: 0px 0px 0px 0px hsl(0 0% 10.1961% / 0.05), 0px 2px 4px -1px hsl(0 0% 10.1961% / 0.05);
+  --shadow-lg: 0px 0px 0px 0px hsl(0 0% 10.1961% / 0.05), 0px 4px 6px -1px hsl(0 0% 10.1961% / 0.05);
+  --shadow-xl: 0px 0px 0px 0px hsl(0 0% 10.1961% / 0.05), 0px 8px 10px -1px hsl(0 0% 10.1961% / 0.05);
+  --shadow-2xl: 0px 0px 0px 0px hsl(0 0% 10.1961% / 0.13);
+  --tracking-normal: normal;
+  --spacing: 0.25rem;
+
+  /* S-Visuals design tokens (light fallback) */
+  --sv-bg: var(--background);
+  --sv-bg-soft: var(--card);
+  --sv-surface: color-mix(in srgb, var(--card) 75%, transparent);
+  --sv-surface-strong: color-mix(in srgb, var(--card) 88%, transparent);
+  --sv-border: color-mix(in srgb, var(--border) 22%, transparent);
+  --sv-text: var(--foreground);
+  --sv-text-muted: var(--muted-foreground);
+  --sv-silver: color-mix(in srgb, var(--foreground) 70%, var(--background));
+
+  --sv-accent-purple: var(--sv-brand-stop-start);
+  --sv-accent-pink: var(--sv-brand-stop-mid);
+  --sv-accent-red: var(--sv-brand-stop-end);
+
+  /* Sparkline / Metric: Rot (Logo-Ende) */
+  --sv-sparkline-color: var(--sv-brand-stop-end);
+  --sv-navbar-height: 4rem;
+
+  /* CTA tokens — Primär rot, Sekundär violett */
+  --sv-cta-primary-bg: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--sv-brand-stop-end) 34%, var(--sv-surface)) 0%,
+    color-mix(in srgb, var(--sv-brand-stop-end) 22%, var(--sv-surface-strong)) 100%
+  );
+  --sv-cta-secondary-bg: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--sv-brand-stop-start) 14%, var(--sv-surface)) 0%,
+    color-mix(in srgb, var(--sv-brand-stop-start) 10%, var(--sv-surface-strong)) 100%
+  );
+  --sv-cta-focus-ring: color-mix(in srgb, var(--sv-brand-stop-end) 65%, transparent);
+
+  --sv-gradient-instagram: linear-gradient(
+    90deg,
+    var(--sv-brand-stop-start) 0%,
+    var(--sv-brand-stop-mid) 45%,
+    var(--sv-brand-stop-end) 100%
+  );
+  --sv-gradient-soft: radial-gradient(
+      900px circle at 18% 18%,
+      color-mix(in srgb, var(--sv-accent-purple) 22%, transparent),
+      transparent 58%
+    ),
+    radial-gradient(
+      760px circle at 72% 16%,
+      color-mix(in srgb, var(--sv-accent-pink) 18%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      880px circle at 70% 78%,
+      color-mix(in srgb, var(--sv-accent-red) 14%, transparent),
+      transparent 62%
+    ),
+    color-mix(in srgb, var(--sv-bg) 92%, black);
+  /* Hero-Mockup: Lila- und Rot-Nebel (wie Markenpaar) */
+  --sv-glow: radial-gradient(
+      520px circle at 40% 40%,
+      color-mix(in srgb, var(--sv-brand-stop-start) 28%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      640px circle at 70% 22%,
+      color-mix(in srgb, var(--sv-brand-stop-end) 24%, transparent),
+      transparent 58%
+    );
+
+  --sv-radius-card: calc(var(--radius) + 0.5rem);
+  --sv-radius-button: calc(var(--sv-radius-card) - 0.5rem);
+  --sv-radius-pill: 999px;
+  --sv-shadow-card: var(--shadow-2xl);
+  --sv-container: 72rem;
+  --sv-section-padding: clamp(4rem, 6vw, 5rem);
+
+  --sv-space-2: 0.5rem;
+  --sv-space-3: 0.75rem;
+  --sv-space-4: 1rem;
+  --sv-space-6: 1.5rem;
+  --sv-space-8: 2rem;
+  --sv-space-10: 2.5rem;
+  --sv-space-12: 3rem;
+
+  --sv-transition-fast: 160ms ease;
+
+  /* Neutrals + brand gradient (single source; use in sections, layout, UI) */
+  --sv-black: rgb(0, 0, 0);
+  --sv-white: rgb(255, 255, 255);
+  /* Label on pink/purple fills; always light (not --primary-foreground: in .dark that is black) */
+  --sv-on-accent: var(--sv-white);
+
+  /*
+   * Buttons: Chrom auf Logo-Stops; Flächen weiterhin über eigene Mix-Formeln.
+   */
+  --sv-button-primary-chroma: var(--sv-brand-stop-end);
+  --sv-button-primary-fill: color-mix(
+    in srgb,
+    var(--sv-button-primary-chroma) 56%,
+    var(--sv-black)
+  );
+  --sv-button-primary-fill-hover: color-mix(
+    in srgb,
+    var(--sv-button-primary-chroma) 62%,
+    var(--sv-black)
+  );
+  --sv-button-primary-glow: var(--sv-button-primary-chroma);
+
+  --sv-button-secondary-chroma: var(--sv-brand-stop-start);
+  --sv-button-secondary-fill: color-mix(
+    in srgb,
+    var(--sv-button-secondary-chroma) 56%,
+    var(--sv-black)
+  );
+  --sv-button-secondary-fill-hover: color-mix(
+    in srgb,
+    var(--sv-button-secondary-chroma) 62%,
+    var(--sv-black)
+  );
+  --sv-button-secondary-border: color-mix(
+    in srgb,
+    var(--sv-border) 78%,
+    var(--sv-button-secondary-chroma)
+  );
+  --sv-button-secondary-fg: var(--sv-on-accent);
+  --sv-button-secondary-glow: var(--sv-button-secondary-chroma);
+
+  --sv-button-focus-ring: color-mix(
+    in srgb,
+    var(--sv-button-primary-chroma) 65%,
+    transparent
+  );
+
+  /* Umgekehrt zum Logo-Verlauf: Rot → Magenta → Violett */
+  --sv-hero-catchphrase-gradient: linear-gradient(
+    135deg,
+    var(--sv-brand-stop-end) 0%,
+    var(--sv-brand-stop-mid) 45%,
+    var(--sv-brand-stop-start) 100%
+  );
 }
 
+.dark {
+  --background: rgb(0, 0, 0);
+  --foreground: rgb(255, 255, 255);
+  --card: rgb(26, 33, 43);
+  --card-foreground: rgb(255, 255, 255);
+  --popover: rgb(26, 33, 43);
+  --popover-foreground: rgb(255, 255, 255);
+  --primary: var(--sv-brand-stop-end);
+  --primary-foreground: rgb(255, 255, 255);
+  --secondary: var(--sv-brand-stop-start);
+  --secondary-foreground: rgb(255, 255, 255);
+  --muted: rgb(51, 51, 51);
+  --muted-foreground: rgb(204, 204, 204);
+  --accent: var(--sv-brand-stop-start);
+  --accent-foreground: rgb(255, 255, 255);
+  --destructive: var(--sv-brand-stop-mid);
+  --destructive-foreground: rgb(255, 255, 255);
+  --border: rgb(84, 84, 84);
+  --input: rgb(255, 255, 255);
+  --ring: color-mix(in srgb, var(--sv-brand-stop-end) 55%, transparent);
+  --chart-1: var(--sv-brand-stop-end);
+  --chart-2: var(--sv-brand-stop-start);
+  --chart-3: var(--sv-brand-stop-mid);
+  --chart-4: color-mix(in srgb, var(--sv-brand-stop-mid) 55%, var(--sv-brand-stop-end));
+  --chart-5: color-mix(in srgb, var(--sv-brand-stop-start) 40%, white);
+  --sidebar: rgb(0, 0, 0);
+  --sidebar-foreground: rgb(255, 255, 255);
+  --sidebar-primary: var(--sv-brand-stop-end);
+  --sidebar-primary-foreground: rgb(255, 255, 255);
+  --sidebar-accent: var(--sv-brand-stop-start);
+  --sidebar-accent-foreground: rgb(255, 255, 255);
+  --sidebar-border: rgb(255, 255, 255);
+  --sidebar-ring: color-mix(in srgb, var(--sv-brand-stop-end) 45%, transparent);
+  --font-sans: DM Sans, sans-serif;
+  --font-serif: DM Sans, sans-serif;
+  --font-mono: Space Mono, monospace;
+  --radius: 1rem;
+  --shadow-x: 0px;
+  --shadow-y: 0px;
+  --shadow-blur: 0px;
+  --shadow-spread: 0px;
+  --shadow-opacity: 0.05;
+  --shadow-color: #1a1a1a;
+  --shadow-2xs: 0px 0px 0px 0px hsl(0 0% 10.1961% / 0.03);
+  --shadow-xs: 0px 0px 0px 0px hsl(0 0% 10.1961% / 0.03);
+  --shadow-sm: 0px 0px 0px 0px hsl(0 0% 10.1961% / 0.05), 0px 1px 2px -1px hsl(0 0% 10.1961% / 0.05);
+  --shadow: 0px 0px 0px 0px hsl(0 0% 10.1961% / 0.05), 0px 1px 2px -1px hsl(0 0% 10.1961% / 0.05);
+  --shadow-md: 0px 0px 0px 0px hsl(0 0% 10.1961% / 0.05), 0px 2px 4px -1px hsl(0 0% 10.1961% / 0.05);
+  --shadow-lg: 0px 0px 0px 0px hsl(0 0% 10.1961% / 0.05), 0px 4px 6px -1px hsl(0 0% 10.1961% / 0.05);
+  --shadow-xl: 0px 0px 0px 0px hsl(0 0% 10.1961% / 0.05), 0px 8px 10px -1px hsl(0 0% 10.1961% / 0.05);
+  --shadow-2xl: 0px 0px 0px 0px hsl(0 0% 10.1961% / 0.13);
+
+  /* S-Visuals design tokens (dark) */
+  --sv-bg: var(--background);
+  --sv-bg-soft: color-mix(in srgb, var(--background) 72%, var(--card));
+  --sv-surface: color-mix(in srgb, var(--card) 62%, transparent);
+  --sv-surface-strong: color-mix(in srgb, var(--card) 78%, transparent);
+  --sv-border: color-mix(in srgb, var(--foreground) 14%, transparent);
+  --sv-text: var(--foreground);
+  --sv-text-muted: var(--muted-foreground);
+  --sv-silver: color-mix(in srgb, var(--foreground) 78%, var(--background));
+
+  --sv-accent-purple: var(--sv-brand-stop-start);
+  --sv-accent-pink: var(--sv-brand-stop-mid);
+  --sv-accent-red: var(--sv-brand-stop-end);
+
+  --sv-cta-primary-bg: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--sv-brand-stop-end) 30%, var(--sv-surface)) 0%,
+    color-mix(in srgb, var(--sv-brand-stop-end) 20%, var(--sv-surface-strong)) 100%
+  );
+  --sv-cta-secondary-bg: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--sv-brand-stop-start) 12%, var(--sv-surface)) 0%,
+    color-mix(in srgb, var(--sv-brand-stop-start) 9%, var(--sv-surface-strong)) 100%
+  );
+  --sv-cta-focus-ring: color-mix(in srgb, var(--sv-brand-stop-end) 65%, transparent);
+
+  --sv-black: rgb(0, 0, 0);
+  --sv-white: rgb(255, 255, 255);
+  --sv-on-accent: var(--sv-white);
+
+  --sv-button-primary-chroma: var(--sv-brand-stop-end);
+  --sv-button-primary-fill: color-mix(
+    in srgb,
+    var(--sv-button-primary-chroma) 56%,
+    var(--sv-black)
+  );
+  --sv-button-primary-fill-hover: color-mix(
+    in srgb,
+    var(--sv-button-primary-chroma) 62%,
+    var(--sv-black)
+  );
+  --sv-button-primary-glow: var(--sv-button-primary-chroma);
+
+  --sv-button-secondary-chroma: var(--sv-brand-stop-start);
+  --sv-button-secondary-fill: color-mix(
+    in srgb,
+    var(--sv-button-secondary-chroma) 56%,
+    var(--sv-black)
+  );
+  --sv-button-secondary-fill-hover: color-mix(
+    in srgb,
+    var(--sv-button-secondary-chroma) 62%,
+    var(--sv-black)
+  );
+  --sv-button-secondary-border: color-mix(
+    in srgb,
+    var(--sv-border) 72%,
+    var(--sv-button-secondary-chroma)
+  );
+  --sv-button-secondary-fg: var(--sv-on-accent);
+  --sv-button-secondary-glow: var(--sv-button-secondary-chroma);
+
+  --sv-button-focus-ring: color-mix(
+    in srgb,
+    var(--sv-button-primary-chroma) 65%,
+    transparent
+  );
+}
+
+/*//////////////SHADCN COMPAT//////////////////*/
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --shadow-2xs: var(--shadow-2xs);
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow: var(--shadow);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
+
+  --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
+  --tracking-tight: calc(var(--tracking-normal) - 0.025em);
+  --tracking-normal: var(--tracking-normal);
+  --tracking-wide: calc(var(--tracking-normal) + 0.025em);
+  --tracking-wider: calc(var(--tracking-normal) + 0.05em);
+  --tracking-widest: calc(var(--tracking-normal) + 0.1em);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/*//////////////BASE STYLES//////////////////*/
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    font-family: var(--font-sans);
+    height: 100%;
+  }
+  body {
+    @apply bg-background text-foreground;
+    letter-spacing: var(--tracking-normal);
+    min-height: 100%;
+    background-image: var(--sv-gradient-soft);
+    background-attachment: fixed;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/*//////////////GLOBAL UTILITIES//////////////////*/
+@layer components {
+  .container-base {
+    width: 100%;
+    max-width: var(--sv-container);
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /*//////////////RESPONSIVE//////////////////*/
+  @media (min-width: 520px) {
+    .container-base {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--sv-text);
+    text-wrap: balance;
+  }
+
+  @media (min-width: 520px) {
+    .section-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  .glass-card {
+    border-color: var(--sv-border) !important;
+    background: linear-gradient(180deg, var(--sv-surface) 0%, var(--sv-surface-strong) 100%);
+    box-shadow: var(--sv-shadow-card);
+  }
 }
