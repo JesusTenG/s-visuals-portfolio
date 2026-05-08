@@ -66,69 +66,73 @@ export function HeroSection({ dict, locale }: Props) {
             <HeroParallaxLayer className={styles["hero-media-parallax"]}>
               <div className={styles["hero-media-glow"]} aria-hidden="true" />
 
-              <div className={styles["hero-image-slot"]} aria-label="Reserved space for future iPhone mockup image">
-                <HeroMockupTilt className={styles["hero-mockup-tilt"]}>
-                  <div className={styles["hero-mockup"]}>
-                  <Image
-                    className={styles["hero-mockup-image"]}
-                    src="/assets/mockups/hero-mockup1.webp"
-                    alt="Smartphone Mockup mit Conversion-orientierter Reel-Ansicht"
-                    width={1497}
-                    height={1982}
-                    priority
-                    sizes="(min-width: 980px) 544px, (min-width: 520px) 512px, 90vw"
-                  />
-                  </div>
-                </HeroMockupTilt>
+              <div className={styles["hero-mockup-layer"]} aria-hidden="true">
+                <div className={styles["hero-image-slot"]} aria-label="Reserved space for future iPhone mockup image">
+                  <HeroMockupTilt className={styles["hero-mockup-tilt"]}>
+                    <div className={styles["hero-mockup"]}>
+                    <Image
+                      className={styles["hero-mockup-image"]}
+                      src="/assets/mockups/hero-mockup1.webp"
+                      alt="Smartphone Mockup mit Conversion-orientierter Reel-Ansicht"
+                      width={1497}
+                      height={1982}
+                      priority
+                      sizes="(min-width: 980px) 544px, (min-width: 520px) 512px, 90vw"
+                    />
+                    </div>
+                  </HeroMockupTilt>
+                </div>
               </div>
 
-              <HeroMetricCard
-                className={styles["hero-metric-card-views"]}
-                label={dict.hero.floatingMetrics.views.label}
-                targetValue={dict.hero.floatingMetrics.views.targetValue}
-                suffix={dict.hero.floatingMetrics.views.suffix}
-                decimals={dict.hero.floatingMetrics.views.decimals}
-                locale={locale}
-                icon="views"
-                animationDelayMs={0}
-                sparklinePath="M4 38 C18 36 24 30 36 31 C50 33 54 18 68 20 C84 22 91 9 108 6"
-              />
+              <div className={styles["hero-metrics-grid"]} aria-label="Hero metrics">
+                <HeroMetricCard
+                  className={styles["hero-metric-card-views"]}
+                  label={dict.hero.floatingMetrics.views.label}
+                  targetValue={dict.hero.floatingMetrics.views.targetValue}
+                  suffix={dict.hero.floatingMetrics.views.suffix}
+                  decimals={dict.hero.floatingMetrics.views.decimals}
+                  locale={locale}
+                  icon="views"
+                  animationDelayMs={0}
+                  sparklinePath="M4 38 C18 36 24 30 36 31 C50 33 54 18 68 20 C84 22 91 9 108 6"
+                />
 
-              <HeroMetricCard
-                className={styles["hero-metric-card-likes"]}
-                label={dict.hero.floatingMetrics.likes.label}
-                targetValue={dict.hero.floatingMetrics.likes.targetValue}
-                suffix={dict.hero.floatingMetrics.likes.suffix}
-                decimals={dict.hero.floatingMetrics.likes.decimals}
-                locale={locale}
-                icon="likes"
-                animationDelayMs={180}
-                sparklinePath="M4 39 C16 37 25 36 36 27 C49 16 56 24 70 17 C84 10 94 7 108 3"
-              />
+                <HeroMetricCard
+                  className={styles["hero-metric-card-likes"]}
+                  label={dict.hero.floatingMetrics.likes.label}
+                  targetValue={dict.hero.floatingMetrics.likes.targetValue}
+                  suffix={dict.hero.floatingMetrics.likes.suffix}
+                  decimals={dict.hero.floatingMetrics.likes.decimals}
+                  locale={locale}
+                  icon="likes"
+                  animationDelayMs={180}
+                  sparklinePath="M4 39 C16 37 25 36 36 27 C49 16 56 24 70 17 C84 10 94 7 108 3"
+                />
 
-              <HeroMetricCard
-                className={styles["hero-metric-card-comments"]}
-                label={dict.hero.floatingMetrics.comments.label}
-                targetValue={dict.hero.floatingMetrics.comments.targetValue}
-                suffix={dict.hero.floatingMetrics.comments.suffix}
-                decimals={dict.hero.floatingMetrics.comments.decimals}
-                locale={locale}
-                icon="comments"
-                animationDelayMs={360}
-                sparklinePath="M4 37 C18 31 26 33 38 29 C52 24 56 15 70 18 C86 21 94 10 108 5"
-              />
+                <HeroMetricCard
+                  className={styles["hero-metric-card-comments"]}
+                  label={dict.hero.floatingMetrics.comments.label}
+                  targetValue={dict.hero.floatingMetrics.comments.targetValue}
+                  suffix={dict.hero.floatingMetrics.comments.suffix}
+                  decimals={dict.hero.floatingMetrics.comments.decimals}
+                  locale={locale}
+                  icon="comments"
+                  animationDelayMs={360}
+                  sparklinePath="M4 37 C18 31 26 33 38 29 C52 24 56 15 70 18 C86 21 94 10 108 5"
+                />
 
-              <HeroMetricCard
-                className={styles["hero-metric-card-shares"]}
-                label={dict.hero.floatingMetrics.shares.label}
-                targetValue={dict.hero.floatingMetrics.shares.targetValue}
-                suffix={dict.hero.floatingMetrics.shares.suffix}
-                decimals={dict.hero.floatingMetrics.shares.decimals}
-                locale={locale}
-                icon="shares"
-                animationDelayMs={540}
-                sparklinePath="M4 40 C18 38 25 29 38 31 C54 34 59 17 74 13 C89 9 96 5 108 3"
-              />
+                <HeroMetricCard
+                  className={styles["hero-metric-card-shares"]}
+                  label={dict.hero.floatingMetrics.shares.label}
+                  targetValue={dict.hero.floatingMetrics.shares.targetValue}
+                  suffix={dict.hero.floatingMetrics.shares.suffix}
+                  decimals={dict.hero.floatingMetrics.shares.decimals}
+                  locale={locale}
+                  icon="shares"
+                  animationDelayMs={540}
+                  sparklinePath="M4 40 C18 38 25 29 38 31 C54 34 59 17 74 13 C89 9 96 5 108 3"
+                />
+              </div>
             </HeroParallaxLayer>
           </div>
         </div>

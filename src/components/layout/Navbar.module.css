@@ -140,6 +140,92 @@
   gap: var(--sv-space-3);
 }
 
+.mobile-actions {
+  display: none;
+  align-items: center;
+}
+
+.mobile-menu-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: var(--sv-radius-pill);
+  border: 1px solid color-mix(in srgb, var(--sv-border) 70%, transparent);
+  background: color-mix(in srgb, var(--sv-surface) 72%, transparent);
+  color: var(--sv-text);
+  transition:
+    border-color var(--sv-transition-fast),
+    background var(--sv-transition-fast);
+}
+
+.mobile-menu-trigger:hover {
+  border-color: color-mix(in srgb, var(--sv-border) 90%, transparent);
+  background: color-mix(in srgb, var(--sv-surface-strong) 78%, transparent);
+}
+
+.mobile-menu-trigger:focus-visible {
+  outline: 2px solid var(--sv-cta-focus-ring);
+  outline-offset: 3px;
+}
+
+.mobile-menu-trigger svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  display: block;
+}
+
+.mobile-sheet {
+  /* Override default shadcn look (keep Tailwind base, add our finish) */
+  padding: 1.1rem 1rem 1rem;
+  background: color-mix(in oklch, var(--sv-bg) 12%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--sv-border) 70%, transparent);
+  backdrop-filter: blur(18px);
+}
+
+.mobile-sheet-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: 2.2rem; /* leaves room for shadcn close button */
+}
+
+.mobile-sheet-nav a {
+  display: flex;
+  align-items: center;
+  height: 2.75rem;
+  padding: 0 0.6rem;
+  border-radius: 0.9rem;
+  text-decoration: none;
+  color: var(--sv-text);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: transparent;
+  transition: background var(--sv-transition-fast);
+}
+
+.mobile-sheet-nav a:hover {
+  background: color-mix(in srgb, var(--sv-surface-strong) 40%, transparent);
+}
+
+.mobile-sheet-nav a:focus-visible {
+  outline: 2px solid var(--sv-cta-focus-ring);
+  outline-offset: 3px;
+}
+
+.mobile-sheet-footer {
+  margin-top: auto;
+  padding-top: 0.9rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.mobile-sheet-cta {
+  justify-content: center;
+  width: 100%;
+}
+
 /* Language toggle: DE (outside) [ 🌐 knob slides ] EN (outside) */
 .lang-toggle {
   --pill-w: 2.85rem;
@@ -244,12 +330,31 @@
   .nav-links {
     display: flex;
   }
+
+  .actions {
+    display: flex;
+  }
+
+  .mobile-actions {
+    display: none;
+  }
 }
 
 /*//////////////RESPONSIVE//////////////////*/
 @media (min-width: 520px) {
   .cta {
     display: inline-flex;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Mobile: avoid wrapping chaos, use sheet menu instead */
+  .actions {
+    display: none;
+  }
+
+  .mobile-actions {
+    display: flex;
   }
 }
 

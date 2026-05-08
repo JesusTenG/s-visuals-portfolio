@@ -179,6 +179,16 @@
   place-items: center;
 }
 
+.hero-mockup-layer {
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.hero-metrics-grid {
+  width: 100%;
+}
+
 .hero-media-glow {
   pointer-events: none;
   position: absolute;
@@ -235,12 +245,132 @@
 }
 
 /*//////////////RESPONSIVE//////////////////*/
+/* Tablet & Mobile: bewusstes Single-Column Layout (Desktop ab 980px bleibt unverändert) */
+@media (max-width: 979px) {
+  .hero-container {
+    align-items: start;
+    gap: clamp(2.25rem, 5vw, 3.5rem);
+  }
+
+  .hero-content {
+    max-width: 46rem;
+  }
+
+  .hero-media {
+    margin-top: clamp(0.5rem, 2.5vw, 1.25rem);
+  }
+
+  .hero-image-slot {
+    width: min(24rem, 100%);
+  }
+
+  /* Metric cards: keine Overlaps im Tablet/Mobile */
+  .hero-media-parallax {
+    place-items: center;
+    gap: clamp(0.75rem, 2.6vw, 1.25rem);
+  }
+
+  .hero-metric-card-views,
+  .hero-metric-card-likes,
+  .hero-metric-card-comments,
+  .hero-metric-card-shares {
+    position: static;
+    inset: auto;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    justify-self: center;
+  }
+}
+
 @media (min-width: 520px) {
   .hero-actions {
     flex-direction: row;
   }
   .hero-image-slot {
     width: min(24rem, 100%);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .hero-eyebrow {
+    justify-content: center;
+  }
+
+  .hero-catchphrase {
+    margin-inline: auto;
+  }
+
+  .hero-actions {
+    align-items: center;
+  }
+
+  .hero-actions > a,
+  .hero-actions > button {
+    width: fit-content;
+    max-width: 90vw;
+  }
+
+  .hero-section {
+    padding: calc(var(--sv-space-10) + var(--sv-space-6)) 0 var(--sv-space-9);
+  }
+
+  .hero-content {
+    max-width: 40rem;
+  }
+
+  .hero-actions {
+    margin-top: var(--sv-space-7);
+  }
+
+  .hero-media-glow {
+    inset: -3rem;
+    opacity: 0.65;
+  }
+
+  /* Mockup becomes a subtle background layer behind content */
+  .hero-media {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-media-parallax {
+    place-items: stretch;
+  }
+
+  .hero-mockup-layer {
+    position: absolute;
+    top: -7.5rem;
+    left: 50%;
+    transform: translate3d(-50%, 0, 0) scale(0.92);
+    width: min(24rem, 92vw);
+    opacity: 0.28;
+    z-index: 0;
+    pointer-events: none;
+    filter: saturate(0.9) contrast(1.02);
+  }
+
+  .hero-metrics-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sv-space-3);
+    width: min(26rem, 100%);
+    margin-inline: auto;
+    padding-top: var(--sv-space-3);
+  }
+
+  .hero-platform-strip {
+    padding-top: var(--sv-space-8);
   }
 }
 
@@ -253,6 +383,42 @@
   .hero-catchphrase--de {
     max-width: 16ch;
     font-size: clamp(2.05rem, 9.2vw, 3.35rem);
+  }
+
+  .hero-content {
+    max-width: 34rem;
+  }
+
+  .hero-image-slot {
+    width: min(21.5rem, 92vw);
+  }
+
+  .hero-platform-line {
+    flex-basis: 4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Platform strip: kontrolliertes Scrollen statt chaotischem Wrap, ohne Overflow */
+  .hero-platform-strip {
+    gap: var(--sv-space-2);
+  }
+
+  .hero-platform-items {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.25rem;
+    scrollbar-width: none;
+  }
+
+  .hero-platform-items::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hero-platform-item {
+    flex: 0 0 auto;
+    white-space: nowrap;
   }
 }
 
