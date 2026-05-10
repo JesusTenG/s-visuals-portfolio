@@ -5,11 +5,14 @@ import Image from "next/image";
 
 import styles from "./HeroSection.module.css";
 
+// NOTE: hero-frame-01 is referenced as -v2 to bust both browser cache and the
+// Next.js image-optimizer cache after the source asset was replaced on disk.
+// The file on disk is renamed to match. If you replace it again, bump to -v3.
 const HERO_FRAMES = [
-  "/assets/hero/hero-frame-01-camera.webp",
-  "/assets/hero/hero-frame-02-fitness-gym.webp",
-  "/assets/hero/hero-frame-03-cutter-desktop.webp",
+  "/assets/hero/hero-frame-01-camera-v2.webp",
+  "/assets/hero/hero-frame-02-fitness-filming.webp",
   "/assets/hero/hero-frame-04-city-shot.webp",
+  "/assets/hero/hero-frame-03-cutter-desktop.webp",
   "/assets/hero/hero-frame-05-closeup-lens.webp",
 ] as const;
 

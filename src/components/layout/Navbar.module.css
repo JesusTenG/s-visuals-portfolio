@@ -1,34 +1,45 @@
-/*//////////////NAVBAR — cinematic glass overlay//////////////////*/
+/*//////////////NAVBAR — controlled dark glass (single bar, no mask / no tall fade)//////////////////*/
+/*
+ * IMPORTANT — backdrop-filter wrapping:
+ *   Lightning CSS / Turbopack (Next 16) folds identical
+ *   `backdrop-filter` + `-webkit-backdrop-filter` declarations and silently
+ *   drops the unprefixed one, which kills the blur in Chromium/Firefox.
+ *   Wrapping the unprefixed declarations in `@supports` prevents the merge
+ *   (this is the same trick Tailwind uses internally).
+ */
 .site-nav {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 50;
+  z-index: 80;
   isolation: isolate;
-  border-bottom: none;
-  background: transparent;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: var(--font-ui, system-ui, sans-serif);
+  background: rgba(8, 8, 10, 0.55);
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .site-nav {
+    backdrop-filter: blur(8px) saturate(135%);
+  }
 }
 
 .site-nav::before {
   content: "";
   position: absolute;
-  inset: 0 0 auto 0;
-  height: clamp(5.5rem, 9vw, 8rem);
-  z-index: -1;
-  background: linear-gradient(
-    to bottom,
-    rgba(3, 3, 3, 0.76) 0%,
-    rgba(3, 3, 3, 0.48) 45%,
-    rgba(3, 3, 3, 0.18) 72%,
-    rgba(3, 3, 3, 0) 100%
-  );
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.065) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
 }
 
 .site-nav-inner {
@@ -57,7 +68,7 @@
 }
 
 .nav-inner {
-  width: min(calc(100% - clamp(1.25rem, 5vw, 6rem)), 1680px);
+  width: min(100% - clamp(2rem, 5vw, 6rem), 1680px);
   margin-inline: auto;
   display: flex;
   min-height: 4rem;
@@ -112,19 +123,19 @@
   gap: clamp(1rem, 2vw, 1.75rem);
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
 }
 
 .nav-links a {
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.76);
   text-decoration: none;
   padding: 0.35rem 0;
   transition: color 180ms ease, opacity 180ms ease;
 }
 
 .nav-links a:hover {
-  color: #fff;
+  color: color-mix(in srgb, var(--color-accent, #8659ce) 42%, white);
 }
 
 .nav-links a:focus-visible {
@@ -155,12 +166,17 @@
   border-radius: 0.35rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   color: rgba(255, 255, 255, 0.92);
   transition:
     border-color var(--sv-transition-fast),
     background var(--sv-transition-fast);
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .mobile-menu-trigger {
+    backdrop-filter: blur(12px);
+  }
 }
 
 .mobile-menu-trigger:hover {
@@ -181,10 +197,15 @@
 
 .mobile-sheet {
   padding: 1.1rem 1rem 1rem;
-  background: rgba(6, 6, 8, 0.88);
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
+  background: rgba(8, 8, 12, 0.92);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .mobile-sheet {
+    backdrop-filter: blur(18px) saturate(125%);
+  }
 }
 
 .mobile-sheet-nav {
@@ -271,10 +292,16 @@
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(10, 10, 12, 0.55);
-  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
     0 10px 26px rgba(0, 0, 0, 0.35);
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .lang-toggle-pill {
+    backdrop-filter: blur(14px);
+  }
 }
 
 .lang-toggle:hover .lang-toggle-pill {
@@ -324,20 +351,18 @@
 .cta-button {
   font-size: 0.68rem !important;
   letter-spacing: 0.22em !important;
-  padding: 0.55rem 0.95rem !important;
+  padding: 0.55rem 1rem !important;
   min-height: 2.4rem;
-  border-radius: 0.35rem !important;
-  background: rgba(134, 89, 206, 0.22) !important;
-  border: 1px solid rgba(134, 89, 206, 0.62) !important;
+  border-radius: 0.4rem !important;
+  background: #8659ce !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
   color: #fff !important;
-  box-shadow: 0 0 22px rgba(134, 89, 206, 0.18) !important;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 0 22px rgba(134, 89, 206, 0.16) !important;
 }
 
 .cta-button:hover {
-  background: rgba(134, 89, 206, 0.34) !important;
-  border-color: rgba(134, 89, 206, 0.78) !important;
+  background: #9468d8 !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
 }
 
 .cta-button :global(.svisuals-button__label) {
