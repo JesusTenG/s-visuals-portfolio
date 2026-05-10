@@ -7,10 +7,12 @@ export type Dictionary = {
   };
   nav: {
     wordmark: string;
+    logoTop: string;
+    logoBottom: string;
     links: {
       work: string;
       services: string;
-      process: string;
+      about: string;
       contact: string;
     };
     cta: string;
@@ -18,19 +20,15 @@ export type Dictionary = {
   };
   hero: {
     eyebrow: string;
-    catchphraseLines: [string, string, string];
-    seoTitle: string;
-    description: string;
+    headline: string;
+    subline: string;
+    seoH1: string;
+    services: string[];
     primaryCta: string;
+    primaryCtaHref: string;
     secondaryCta: string;
-    platformStripLabel: string;
-    platformStripItems: string[];
-    floatingMetrics: {
-      views: { label: string; targetValue: number; suffix: string; decimals: number };
-      likes: { label: string; targetValue: number; suffix: string; decimals: number };
-      comments: { label: string; targetValue: number; suffix: string; decimals: number };
-      shares: { label: string; targetValue: number; suffix: string; decimals: number };
-    };
+    secondaryCtaHref: string;
+    scrollLabel: string;
   };
   metrics: {
     title: string;
@@ -40,7 +38,7 @@ export type Dictionary = {
     title: string;
     items: Array<{ title: string; description: string }>;
   };
-  process: {
+  about: {
     title: string;
     steps: Array<{ title: string; description: string }>;
   };
@@ -58,7 +56,7 @@ export type Dictionary = {
     links: {
       work: string;
       services: string;
-      process: string;
+      about: string;
       contact: string;
     };
   };
@@ -67,235 +65,245 @@ export type Dictionary = {
 const dictionaries: Record<Locale, Dictionary> = {
   en: {
     meta: {
-      title: "S-Visuals | Short-Form Video Editing for Reels, TikTok & Shorts",
+      title: "Simon Saad Visuals — High Impact Video Editing",
       description:
-        "Premium short-form video editing for creators, brands and businesses that want more attention, watchtime and engagement.",
+        "Cinematic video editing and high impact visuals for brands, artists and creators.",
     },
     nav: {
-      wordmark: "S-Visuals",
+      wordmark: "Simon Saad Visuals",
+      logoTop: "SIMON SAAD",
+      logoBottom: "VISUALS",
       links: {
-        work: "Work",
-        services: "Services",
-        process: "Process",
-        contact: "Contact",
+        work: "WORK",
+        services: "SERVICES",
+        about: "ABOUT",
+        contact: "CONTACT",
       },
-      cta: "Start a project",
+      cta: "LET'S TALK",
       langSwitchLabel: "DE",
     },
     hero: {
-      eyebrow: "Video editing + filming",
-      catchphraseLines: ["More attention.", "More views.", "More results."],
-      seoTitle:
-        "Video editing, cutting and short-form content for creators, brands and businesses. Optimized for Reels, TikTok, YouTube Shorts and social content.",
-      description:
-        "Premium video editing and filming support. Built around strong hooks, retention-focused cuts and platform-ready exports.",
-      primaryCta: "Start a project",
-      secondaryCta: "View work",
-      platformStripLabel: "Platform-ready for",
-      platformStripItems: [
-        "Instagram",
-        "TikTok",
-        "YouTube",
-        "Reels",
-        "Shorts",
-        "Video Editing",
-        "Cutting",
-        "Filming",
-        "Social Ads",
-        "Captions",
-      ],
-      floatingMetrics: {
-        views: { label: "Views", targetValue: 2.3, suffix: "M", decimals: 1 },
-        likes: { label: "Likes", targetValue: 128, suffix: "K", decimals: 0 },
-        comments: { label: "Comments", targetValue: 4.6, suffix: "K", decimals: 1 },
-        shares: { label: "Shares", targetValue: 3.1, suffix: "K", decimals: 1 },
-      },
+      eyebrow: "HIGH IMPACT",
+      headline: "VISUALS",
+      subline: "FOR BRANDS & CREATORS",
+      seoH1: "Simon Saad Visuals — High Impact Video Editing for Brands and Creators",
+      services: ["REEL EDITING", "CINEMATIC CONTENT", "ADS", "YOUTUBE"],
+      primaryCta: "LET'S TALK",
+      primaryCtaHref: "#contact",
+      secondaryCta: "VIEW WORK",
+      secondaryCtaHref: "#work",
+      scrollLabel: "SCROLL",
     },
     metrics: {
-      title: "Built for performance",
+      title: "Focus",
       items: [
         {
-          title: "Watchtime-first edits",
-          description: "Structure and pacing designed to keep viewers watching.",
+          title: "Pacing & rhythm",
+          description: "Cuts that breathe with the story — clarity without noise.",
         },
         {
-          title: "Short-form optimized",
-          description: "Hooks, rhythm and timing tuned for vertical platforms.",
+          title: "Visual intent",
+          description: "Every frame earns its place; emotion before decoration.",
         },
         {
-          title: "Built for retention",
-          description: "Clean storytelling that reduces drop-off.",
+          title: "Sound design sensibility",
+          description: "Music and ambience treated as part of the picture.",
         },
         {
-          title: "Made for Reels, TikTok & Shorts",
-          description: "Formats, safe zones and export standards done right.",
+          title: "Delivery-ready exports",
+          description: "Formats and specs aligned with platform expectations.",
         },
       ],
     },
     services: {
-      title: "Services",
+      title: "SERVICES",
       items: [
         {
           title: "Reel Editing",
-          description: "High-signal edits from your raw clips. Crisp, paced, retention-first.",
+          description: "Vertical edits with punchy rhythm and clean storytelling.",
         },
         {
-          title: "Short-Form Strategy",
-          description: "Hook frameworks, content angles and iteration focused on what performs.",
+          title: "Cinematic Content",
+          description: "Long-form scenes, mood and atmosphere — narrative-first.",
         },
         {
-          title: "Social Media Content Systems",
-          description: "A repeatable pipeline from capture to publish. Designed for consistency.",
+          title: "Ads",
+          description: "Sharp commercial cuts designed to hold attention fast.",
+        },
+        {
+          title: "YouTube",
+          description: "Retention-aware pacing for titles, chapters and hooks.",
+        },
+        {
+          title: "Music Videos",
+          description: "Performance-forward edits built around track energy.",
         },
       ],
     },
-    process: {
-      title: "Process",
+    about: {
+      title: "ABOUT",
       steps: [
-        { title: "Send raw footage", description: "Upload clips, references and must-keep moments." },
-        { title: "Define the goal", description: "Audience, platform and outcome (reach, leads, sales)." },
-        { title: "Edit for retention", description: "Hook, pacing and sound design built to hold attention." },
-        { title: "Publish and improve", description: "Export-ready deliverables. Iterate based on results." },
+        {
+          title: "Editor-first mindset",
+          description: "Cutting is decision-making — what stays, what moves, what lands.",
+        },
+        {
+          title: "Story before trends",
+          description: "Technique serves the narrative; style follows substance.",
+        },
+        {
+          title: "Rhythm you can feel",
+          description: "Micro-timing and macro-structure tuned for emotional pull.",
+        },
+        {
+          title: "Collaboration",
+          description: "Clear feedback loops — fewer iterations, stronger outcomes.",
+        },
       ],
     },
     work: {
-      title: "Selected Work",
+      title: "WORK",
       items: [
-        { title: "Fitness Reel Concept", tag: "Hook + pacing" },
-        { title: "Personal Brand Clip", tag: "Story + clarity" },
-        { title: "Product Highlight", tag: "Benefit-led cut" },
+        { title: "Fitness — cinematic reel", tag: "Hook · pacing · contrast" },
+        { title: "Brand spot — night drive", tag: "Mood · grade · sound" },
+        { title: "Creator edit — performance", tag: "Energy · structure · cuts" },
       ],
     },
     contact: {
-      title: "Ready to upgrade your short-form?",
+      title: "Let’s build something sharp.",
       description:
-        "We turn attention into measurable engagement. Your content earns watchtime, likes, comments, shares and reach.",
-      cta: "Contact S-Visuals",
+        "Tell me about your project, timeline and references — I’ll reply with next steps.",
+      cta: "START A PROJECT",
     },
     footer: {
-      copyright: "© S-Visuals",
+      copyright: "© Simon Saad Visuals",
       links: {
-        work: "Work",
-        services: "Services",
-        process: "Process",
-        contact: "Contact",
+        work: "WORK",
+        services: "SERVICES",
+        about: "ABOUT",
+        contact: "CONTACT",
       },
     },
   },
   de: {
     meta: {
-      title: "S-Visuals | Short-Form Videoschnitt für Reels, TikTok & Shorts",
+      title: "Simon Saad Visuals — High Impact Video Editing",
       description:
-        "Premium Short-Form Videoschnitt für Creator, Marken und Unternehmen, die mehr Aufmerksamkeit, Watchtime und Engagement wollen.",
+        "Cinematic Video Editing und hochwertige Visuals für Brands, Artists und Creator.",
     },
     nav: {
-      wordmark: "S-Visuals",
+      wordmark: "Simon Saad Visuals",
+      logoTop: "SIMON SAAD",
+      logoBottom: "VISUALS",
       links: {
-        work: "Arbeiten",
-        services: "Services",
-        process: "Prozess",
-        contact: "Kontakt",
+        work: "WORK",
+        services: "SERVICES",
+        about: "ABOUT",
+        contact: "KONTAKT",
       },
-      cta: "Projekt starten",
+      cta: "ANFRAGEN",
       langSwitchLabel: "EN",
     },
     hero: {
-      eyebrow: "Video Editing und Filming",
-      catchphraseLines: ["Mehr Aufmerksamkeit.", "Mehr Aufrufe.", "Mehr Ergebnisse."],
-      seoTitle:
-        "Video Editing, Cutting und Short-Form Content für Creator, Marken und Unternehmen. Optimiert für Reels, TikTok, YouTube Shorts und Social Content.",
-      description:
-        "Premium Video Editing mit Filming-Support. Mit starken Hooks, retention-orientierten Cuts und plattformfertigen Exports.",
-      primaryCta: "Projekt starten",
-      secondaryCta: "Arbeiten ansehen",
-      platformStripLabel: "Platform-ready für",
-      platformStripItems: [
-        "Instagram",
-        "TikTok",
-        "YouTube",
-        "Reels",
-        "Shorts",
-        "Video Editing",
-        "Cutting",
-        "Filming",
-        "Social Ads",
-        "Captions",
-      ],
-      floatingMetrics: {
-        views: { label: "Aufrufe", targetValue: 2.3, suffix: "M", decimals: 1 },
-        likes: { label: "Likes", targetValue: 128, suffix: "K", decimals: 0 },
-        comments: { label: "Kommentare", targetValue: 4.6, suffix: "K", decimals: 1 },
-        shares: { label: "Teilungen", targetValue: 3.1, suffix: "K", decimals: 1 },
-      },
+      eyebrow: "HIGH IMPACT",
+      headline: "VISUALS",
+      subline: "FÜR BRANDS & CREATOR",
+      seoH1: "Simon Saad Visuals — High Impact Video Editing für Brands und Creator",
+      services: ["REEL EDITING", "CINEMATIC CONTENT", "ADS", "YOUTUBE"],
+      primaryCta: "ANFRAGEN",
+      primaryCtaHref: "#contact",
+      secondaryCta: "WORK ANSEHEN",
+      secondaryCtaHref: "#work",
+      scrollLabel: "SCROLL",
     },
     metrics: {
-      title: "Auf Performance ausgelegt",
+      title: "FOKUS",
       items: [
         {
-          title: "Edits für mehr Watchtime",
-          description: "Struktur und Tempo, damit Zuschauer dranbleiben.",
+          title: "Pacing & Rhythmus",
+          description: "Schnitte mit Luft und Präzision — Klarheit statt Lärm.",
         },
         {
-          title: "Short-Form optimiert",
-          description: "Hooks, Rhythmus und Timing für Vertical-Plattformen.",
+          title: "Visuelle Intention",
+          description: "Jedes Bild hat Gewicht; Emotion vor Dekoration.",
         },
         {
-          title: "Auf Retention ausgelegt",
-          description: "Klares Storytelling mit weniger Drop-off.",
+          title: "Sound-Sinn",
+          description: "Musik und Ambiente als Teil des Bildes gedacht.",
         },
         {
-          title: "Für Reels, TikTok & Shorts",
-          description: "Formate, Safe-Zones und Exports sauber umgesetzt.",
+          title: "Delivery-ready Exports",
+          description: "Formate und Specs, die zu Plattformen passen.",
         },
       ],
     },
     services: {
-      title: "Services",
+      title: "SERVICES",
       items: [
         {
-          title: "Reel-Schnitt",
-          description: "High-Signal Edits aus deinen Clips. Clean, paced, retention-first.",
+          title: "Reel Editing",
+          description: "Vertikale Edits mit klarer Dramaturgie und Drive.",
         },
         {
-          title: "Short-Form-Strategie",
-          description: "Hook-Frameworks, Content-Angles und Iteration nach Performance.",
+          title: "Cinematic Content",
+          description: "Langform mit Atmosphäre — Story und Stimmung zuerst.",
         },
         {
-          title: "Social-Media-Content-Systeme",
-          description: "Ein wiederholbarer Workflow von Capture bis Publish. Für Konsistenz.",
+          title: "Ads",
+          description: "Commercial-Schnitte mit sofortiger Aufmerksamkeit.",
+        },
+        {
+          title: "YouTube",
+          description: "Retention-orientiertes Timing für Hooks und Kapitel.",
+        },
+        {
+          title: "Music Videos",
+          description: "Performance-zentrierte Cuts im Rhythmus des Tracks.",
         },
       ],
     },
-    process: {
-      title: "Prozess",
+    about: {
+      title: "ABOUT",
       steps: [
-        { title: "Rohmaterial senden", description: "Clips, Referenzen und Must-haves bereitstellen." },
-        { title: "Ziel definieren", description: "Audience, Plattform und Outcome (Reach, Leads, Sales)." },
-        { title: "Für Retention schneiden", description: "Hook, Tempo und Sound für maximale Aufmerksamkeit." },
-        { title: "Veröffentlichen und verbessern", description: "Upload-ready Deliverables. Iterieren nach Daten." },
+        {
+          title: "Editor-Denkweise",
+          description: "Schnitt ist Entscheiden — was bleibt, was trägt, was wirkt.",
+        },
+        {
+          title: "Story vor Trend",
+          description: "Technik dient der Erzählung; Stil folgt Substanz.",
+        },
+        {
+          title: "Spürbarer Rhythmus",
+          description: "Mikro-Timing und Makro-Spannung für emotionale Zugkraft.",
+        },
+        {
+          title: "Zusammenarbeit",
+          description: "Klare Feedback-Schleifen — weniger Runden, mehr Klarheit.",
+        },
       ],
     },
     work: {
-      title: "Ausgewählte Arbeiten",
+      title: "WORK",
       items: [
-        { title: "Fitness-Reel-Konzept", tag: "Hook + Tempo" },
-        { title: "Personal-Brand-Clip", tag: "Story + Klarheit" },
-        { title: "Produkt-Highlight", tag: "Benefit-Edit" },
+        { title: "Fitness — cinematic reel", tag: "Hook · Rhythmus · Kontrast" },
+        { title: "Brand spot — night drive", tag: "Mood · Grade · Sound" },
+        { title: "Creator edit — performance", tag: "Energie · Struktur · Cuts" },
       ],
     },
     contact: {
-      title: "Bereit für Short-Form auf Premium-Niveau?",
+      title: "Lass uns etwas Präzises bauen.",
       description:
-        "Wir machen Aufmerksamkeit messbar. Mit mehr Watchtime, Likes, Kommentaren, Shares und Reichweite.",
-      cta: "S-Visuals kontaktieren",
+        "Schreib mir zu Projekt, Timeline und Referenzen — ich melde mich mit den nächsten Schritten.",
+      cta: "PROJEKT STARTEN",
     },
     footer: {
-      copyright: "© S-Visuals",
+      copyright: "© Simon Saad Visuals",
       links: {
-        work: "Arbeiten",
-        services: "Services",
-        process: "Prozess",
-        contact: "Kontakt",
+        work: "WORK",
+        services: "SERVICES",
+        about: "ABOUT",
+        contact: "KONTAKT",
       },
     },
   },
@@ -304,4 +312,3 @@ const dictionaries: Record<Locale, Dictionary> = {
 export async function getDictionary(locale: Locale): Promise<Dictionary> {
   return dictionaries[locale];
 }
-

@@ -1,22 +1,46 @@
-/*//////////////NAVBAR//////////////////*/
+/*//////////////NAVBAR — cinematic glass overlay//////////////////*/
 .site-nav {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
   z-index: 50;
-  border-bottom: 1px solid var(--sv-border);
-  background: color-mix(in oklch, var(--sv-bg) 5%, transparent);
-  backdrop-filter: blur(14px);
+  isolation: isolate;
+  border-bottom: none;
+  background: transparent;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
-/* Load-in auf inner: sticky/header bleibt ohne transform (Layout/Sticky-sicher) */
+.site-nav::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: clamp(5.5rem, 9vw, 8rem);
+  z-index: -1;
+  background: linear-gradient(
+    to bottom,
+    rgba(3, 3, 3, 0.76) 0%,
+    rgba(3, 3, 3, 0.48) 45%,
+    rgba(3, 3, 3, 0.18) 72%,
+    rgba(3, 3, 3, 0) 100%
+  );
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+  pointer-events: none;
+}
+
 .site-nav-inner {
+  position: relative;
+  z-index: 1;
   animation: site-nav-enter 0.62s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @keyframes site-nav-enter {
   from {
     opacity: 0;
-    transform: translate3d(0, -24px, 0);
+    transform: translate3d(0, -12px, 0);
   }
   to {
     opacity: 1;
@@ -32,106 +56,81 @@
   }
 }
 
-.nav-row {
+.nav-inner {
+  width: min(calc(100% - clamp(1.25rem, 5vw, 6rem)), 1680px);
+  margin-inline: auto;
   display: flex;
-  height: 4rem;
+  min-height: 4rem;
   align-items: center;
   justify-content: space-between;
   gap: var(--sv-space-4);
+  padding-block: 0.5rem;
 }
 
 .wordmark {
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  line-height: 0;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: var(--sv-text);
-  transition: color var(--sv-transition-fast);
+  text-align: center;
+  gap: 0.34rem;
+  color: #f5f5f5;
   text-decoration: none;
+  text-transform: uppercase;
+  line-height: 1;
 }
 
-.wordmark:hover {
-  color: color-mix(in oklch, var(--sv-text) 92%, transparent);
+.wordmark:hover .nav-logo-main,
+.wordmark:hover .nav-logo-sub {
+  color: #fff;
 }
 
-/* Single white logo: mask + solid background; hover swaps background to brand gradient (no second image / no flash). */
-.navbar-brand-logo {
-  display: block;
-  height: 2.3rem;
-  aspect-ratio: 1170 / 310;
-  width: auto;
-
-  /* Light: white card bg; dark: light foreground on glass bar */
-  background-color: var(--card);
-  -webkit-mask-image: url("/assets/logo/s-visuals-logo-black.svg");
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: contain;
-  mask-image: url("/assets/logo/s-visuals-logo-black.svg");
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-
-  transition: background 220ms ease;
+.nav-logo-main {
+  font-size: clamp(0.88rem, 0.95vw, 1.1rem);
+  font-weight: 800;
+  letter-spacing: 0.38em;
+  line-height: 1;
+  /* Compensate trailing letter-spacing whitespace so the visual block sits centered. */
+  padding-left: 0.38em;
 }
 
-.wordmark:hover .navbar-brand-logo {
-  background: var(--sv-gradient-brand);
-}
-
-:global(.dark) .navbar-brand-logo {
-  background-color: var(--foreground);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .navbar-brand-logo {
-    transition: none;
-  }
+.nav-logo-sub {
+  font-size: 0.56rem;
+  font-weight: 600;
+  letter-spacing: 0.9em;
+  line-height: 1;
+  opacity: 0.78;
+  text-align: center;
+  width: 100%;
+  /* Optical centering: shift right by half of the trailing letter-spacing
+     so the wider VISUALS sits visually centered under SIMON SAAD. */
+  transform: translateX(0.45em);
 }
 
 .nav-links {
   display: none;
   align-items: center;
-  gap: var(--sv-space-4);
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  gap: clamp(1rem, 2vw, 1.75rem);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: var(--sv-text-muted);
 }
 
 .nav-links a {
-  color: inherit;
+  color: rgba(255, 255, 255, 0.78);
   text-decoration: none;
-  position: relative;
-  padding: 0.25rem 0;
-  transition: color var(--sv-transition-fast);
+  padding: 0.35rem 0;
+  transition: color 180ms ease, opacity 180ms ease;
 }
 
 .nav-links a:hover {
-  color: var(--sv-text);
+  color: #fff;
 }
 
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: currentColor;
-  opacity: 0;
-  transform: scaleX(0.7);
-  transform-origin: center;
-  transition:
-    opacity var(--sv-transition-fast),
-    transform var(--sv-transition-fast);
-}
-
-.nav-links a:hover::after {
-  opacity: 0.6;
-  transform: scaleX(1);
+.nav-links a:focus-visible {
+  outline: 2px solid rgba(134, 89, 206, 0.55);
+  outline-offset: 4px;
+  border-radius: 2px;
 }
 
 .actions {
@@ -149,68 +148,75 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.4rem;
-  height: 2.4rem;
-  border-radius: var(--sv-radius-pill);
-  border: 1px solid color-mix(in srgb, var(--sv-border) 70%, transparent);
-  background: color-mix(in srgb, var(--sv-surface) 72%, transparent);
-  color: var(--sv-text);
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: rgba(255, 255, 255, 0.92);
   transition:
     border-color var(--sv-transition-fast),
     background var(--sv-transition-fast);
 }
 
 .mobile-menu-trigger:hover {
-  border-color: color-mix(in srgb, var(--sv-border) 90%, transparent);
-  background: color-mix(in srgb, var(--sv-surface-strong) 78%, transparent);
+  border-color: rgba(134, 89, 206, 0.45);
+  background: rgba(134, 89, 206, 0.12);
 }
 
 .mobile-menu-trigger:focus-visible {
-  outline: 2px solid var(--sv-cta-focus-ring);
+  outline: 2px solid rgba(134, 89, 206, 0.55);
   outline-offset: 3px;
 }
 
 .mobile-menu-trigger svg {
-  width: 1.1rem;
-  height: 1.1rem;
+  width: 1.15rem;
+  height: 1.15rem;
   display: block;
 }
 
 .mobile-sheet {
-  /* Override default shadcn look (keep Tailwind base, add our finish) */
   padding: 1.1rem 1rem 1rem;
-  background: color-mix(in oklch, var(--sv-bg) 12%, transparent);
-  border-left: 1px solid color-mix(in srgb, var(--sv-border) 70%, transparent);
-  backdrop-filter: blur(18px);
+  background: rgba(6, 6, 8, 0.88);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
 }
 
 .mobile-sheet-nav {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-  margin-top: 2.2rem; /* leaves room for shadcn close button */
+  gap: 0.15rem;
+  margin-top: 2.2rem;
 }
 
 .mobile-sheet-nav a {
   display: flex;
   align-items: center;
-  height: 2.75rem;
+  min-height: 2.75rem;
   padding: 0 0.6rem;
-  border-radius: 0.9rem;
+  border-radius: 0.5rem;
   text-decoration: none;
-  color: var(--sv-text);
+  color: rgba(255, 255, 255, 0.88);
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.28em;
+  font-size: 0.72rem;
+  text-transform: uppercase;
   background: transparent;
-  transition: background var(--sv-transition-fast);
+  transition: background var(--sv-transition-fast), color 160ms ease;
 }
 
 .mobile-sheet-nav a:hover {
-  background: color-mix(in srgb, var(--sv-surface-strong) 40%, transparent);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
 }
 
 .mobile-sheet-nav a:focus-visible {
-  outline: 2px solid var(--sv-cta-focus-ring);
+  outline: 2px solid rgba(134, 89, 206, 0.55);
   outline-offset: 3px;
 }
 
@@ -226,7 +232,6 @@
   width: 100%;
 }
 
-/* Language toggle: DE (outside) [ 🌐 knob slides ] EN (outside) */
 .lang-toggle {
   --pill-w: 2.85rem;
   --pill-h: 1.55rem;
@@ -240,7 +245,7 @@
 }
 
 .lang-toggle:focus-visible {
-  outline: 2px solid var(--sv-cta-focus-ring);
+  outline: 2px solid rgba(134, 89, 206, 0.55);
   outline-offset: 3px;
   border-radius: var(--sv-radius-pill);
 }
@@ -251,7 +256,7 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   line-height: 1;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.45);
   transition: color 160ms ease;
 }
 
@@ -264,17 +269,17 @@
   width: var(--pill-w);
   height: var(--pill-h);
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(10, 10, 12, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(10, 10, 12, 0.55);
   backdrop-filter: blur(14px);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 10px 26px rgba(0, 0, 0, 0.22);
+    0 10px 26px rgba(0, 0, 0, 0.35);
 }
 
 .lang-toggle:hover .lang-toggle-pill {
-  border-color: rgba(255, 255, 255, 0.12);
-  background: rgba(10, 10, 12, 0.66);
+  border-color: rgba(134, 89, 206, 0.35);
+  background: rgba(12, 12, 14, 0.65);
 }
 
 .lang-toggle-knob {
@@ -286,10 +291,10 @@
   border-radius: 999px;
   display: grid;
   place-items: center;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow:
-    0 10px 22px rgba(0, 0, 0, 0.24),
+    0 10px 22px rgba(0, 0, 0, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
   transform: translate3d(0, -50%, 0);
   transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -317,13 +322,30 @@
 }
 
 .cta-button {
-  font-size: 0.9rem;
-  padding: 0.6rem 0.9rem;
+  font-size: 0.68rem !important;
+  letter-spacing: 0.22em !important;
+  padding: 0.55rem 0.95rem !important;
+  min-height: 2.4rem;
+  border-radius: 0.35rem !important;
+  background: rgba(134, 89, 206, 0.22) !important;
+  border: 1px solid rgba(134, 89, 206, 0.62) !important;
+  color: #fff !important;
+  box-shadow: 0 0 22px rgba(134, 89, 206, 0.18) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.cta-button:hover {
+  background: rgba(134, 89, 206, 0.34) !important;
+  border-color: rgba(134, 89, 206, 0.78) !important;
+}
+
+.cta-button :global(.svisuals-button__label) {
+  font-weight: 750;
 }
 
 .cta-button :global(svg) {
-  width: 26px;
-  height: 26px;
+  display: none;
 }
 
 @media (min-width: 768px) {
@@ -340,7 +362,6 @@
   }
 }
 
-/*//////////////RESPONSIVE//////////////////*/
 @media (min-width: 520px) {
   .cta {
     display: inline-flex;
@@ -348,7 +369,6 @@
 }
 
 @media (max-width: 767px) {
-  /* Mobile: avoid wrapping chaos, use sheet menu instead */
   .actions {
     display: none;
   }
@@ -357,4 +377,3 @@
     display: flex;
   }
 }
-

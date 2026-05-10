@@ -1,6 +1,6 @@
 /*//////////////FOOTER//////////////////*/
 .footer {
-  border-top: 1px solid var(--sv-border);
+  border-top: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.1));
 }
 
 .inner {

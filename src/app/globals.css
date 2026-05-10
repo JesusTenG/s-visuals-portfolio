@@ -6,13 +6,20 @@
 
 /*//////////////DESIGN TOKENS//////////////////*/
 :root {
+  --color-accent: #8659ce;
+  --color-accent-soft: rgba(134, 89, 206, 0.32);
+  --color-accent-muted: rgba(134, 89, 206, 0.18);
+  --color-text-primary: #f5f5f5;
+  --color-text-muted: rgba(245, 245, 245, 0.68);
+  --color-border-subtle: rgba(255, 255, 255, 0.14);
+  --color-surface-glass: rgba(255, 255, 255, 0.055);
+
   /*
-   * Markenfarben = Logo-Verlauf (public/assets/logo/s-visuals-logo-gradient.svg).
-   * Primär-UI (Buttons, Sparkline, Fokus): Stop Ende (Rot); Sekundär: Stop Start (Violett).
+   * Portfolio-Akzent: einheitlich #8659ce (Kompatibilität: bestehende Brand-Stops gemappt).
    */
-  --sv-brand-stop-start: #9639d7;
-  --sv-brand-stop-mid: #dc3471;
-  --sv-brand-stop-end: #ff3a65;
+  --sv-brand-stop-start: #8659ce;
+  --sv-brand-stop-mid: #8659ce;
+  --sv-brand-stop-end: #8659ce;
   --sv-gradient-brand: linear-gradient(
     135deg,
     var(--sv-brand-stop-start) 0%,
@@ -111,30 +118,25 @@
     var(--sv-brand-stop-end) 100%
   );
   --sv-gradient-soft: radial-gradient(
-      900px circle at 18% 18%,
-      color-mix(in srgb, var(--sv-accent-purple) 22%, transparent),
+      900px circle at 20% 12%,
+      color-mix(in srgb, var(--color-accent) 12%, transparent),
       transparent 58%
     ),
     radial-gradient(
-      760px circle at 72% 16%,
-      color-mix(in srgb, var(--sv-accent-pink) 18%, transparent),
-      transparent 60%
+      760px circle at 78% 20%,
+      rgba(255, 255, 255, 0.03),
+      transparent 55%
     ),
-    radial-gradient(
-      880px circle at 70% 78%,
-      color-mix(in srgb, var(--sv-accent-red) 14%, transparent),
-      transparent 62%
-    ),
-    color-mix(in srgb, var(--sv-bg) 92%, black);
+    color-mix(in srgb, var(--sv-bg) 96%, black);
   /* Hero-Mockup: Lila- und Rot-Nebel (wie Markenpaar) */
   --sv-glow: radial-gradient(
       520px circle at 40% 40%,
-      color-mix(in srgb, var(--sv-brand-stop-start) 28%, transparent),
+      color-mix(in srgb, var(--color-accent) 22%, transparent),
       transparent 55%
     ),
     radial-gradient(
       640px circle at 70% 22%,
-      color-mix(in srgb, var(--sv-brand-stop-end) 24%, transparent),
+      rgba(255, 255, 255, 0.04),
       transparent 58%
     );
 
@@ -205,10 +207,19 @@
   /* Umgekehrt zum Logo-Verlauf: Rot → Magenta → Violett */
   --sv-hero-catchphrase-gradient: linear-gradient(
     135deg,
-    var(--sv-brand-stop-end) 0%,
-    var(--sv-brand-stop-mid) 45%,
-    var(--sv-brand-stop-start) 100%
+    var(--color-accent) 0%,
+    color-mix(in srgb, var(--color-accent) 72%, white) 100%
   );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 .dark {
@@ -406,8 +417,15 @@
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
     min-height: 100%;
-    background-image: var(--sv-gradient-soft);
+    background-color: #030303;
+    background-image:
+      radial-gradient(1200px circle at 50% -10%, rgba(134, 89, 206, 0.07), transparent 55%),
+      linear-gradient(180deg, #050505 0%, #030303 45%, #020202 100%);
     background-attachment: fixed;
+  }
+
+  section[id] {
+    scroll-margin-top: calc(var(--sv-navbar-height) + 0.75rem);
   }
 }
 
@@ -430,22 +448,23 @@
   }
 
   .section-title {
-    font-size: 1.25rem;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    color: var(--sv-text);
+    font-size: clamp(0.95rem, 1.35vw, 1.2rem);
+    font-weight: 650;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: rgba(245, 245, 245, 0.94);
     text-wrap: balance;
   }
 
-  @media (min-width: 520px) {
-    .section-title {
-      font-size: 1.5rem;
-    }
-  }
-
   .glass-card {
-    border-color: var(--sv-border) !important;
-    background: linear-gradient(180deg, var(--sv-surface) 0%, var(--sv-surface-strong) 100%);
-    box-shadow: var(--sv-shadow-card);
+    border: 1px solid var(--color-border-subtle, rgba(255, 255, 255, 0.14)) !important;
+    background: linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.055) 0%,
+      rgba(12, 12, 14, 0.78) 100%
+    );
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.42);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
 }

@@ -26,7 +26,7 @@ export default async function LangHomePage({ params }: Props) {
     <>
       <Navbar locale={locale} dict={dict} />
       <main className="flex-1">
-        <HeroSection dict={dict} locale={locale} />
+        <HeroSection dict={dict} />
         <MetricsSection dict={dict} />
         <ServicesSection dict={dict} />
         <ProcessSection dict={dict} />

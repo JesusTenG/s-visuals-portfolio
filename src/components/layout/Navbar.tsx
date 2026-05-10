@@ -1,4 +1,4 @@
- "use client";
+"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -26,25 +26,25 @@ export function Navbar({ locale, dict }: Props) {
   return (
     <header className={styles["site-nav"]}>
       <div className={styles["site-nav-inner"]}>
-        <div className="container-base">
-          <div className={styles["nav-row"]}>
+        <div className={styles["nav-inner"]}>
           <Link
             href={`/${locale}`}
             className={styles.wordmark}
             aria-label={dict.nav.wordmark}
           >
-            <span className={styles["navbar-brand-logo"]} aria-hidden="true" />
+            <span className={styles["nav-logo-main"]}>{dict.nav.logoTop}</span>
+            <span className={styles["nav-logo-sub"]}>{dict.nav.logoBottom}</span>
           </Link>
 
-          <nav className={styles["nav-links"]}>
+          <nav className={styles["nav-links"]} aria-label="Primary">
             <a href="#work">
               {dict.nav.links.work}
             </a>
             <a href="#services">
               {dict.nav.links.services}
             </a>
-            <a href="#process">
-              {dict.nav.links.process}
+            <a href="#about">
+              {dict.nav.links.about}
             </a>
             <a href="#contact">
               {dict.nav.links.contact}
@@ -52,7 +52,7 @@ export function Navbar({ locale, dict }: Props) {
           </nav>
 
           <div className={styles.actions}>
-            <SVisualsButton href="#contact" className={`${styles.cta} ${styles["cta-button"]}`}>
+            <SVisualsButton href="#contact" showIcon={false} className={`${styles.cta} ${styles["cta-button"]}`}>
               {dict.nav.cta}
             </SVisualsButton>
             <Link
@@ -108,8 +108,8 @@ export function Navbar({ locale, dict }: Props) {
                   <a href="#services" onClick={() => setMobileOpen(false)}>
                     {dict.nav.links.services}
                   </a>
-                  <a href="#process" onClick={() => setMobileOpen(false)}>
-                    {dict.nav.links.process}
+                  <a href="#about" onClick={() => setMobileOpen(false)}>
+                    {dict.nav.links.about}
                   </a>
                   <a href="#contact" onClick={() => setMobileOpen(false)}>
                     {dict.nav.links.contact}
@@ -119,6 +119,7 @@ export function Navbar({ locale, dict }: Props) {
                 <div className={styles["mobile-sheet-footer"]}>
                   <SVisualsButton
                     href="#contact"
+                    showIcon={false}
                     className={styles["mobile-sheet-cta"]}
                     onClick={() => setMobileOpen(false)}
                   >
@@ -160,7 +161,6 @@ export function Navbar({ locale, dict }: Props) {
               </SheetContent>
             </Sheet>
           </div>
-        </div>
         </div>
       </div>
     </header>

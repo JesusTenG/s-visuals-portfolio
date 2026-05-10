@@ -9,11 +9,11 @@ type Props = Readonly<{
 
 export function ProcessSection({ dict }: Props) {
   return (
-    <section id="process" className={styles.section}>
+    <section id="about" className={styles.section}>
       <div className="container-base">
-        <h2 className="section-title">{dict.process.title}</h2>
+        <h2 className="section-title">{dict.about.title}</h2>
         <div className={styles.grid}>
-          {dict.process.steps.map((step, idx) => (
+          {dict.about.steps.map((step, idx) => (
             <Card key={step.title} className="glass-card">
               <CardHeader className="flex-row items-start justify-between gap-3">
                 <CardTitle className="leading-snug">{step.title}</CardTitle>

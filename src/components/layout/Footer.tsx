@@ -20,8 +20,8 @@ export function Footer({ dict }: Props) {
               <a href="#services">
                 {dict.footer.links.services}
               </a>
-              <a href="#process">
-                {dict.footer.links.process}
+              <a href="#about">
+                {dict.footer.links.about}
               </a>
               <a href="#contact">
                 {dict.footer.links.contact}
