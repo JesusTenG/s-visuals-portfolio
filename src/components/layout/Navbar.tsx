@@ -22,6 +22,7 @@ export function Navbar({ locale, dict }: Props) {
   const switchLabel =
     switchTo === "en" ? "Switch language to English" : "Sprache auf Deutsch wechseln";
   const [mobileOpen, setMobileOpen] = useState(false);
+  const home = `/${locale}`;
 
   return (
     <header className={styles["site-nav"]}>
@@ -37,22 +38,26 @@ export function Navbar({ locale, dict }: Props) {
           </Link>
 
           <nav className={styles["nav-links"]} aria-label="Primary">
-            <a href="#work">
+            <a href={`${home}#work`}>
               {dict.nav.links.work}
             </a>
-            <a href="#services">
+            <a href={`${home}#services`}>
               {dict.nav.links.services}
             </a>
-            <a href="#about">
+            <a href={`${home}#about`}>
               {dict.nav.links.about}
             </a>
-            <a href="#contact">
+            <a href={`${home}#contact`}>
               {dict.nav.links.contact}
             </a>
           </nav>
 
           <div className={styles.actions}>
-            <SVisualsButton href="#contact" showIcon={false} className={`${styles.cta} ${styles["cta-button"]}`}>
+            <SVisualsButton
+              href={`${home}#contact`}
+              showIcon={false}
+              className={`${styles.cta} ${styles["cta-button"]}`}
+            >
               {dict.nav.cta}
             </SVisualsButton>
             <Link
@@ -102,23 +107,23 @@ export function Navbar({ locale, dict }: Props) {
                 className={styles["mobile-sheet"]}
               >
                 <nav className={styles["mobile-sheet-nav"]} aria-label="Mobile navigation">
-                  <a href="#work" onClick={() => setMobileOpen(false)}>
+                  <a href={`${home}#work`} onClick={() => setMobileOpen(false)}>
                     {dict.nav.links.work}
                   </a>
-                  <a href="#services" onClick={() => setMobileOpen(false)}>
+                  <a href={`${home}#services`} onClick={() => setMobileOpen(false)}>
                     {dict.nav.links.services}
                   </a>
-                  <a href="#about" onClick={() => setMobileOpen(false)}>
+                  <a href={`${home}#about`} onClick={() => setMobileOpen(false)}>
                     {dict.nav.links.about}
                   </a>
-                  <a href="#contact" onClick={() => setMobileOpen(false)}>
+                  <a href={`${home}#contact`} onClick={() => setMobileOpen(false)}>
                     {dict.nav.links.contact}
                   </a>
                 </nav>
 
                 <div className={styles["mobile-sheet-footer"]}>
                   <SVisualsButton
-                    href="#contact"
+                    href={`${home}#contact`}
                     showIcon={false}
                     className={styles["mobile-sheet-cta"]}
                     onClick={() => setMobileOpen(false)}

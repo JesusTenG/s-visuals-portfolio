@@ -1,0 +1,91 @@
+/*//////////////WORK SECTION//////////////////*/
+.work-section {
+  position: relative;
+  padding-block: var(--sv-section-padding);
+  border-top: 1px solid var(--color-border-faint);
+  color: var(--color-text-primary);
+}
+
+.work-section__inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.work-section__header {
+  max-width: 47.5rem;
+  margin-bottom: clamp(2rem, 5vw, 4rem);
+}
+
+.work-section__eyebrow {
+  margin: 0 0 var(--sv-space-3);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.work-section__title {
+  margin: 0 0 var(--sv-space-4);
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-text-section-title);
+}
+
+.work-section__intro {
+  margin: 0;
+  max-width: 40rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.work-section__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.work-section__cta-wrap {
+  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  text-align: center;
+}
+
+.work-section__cta-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-accent);
+  border-bottom: 1px solid var(--color-accent-border-interactive);
+  padding-bottom: 0.15rem;
+  transition: color var(--sv-transition-fast), border-color var(--sv-transition-fast);
+}
+
+.work-section__cta-link:hover {
+  color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+
+.work-section__cta-link:focus-visible {
+  outline: 2px solid var(--color-accent-outline-focus);
+  outline-offset: 4px;
+}
+
+/*//////////////WORK SECTION — RESPONSIVE//////////////////*/
+@media (max-width: 980px) {
+  .work-section__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .work-section__grid {
+    grid-template-columns: 1fr;
+  }
+}

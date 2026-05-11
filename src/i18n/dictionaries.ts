@@ -1,5 +1,24 @@
 import type { Locale } from "./config";
 
+export type WorkVideoItem = {
+  title: string;
+  type: string;
+  description: string;
+  tags: string[];
+  posterSrc: string;
+  videoSrc: string;
+  alt: string;
+};
+
+export type ClientStoryItem = {
+  title: string;
+  label: string;
+  description: string;
+  href: string;
+  imageSrc: string;
+  alt: string;
+};
+
 export type Dictionary = {
   meta: {
     title: string;
@@ -30,7 +49,7 @@ export type Dictionary = {
     secondaryCtaHref: string;
     scrollLabel: string;
   };
-  metrics: {
+  focus: {
     title: string;
     items: Array<{ title: string; description: string }>;
   };
@@ -43,13 +62,30 @@ export type Dictionary = {
     steps: Array<{ title: string; description: string }>;
   };
   work: {
+    eyebrow: string;
     title: string;
-    items: Array<{ title: string; tag: string }>;
+    intro: string;
+    items: WorkVideoItem[];
+    collaborationsCtaLabel: string;
+    collaborationsCtaHref: string;
+  };
+  clientStories: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    items: ClientStoryItem[];
+    viewCase: string;
   };
   contact: {
     title: string;
     description: string;
     cta: string;
+  };
+  caseDetail: {
+    back: string;
+    contentGridTitle: string;
+    cta: string;
+    ctaHref: string;
   };
   footer: {
     copyright: string;
@@ -94,7 +130,7 @@ const dictionaries: Record<Locale, Dictionary> = {
       secondaryCtaHref: "#work",
       scrollLabel: "SCROLL",
     },
-    metrics: {
+    focus: {
       title: "Focus",
       items: [
         {
@@ -162,11 +198,76 @@ const dictionaries: Record<Locale, Dictionary> = {
       ],
     },
     work: {
-      title: "WORK",
+      eyebrow: "SELECTED WORK",
+      title: "Proof in motion.",
+      intro:
+        "A first look at pacing, rhythm and visual direction across social edits, brand content and creator-focused videos.",
+      collaborationsCtaLabel: "View deeper collaborations",
+      collaborationsCtaHref: "#collaborations",
       items: [
-        { title: "Fitness — cinematic reel", tag: "Hook · pacing · contrast" },
-        { title: "Brand spot — night drive", tag: "Mood · grade · sound" },
-        { title: "Creator edit — performance", tag: "Energy · structure · cuts" },
+        {
+          title: "Fitness — cinematic reel",
+          type: "Cinematic Reel",
+          description:
+            "High-energy pacing, sharp transitions and a premium training atmosphere.",
+          tags: ["Hook", "Pacing", "Sound sync"],
+          posterSrc: "/assets/work/fitness-reel-poster.svg",
+          videoSrc: "/assets/work/fitness-reel.mp4",
+          alt: "Poster frame for a cinematic fitness reel",
+        },
+        {
+          title: "Brand spot — night drive",
+          type: "Brand Spot",
+          description: "Moody visuals, clean cuts and atmosphere-driven product framing.",
+          tags: ["Atmosphere", "Brand", "Motion"],
+          posterSrc: "/assets/work/night-drive-poster.svg",
+          videoSrc: "/assets/work/night-drive.mp4",
+          alt: "Poster frame for a night drive brand spot",
+        },
+        {
+          title: "Creator edit — performance",
+          type: "Creator Edit",
+          description: "Fast structure, retention-focused timing and social-first delivery.",
+          tags: ["Retention", "Social", "Performance"],
+          posterSrc: "/assets/work/creator-performance-poster.svg",
+          videoSrc: "/assets/work/creator-performance.mp4",
+          alt: "Poster frame for a creator performance edit",
+        },
+      ],
+    },
+    clientStories: {
+      eyebrow: "COLLABORATIONS",
+      title: "Long-term visual systems for creators and brands.",
+      intro:
+        "Explore ongoing collaborations with recurring edits, campaign visuals and content built around a consistent visual direction.",
+      viewCase: "View case",
+      items: [
+        {
+          title: "Client One",
+          label: "Ongoing Social Edits",
+          description:
+            "Recurring reels, campaign cuts and visual direction across multiple content drops.",
+          href: "/work/client-one",
+          imageSrc: "/assets/clients/client-one-poster.svg",
+          alt: "Preview image for Client One collaboration",
+        },
+        {
+          title: "Client Two",
+          label: "Creator Content System",
+          description:
+            "A consistent editing language across short-form videos, launches and social content.",
+          href: "/work/client-two",
+          imageSrc: "/assets/clients/client-two-poster.svg",
+          alt: "Preview image for Client Two collaboration",
+        },
+        {
+          title: "Client Three",
+          label: "Brand Visuals",
+          description: "Premium campaign edits and atmospheric visuals shaped for social platforms.",
+          href: "/work/client-three",
+          imageSrc: "/assets/clients/client-three-poster.svg",
+          alt: "Preview image for Client Three collaboration",
+        },
       ],
     },
     contact: {
@@ -174,6 +275,12 @@ const dictionaries: Record<Locale, Dictionary> = {
       description:
         "Tell me about your project, timeline and references — I’ll reply with next steps.",
       cta: "START A PROJECT",
+    },
+    caseDetail: {
+      back: "Back to selected work",
+      contentGridTitle: "Content drops",
+      cta: "Start a project",
+      ctaHref: "#contact",
     },
     footer: {
       copyright: "© Simon Saad Visuals",
@@ -216,7 +323,7 @@ const dictionaries: Record<Locale, Dictionary> = {
       secondaryCtaHref: "#work",
       scrollLabel: "SCROLL",
     },
-    metrics: {
+    focus: {
       title: "FOKUS",
       items: [
         {
@@ -284,11 +391,76 @@ const dictionaries: Record<Locale, Dictionary> = {
       ],
     },
     work: {
-      title: "WORK",
+      eyebrow: "SELECTED WORK",
+      title: "Proof in motion.",
+      intro:
+        "Ein erster Blick auf Pacing, Rhythmus und visuelle Richtung in Social Edits, Brand Content und Creator-Videos.",
+      collaborationsCtaLabel: "Mehr Collaborations",
+      collaborationsCtaHref: "#collaborations",
       items: [
-        { title: "Fitness — cinematic reel", tag: "Hook · Rhythmus · Kontrast" },
-        { title: "Brand spot — night drive", tag: "Mood · Grade · Sound" },
-        { title: "Creator edit — performance", tag: "Energie · Struktur · Cuts" },
+        {
+          title: "Fitness — Cinematic Reel",
+          type: "Cinematic Reel",
+          description:
+            "Energiegeladenes Pacing, präzise Übergänge und eine hochwertige Trainingsatmosphäre.",
+          tags: ["Hook", "Pacing", "Sound Sync"],
+          posterSrc: "/assets/work/fitness-reel-poster.svg",
+          videoSrc: "/assets/work/fitness-reel.mp4",
+          alt: "Posterbild eines cinematic Fitness Reels",
+        },
+        {
+          title: "Brand Spot — Night Drive",
+          type: "Brand Spot",
+          description: "Moody Visuals, klare Cuts und atmosphärisches Product Framing.",
+          tags: ["Atmosphäre", "Brand", "Motion"],
+          posterSrc: "/assets/work/night-drive-poster.svg",
+          videoSrc: "/assets/work/night-drive.mp4",
+          alt: "Posterbild eines Night Drive Brand Spots",
+        },
+        {
+          title: "Creator Edit — Performance",
+          type: "Creator Edit",
+          description: "Schnelle Struktur, retention-fokussiertes Timing und social-first Delivery.",
+          tags: ["Retention", "Social", "Performance"],
+          posterSrc: "/assets/work/creator-performance-poster.svg",
+          videoSrc: "/assets/work/creator-performance.mp4",
+          alt: "Posterbild eines Creator Performance Edits",
+        },
+      ],
+    },
+    clientStories: {
+      eyebrow: "COLLABORATIONS",
+      title: "Langfristige Visual-Systeme für Creator und Marken.",
+      intro:
+        "Entdecke laufende Zusammenarbeiten mit wiederkehrenden Edits, Kampagnen-Visuals und Content mit klarer visueller Richtung.",
+      viewCase: "Case ansehen",
+      items: [
+        {
+          title: "Kunde Eins",
+          label: "Ongoing Social Edits",
+          description:
+            "Wiederkehrende Reels, Kampagnen-Cuts und visuelle Richtung über mehrere Content-Drops hinweg.",
+          href: "/work/client-one",
+          imageSrc: "/assets/clients/client-one-poster.svg",
+          alt: "Vorschaubild für die Zusammenarbeit mit Kunde Eins",
+        },
+        {
+          title: "Kunde Zwei",
+          label: "Creator Content System",
+          description:
+            "Eine konsistente Editing-Sprache für Short-Form-Videos, Launches und Social Content.",
+          href: "/work/client-two",
+          imageSrc: "/assets/clients/client-two-poster.svg",
+          alt: "Vorschaubild für die Zusammenarbeit mit Kunde Zwei",
+        },
+        {
+          title: "Kunde Drei",
+          label: "Brand Visuals",
+          description: "Premium Campaign Edits und atmosphärische Visuals für Social-Plattformen.",
+          href: "/work/client-three",
+          imageSrc: "/assets/clients/client-three-poster.svg",
+          alt: "Vorschaubild für die Zusammenarbeit mit Kunde Drei",
+        },
       ],
     },
     contact: {
@@ -296,6 +468,12 @@ const dictionaries: Record<Locale, Dictionary> = {
       description:
         "Schreib mir zu Projekt, Timeline und Referenzen — ich melde mich mit den nächsten Schritten.",
       cta: "PROJEKT STARTEN",
+    },
+    caseDetail: {
+      back: "Zurück zu Selected Work",
+      contentGridTitle: "Content Drops",
+      cta: "Projekt starten",
+      ctaHref: "#contact",
     },
     footer: {
       copyright: "© Simon Saad Visuals",

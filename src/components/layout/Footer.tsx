@@ -1,12 +1,16 @@
+import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 
 import styles from "./Footer.module.css";
 
 type Props = Readonly<{
+  locale: Locale;
   dict: Dictionary;
 }>;
 
-export function Footer({ dict }: Props) {
+export function Footer({ locale, dict }: Props) {
+  const home = `/${locale}`;
+
   return (
     <footer className={styles.footer}>
       <div className="container-base">
@@ -14,16 +18,16 @@ export function Footer({ dict }: Props) {
           <div className={styles.row}>
             <div className={styles.copy}>{dict.footer.copyright}</div>
             <nav className={styles.links}>
-              <a href="#work">
+              <a href={`${home}#work`}>
                 {dict.footer.links.work}
               </a>
-              <a href="#services">
+              <a href={`${home}#services`}>
                 {dict.footer.links.services}
               </a>
-              <a href="#about">
+              <a href={`${home}#about`}>
                 {dict.footer.links.about}
               </a>
-              <a href="#contact">
+              <a href={`${home}#contact`}>
                 {dict.footer.links.contact}
               </a>
             </nav>

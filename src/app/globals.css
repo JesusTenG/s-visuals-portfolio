@@ -255,9 +255,12 @@
   --sv-space-12: 3rem;
 
   /*//////////////RADIUS TOKENS//////////////////*/
-  --radius: 1rem;
-  --sv-radius-card: calc(var(--radius) + 0.5rem);
-  --sv-radius-button: calc(var(--sv-radius-card) - 0.5rem);
+  /* Matches SVisuals primary button corners — default for cards, chrome, tags */
+  --sv-radius-ui: 0.15rem;
+  --radius: var(--sv-radius-ui);
+  --sv-radius-card: var(--sv-radius-ui);
+  --sv-radius-button: var(--sv-radius-ui);
+  /* Full circles / capsule hardware only (e.g. lang knob, hero dots) */
   --sv-radius-pill: 999px;
 
   /*//////////////MOTION TOKENS//////////////////*/
@@ -510,10 +513,10 @@
   --font-mono: var(--font-mono);
   --font-serif: var(--font-serif);
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: var(--sv-radius-ui);
+  --radius-md: var(--sv-radius-ui);
+  --radius-lg: var(--sv-radius-ui);
+  --radius-xl: var(--sv-radius-ui);
 
   --shadow-2xs: var(--shadow-2xs);
   --shadow-xs: var(--shadow-xs);
@@ -605,6 +608,7 @@
 
   .glass-card {
     border: 1px solid var(--color-border-subtle) !important;
+    border-radius: var(--sv-radius-ui) !important;
     background: var(--gradient-glass-card);
     box-shadow: var(--shadow-glass-card);
     -webkit-backdrop-filter: blur(var(--glass-backdrop-blur));

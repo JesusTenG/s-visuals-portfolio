@@ -1,26 +1,25 @@
 import type { Dictionary } from "@/i18n/dictionaries";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import styles from "./WorkSection.module.css";
+import styles from "./FocusSection.module.css";
 
 type Props = Readonly<{
   dict: Dictionary;
 }>;
 
-export function WorkSection({ dict }: Props) {
+export function FocusSection({ dict }: Props) {
   return (
-    <section id="work" className={styles.section}>
+    <section className={styles.section}>
       <div className="container-base">
-        <h2 className="section-title">{dict.work.title}</h2>
+        <h2 className="section-title">{dict.focus.title}</h2>
         <div className={styles.grid}>
-          {dict.work.items.map((item) => (
-            <Card key={item.title} className="glass-card overflow-hidden">
-              <div className={styles["work-preview"]} aria-hidden="true" />
+          {dict.focus.items.map((item) => (
+            <Card key={item.title} className="glass-card">
               <CardHeader>
                 <CardTitle>{item.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm leading-6 text-muted-foreground">{item.tag}</p>
+                <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>
               </CardContent>
             </Card>
           ))}
@@ -29,4 +28,3 @@ export function WorkSection({ dict }: Props) {
     </section>
   );
 }
-

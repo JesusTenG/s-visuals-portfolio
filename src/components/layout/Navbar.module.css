@@ -132,7 +132,7 @@
 .nav-links a:focus-visible {
   outline: 2px solid var(--color-accent-outline-focus);
   outline-offset: 4px;
-  border-radius: 2px;
+  border-radius: var(--sv-radius-ui);
 }
 
 .actions {
@@ -154,7 +154,7 @@
   min-height: 2.75rem;
   width: 2.75rem;
   height: 2.75rem;
-  border-radius: 0.35rem;
+  border-radius: var(--sv-radius-ui);
   border: 1px solid var(--color-border-mobile-trigger);
   background: var(--color-bg-mobile-trigger);
   -webkit-backdrop-filter: blur(12px);
@@ -211,7 +211,7 @@
   align-items: center;
   min-height: 2.75rem;
   padding: 0 0.6rem;
-  border-radius: 0.5rem;
+  border-radius: var(--sv-radius-ui);
   text-decoration: none;
   color: var(--color-text-nav-mobile);
   font-weight: 700;
@@ -340,7 +340,7 @@
   letter-spacing: 0.22em !important;
   padding: 0.55rem 1rem !important;
   min-height: 2.4rem;
-  border-radius: 0.4rem !important;
+  border-radius: var(--sv-radius-ui) !important;
   background: var(--color-accent) !important;
   border: 1px solid var(--color-border-cta-compact) !important;
   color: var(--color-text-on-accent) !important;

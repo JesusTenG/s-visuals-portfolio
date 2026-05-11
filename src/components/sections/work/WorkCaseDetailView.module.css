@@ -1,0 +1,107 @@
+/*//////////////WORK CASE DETAIL//////////////////*/
+.work-case-detail {
+  padding-block: var(--sv-section-padding);
+}
+
+.work-case-detail__back-wrap {
+  margin: 0 0 var(--sv-space-6);
+}
+
+.work-case-detail__back {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: var(--color-accent);
+  border-bottom: 1px solid var(--color-accent-border-interactive);
+  padding-bottom: 0.1rem;
+  transition: color var(--sv-transition-fast), border-color var(--sv-transition-fast);
+}
+
+.work-case-detail__back:hover {
+  color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+
+.work-case-detail__back:focus-visible {
+  outline: 2px solid var(--color-accent-outline-focus);
+  outline-offset: 4px;
+}
+
+.work-case-detail__header {
+  max-width: 42rem;
+  margin-bottom: var(--sv-space-8);
+}
+
+.work-case-detail__label {
+  margin: 0 0 var(--sv-space-2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.work-case-detail__title {
+  margin: 0 0 var(--sv-space-4);
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  line-height: 1.1;
+  color: var(--color-text-section-title);
+}
+
+.work-case-detail__description {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+}
+
+.work-case-detail__hero-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  min-height: 12rem;
+  border-radius: var(--sv-radius-card);
+  overflow: hidden;
+  border: 1px solid var(--color-border-faint);
+  box-shadow: var(--shadow-glass-card);
+  margin-bottom: var(--sv-space-10);
+}
+
+.work-case-detail__hero-image {
+  object-fit: cover;
+}
+
+.work-case-detail__drops-title {
+  margin: 0 0 var(--sv-space-6);
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-section-title);
+}
+
+.work-case-detail__drops-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.work-case-detail__cta {
+  margin-top: var(--sv-space-10);
+}
+
+@media (max-width: 980px) {
+  .work-case-detail__drops-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .work-case-detail__hero-media {
+    aspect-ratio: 16 / 10;
+  }
+
+  .work-case-detail__drops-grid {
+    grid-template-columns: 1fr;
+  }
+}

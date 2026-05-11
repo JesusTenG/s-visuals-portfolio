@@ -3,7 +3,7 @@
   position: relative;
   overflow: hidden;
   border: none;
-  border-radius: calc(var(--sv-radius-card) - 0.1rem);
+  border-radius: var(--sv-radius-ui);
   background: transparent;
   box-shadow: none;
   backdrop-filter: none;

@@ -5,7 +5,7 @@
   cursor: pointer;
   outline: none;
   border: 1px solid color-mix(in srgb, var(--sv-border) 75%, transparent);
-  border-radius: 0.35rem;
+  border-radius: var(--sv-radius-ui);
 
   display: inline-flex;
   align-items: center;

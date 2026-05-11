@@ -1,0 +1,109 @@
+/*//////////////CASE CONTENT DROP CARD//////////////////*/
+.case-drop-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sv-space-3);
+  border-radius: var(--sv-radius-card);
+  border: 1px solid var(--color-border-faint);
+  background: var(--gradient-glass-card);
+  box-shadow: var(--shadow-glass-card);
+  padding: var(--sv-space-3);
+  transition:
+    border-color var(--sv-transition-fast),
+    box-shadow var(--sv-transition-fast);
+}
+
+.case-drop-card:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-button-quiet-hover);
+}
+
+.case-drop-card__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: var(--sv-radius-ui);
+  overflow: hidden;
+  border: 1px solid var(--color-border-faint);
+}
+
+.case-drop-card__poster-button {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  background: var(--color-bg-overlay-scrim);
+  color: var(--color-text-primary);
+}
+
+.case-drop-card__poster-button:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+.case-drop-card__poster-button:focus-visible {
+  outline: 2px solid var(--color-accent-outline-focus);
+  outline-offset: 2px;
+}
+
+.case-drop-card__poster {
+  object-fit: cover;
+}
+
+.case-drop-card__play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3rem;
+  min-height: 3rem;
+  border-radius: var(--sv-radius-ui);
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface-glass);
+  backdrop-filter: blur(var(--glass-backdrop-blur));
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-button-quiet);
+}
+
+.case-drop-card__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--color-bg-body-base);
+}
+
+.case-drop-card__meta {
+  padding-inline: var(--sv-space-1);
+}
+
+.case-drop-card__type {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.case-drop-card__title {
+  margin: var(--sv-space-1) 0 0;
+  font-size: 1rem;
+  line-height: 1.3;
+  color: var(--color-text-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-drop-card {
+    transition: none;
+  }
+}
