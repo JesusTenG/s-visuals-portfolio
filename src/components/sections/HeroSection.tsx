@@ -46,7 +46,7 @@ export function HeroSection({ dict }: Props) {
 
       <div className={styles["hero-inner"]}>
         <div className={styles["hero-content"]}>
-          <h1 id="hero-heading" className={styles["sr-only"]}>
+          <h1 id="hero-heading" className="sr-only">
             {dict.hero.seoH1}
           </h1>
 

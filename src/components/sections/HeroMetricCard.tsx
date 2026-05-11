@@ -235,7 +235,7 @@ export function HeroMetricCard({
       <strong className={styles["hero-metric-value"]} aria-hidden="true">
         {formatValue(displayValue, locale, decimals, suffix)}
       </strong>
-      <span className={styles["sr-only"]}>{finalText}</span>
+      <span className="sr-only">{finalText}</span>
 
       <svg
         className={styles["hero-metric-sparkline"]}
