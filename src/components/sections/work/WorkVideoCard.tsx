@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import styles from "./WorkVideoCard.module.css";
 
@@ -13,6 +13,10 @@ export type WorkVideoCardProps = Readonly<{
   posterSrc: string;
   videoSrc: string;
   alt: string;
+  videoAriaLabel: string;
+  preload?: "none" | "metadata";
+  isPreviewPaused: boolean;
+  onOpen: () => void;
 }>;
 
 export function WorkVideoCard({
@@ -23,28 +27,57 @@ export function WorkVideoCard({
   posterSrc,
   videoSrc,
   alt,
+  videoAriaLabel,
+  preload = "none",
+  isPreviewPaused,
+  onOpen,
 }: WorkVideoCardProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const syncPreference = () => setPrefersReducedMotion(mediaQuery.matches);
+
+    syncPreference();
+    mediaQuery.addEventListener("change", syncPreference);
+    return () => mediaQuery.removeEventListener("change", syncPreference);
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || prefersReducedMotion) return;
+
+    if (isPreviewPaused) {
+      video.pause();
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          void video.play().catch(() => {});
+          return;
+        }
+        video.pause();
+      },
+      { threshold: 0.35 },
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [prefersReducedMotion, videoSrc, isPreviewPaused]);
 
   return (
     <article className={styles["work-video-card"]}>
-      <div className={styles["work-video-card__media"]}>
-        {isPlaying ? (
-          <video
-            className={styles["work-video-card__video"]}
-            src={videoSrc}
-            poster={posterSrc}
-            controls
-            playsInline
-            preload="metadata"
-          />
-        ) : (
-          <button
-            className={styles["work-video-card__poster-button"]}
-            type="button"
-            onClick={() => setIsPlaying(true)}
-            aria-label={`Play video: ${title}`}
-          >
+      <button
+        type="button"
+        className={styles["work-video-card__media-trigger"]}
+        aria-label={`Open video: ${videoAriaLabel}`}
+        onClick={onOpen}
+      >
+        <div className={styles["work-video-card__media"]}>
+          {prefersReducedMotion ? (
             <Image
               className={styles["work-video-card__poster"]}
               src={posterSrc}
@@ -52,12 +85,24 @@ export function WorkVideoCard({
               fill
               sizes="(max-width: 768px) 92vw, (max-width: 980px) 45vw, 30vw"
             />
-            <span className={styles["work-video-card__play"]} aria-hidden="true">
-              Play
-            </span>
-          </button>
-        )}
-      </div>
+          ) : (
+            <video
+              ref={videoRef}
+              className={styles["work-video-card__video"]}
+              src={videoSrc}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload={preload}
+              aria-hidden="true"
+            />
+          )}
+          <span className={styles["work-video-card__play"]} aria-hidden="true">
+            Play
+          </span>
+        </div>
+      </button>
 
       <div className={styles["work-video-card__content"]}>
         <p className={styles["work-video-card__type"]}>{type}</p>

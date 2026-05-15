@@ -1,6 +1,6 @@
 import type { Dictionary } from "@/i18n/dictionaries";
 
-import { WorkVideoCard } from "./WorkVideoCard";
+import { WorkVideoGrid } from "./WorkVideoGrid.client";
 import styles from "./WorkSection.module.css";
 
 type Props = Readonly<{
@@ -21,20 +21,7 @@ export function WorkSection({ dict }: Props) {
           <p className={styles["work-section__intro"]}>{work.intro}</p>
         </header>
 
-        <div className={styles["work-section__grid"]}>
-          {work.items.map((item) => (
-            <WorkVideoCard
-              key={item.title}
-              title={item.title}
-              type={item.type}
-              description={item.description}
-              tags={item.tags}
-              posterSrc={item.posterSrc}
-              videoSrc={item.videoSrc}
-              alt={item.alt}
-            />
-          ))}
-        </div>
+        <WorkVideoGrid items={work.items} />
 
         <p className={styles["work-section__cta-wrap"]}>
           <a className={styles["work-section__cta-link"]} href={work.collaborationsCtaHref}>

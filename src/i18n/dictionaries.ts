@@ -8,6 +8,7 @@ export type WorkVideoItem = {
   posterSrc: string;
   videoSrc: string;
   alt: string;
+  videoAriaLabel: string;
 };
 
 export type ClientStoryItem = {
@@ -212,8 +213,9 @@ const dictionaries: Record<Locale, Dictionary> = {
             "High-energy pacing, sharp transitions and a premium training atmosphere.",
           tags: ["Hook", "Pacing", "Sound sync"],
           posterSrc: "/assets/work/fitness-reel-poster.svg",
-          videoSrc: "/assets/work/fitness-reel.mp4",
+          videoSrc: "/assets/videos/diamten/sinnvoll_final.mp4",
           alt: "Poster frame for a cinematic fitness reel",
+          videoAriaLabel: "Cinematic fitness reel editing example",
         },
         {
           title: "Brand spot — night drive",
@@ -221,8 +223,9 @@ const dictionaries: Record<Locale, Dictionary> = {
           description: "Moody visuals, clean cuts and atmosphere-driven product framing.",
           tags: ["Atmosphere", "Brand", "Motion"],
           posterSrc: "/assets/work/night-drive-poster.svg",
-          videoSrc: "/assets/work/night-drive.mp4",
+          videoSrc: "/assets/videos/podcast%20trailer/PT_FINAL.mp4",
           alt: "Poster frame for a night drive brand spot",
+          videoAriaLabel: "Brand trailer video editing with moody pacing",
         },
         {
           title: "Creator edit — performance",
@@ -230,8 +233,9 @@ const dictionaries: Record<Locale, Dictionary> = {
           description: "Fast structure, retention-focused timing and social-first delivery.",
           tags: ["Retention", "Social", "Performance"],
           posterSrc: "/assets/work/creator-performance-poster.svg",
-          videoSrc: "/assets/work/creator-performance.mp4",
+          videoSrc: "/assets/videos/random/ayo.mp4",
           alt: "Poster frame for a creator performance edit",
+          videoAriaLabel: "Social media reel editing proof",
         },
       ],
     },
@@ -405,8 +409,9 @@ const dictionaries: Record<Locale, Dictionary> = {
             "Energiegeladenes Pacing, präzise Übergänge und eine hochwertige Trainingsatmosphäre.",
           tags: ["Hook", "Pacing", "Sound Sync"],
           posterSrc: "/assets/work/fitness-reel-poster.svg",
-          videoSrc: "/assets/work/fitness-reel.mp4",
+          videoSrc: "/assets/videos/diamten/sinnvoll_final.mp4",
           alt: "Posterbild eines cinematic Fitness Reels",
+          videoAriaLabel: "Beispiel für ein cinematic Fitness-Reel-Editing",
         },
         {
           title: "Brand Spot — Night Drive",
@@ -414,8 +419,9 @@ const dictionaries: Record<Locale, Dictionary> = {
           description: "Moody Visuals, klare Cuts und atmosphärisches Product Framing.",
           tags: ["Atmosphäre", "Brand", "Motion"],
           posterSrc: "/assets/work/night-drive-poster.svg",
-          videoSrc: "/assets/work/night-drive.mp4",
+          videoSrc: "/assets/videos/podcast%20trailer/PT_FINAL.mp4",
           alt: "Posterbild eines Night Drive Brand Spots",
+          videoAriaLabel: "Brand-Trailer-Editing mit atmosphärischem Pacing",
         },
         {
           title: "Creator Edit — Performance",
@@ -423,8 +429,9 @@ const dictionaries: Record<Locale, Dictionary> = {
           description: "Schnelle Struktur, retention-fokussiertes Timing und social-first Delivery.",
           tags: ["Retention", "Social", "Performance"],
           posterSrc: "/assets/work/creator-performance-poster.svg",
-          videoSrc: "/assets/work/creator-performance.mp4",
+          videoSrc: "/assets/videos/random/ayo.mp4",
           alt: "Posterbild eines Creator Performance Edits",
+          videoAriaLabel: "Social-Media-Reel als Editing-Proof",
         },
       ],
     },

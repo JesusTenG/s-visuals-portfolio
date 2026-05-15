@@ -20,6 +20,30 @@
   transform: translateY(-2px);
 }
 
+.work-video-card__media-trigger {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: inherit;
+  border-radius: var(--sv-radius-ui);
+  transition:
+    transform var(--sv-transition-fast),
+    box-shadow var(--sv-transition-fast);
+}
+
+.work-video-card__media-trigger:hover {
+  transform: scale(1.015);
+}
+
+.work-video-card__media-trigger:focus-visible {
+  outline: 2px solid var(--color-accent-outline-focus);
+  outline-offset: 3px;
+}
+
 .work-video-card__media {
   position: relative;
   width: 100%;
@@ -27,6 +51,11 @@
   border-radius: var(--sv-radius-ui);
   overflow: hidden;
   border: 1px solid var(--color-border-faint);
+  transition: border-color var(--sv-transition-fast);
+}
+
+.work-video-card__media-trigger:hover .work-video-card__media {
+  border-color: var(--color-border-strong);
 }
 
 .work-video-card__poster-button {
@@ -50,7 +79,8 @@
   transition: transform var(--sv-transition-fast);
 }
 
-.work-video-card:hover .work-video-card__poster {
+.work-video-card__media-trigger:hover .work-video-card__poster,
+.work-video-card__media-trigger:focus-visible .work-video-card__poster {
   transform: scale(1.02);
 }
 
@@ -74,6 +104,14 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   box-shadow: var(--shadow-button-quiet);
+  opacity: 0;
+  transition: opacity var(--sv-transition-fast);
+  pointer-events: none;
+}
+
+.work-video-card__media-trigger:hover .work-video-card__play,
+.work-video-card__media-trigger:focus-visible .work-video-card__play {
+  opacity: 1;
 }
 
 .work-video-card__video {
@@ -83,6 +121,7 @@
   height: 100%;
   object-fit: cover;
   background: var(--color-bg-body-base);
+  pointer-events: none;
 }
 
 .work-video-card__content {
@@ -145,7 +184,13 @@
     transform: none;
   }
 
-  .work-video-card:hover .work-video-card__poster {
+  .work-video-card__media-trigger:hover .work-video-card__poster,
+  .work-video-card__media-trigger:focus-visible .work-video-card__poster {
     transform: none;
+  }
+
+  .work-video-card__media-trigger:hover .work-video-card__play,
+  .work-video-card__media-trigger:focus-visible .work-video-card__play {
+    opacity: 1;
   }
 }
