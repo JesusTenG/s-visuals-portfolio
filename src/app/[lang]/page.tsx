@@ -5,6 +5,7 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { Navbar } from "@/components/layout/Navbar";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { WorkSection } from "@/components/sections/work/WorkSection";
+import { ImpactSnapshotSection } from "@/components/sections/impact-snapshot/ImpactSnapshotSection";
 import { FocusSection } from "@/components/sections/FocusSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { ProcessSection } from "@/components/sections/ProcessSection";
@@ -28,7 +29,9 @@ export default async function LangHomePage({ params }: Props) {
       <Navbar locale={locale} dict={dict} />
       <main className="flex-1">
         <HeroSection dict={dict} />
+        <ImpactSnapshotSection dict={dict} locale={locale} />
         <WorkSection dict={dict} />
+
         <FocusSection dict={dict} />
         <ServicesSection dict={dict} />
         <ProcessSection dict={dict} />

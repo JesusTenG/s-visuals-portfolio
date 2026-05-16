@@ -20,6 +20,16 @@ export type ClientStoryItem = {
   alt: string;
 };
 
+export type ImpactSnapshotCardIcon = "eye" | "heart" | "message" | "share2";
+
+export type ImpactSnapshotCardDict = {
+  label: string;
+  targetValue: number;
+  decimals: number;
+  suffix: string;
+  icon: ImpactSnapshotCardIcon;
+};
+
 export type Dictionary = {
   meta: {
     title: string;
@@ -67,8 +77,16 @@ export type Dictionary = {
     title: string;
     intro: string;
     items: WorkVideoItem[];
+    moreItems: WorkVideoItem[];
+    viewMoreWork: string;
+    showLessWork: string;
     collaborationsCtaLabel: string;
     collaborationsCtaHref: string;
+  };
+  impactSnapshot: {
+    ariaLabel: string;
+    statementLines: readonly [string, string, string];
+    cards: ImpactSnapshotCardDict[];
   };
   clientStories: {
     eyebrow: string;
@@ -205,6 +223,8 @@ const dictionaries: Record<Locale, Dictionary> = {
         "A first look at pacing, rhythm and visual direction across social edits, brand content and creator-focused videos.",
       collaborationsCtaLabel: "View deeper collaborations",
       collaborationsCtaHref: "#collaborations",
+      viewMoreWork: "View more work",
+      showLessWork: "Show less",
       items: [
         {
           title: "Fitness — cinematic reel",
@@ -236,6 +256,142 @@ const dictionaries: Record<Locale, Dictionary> = {
           videoSrc: "/assets/videos/random/ayo.mp4",
           alt: "Poster frame for a creator performance edit",
           videoAriaLabel: "Social media reel editing proof",
+        },
+      ],
+      moreItems: [
+        {
+          title: "Diamond cut — energy edit",
+          type: "Social Reel",
+          description: "Punchy rhythm, clean structure and a bold visual attitude.",
+          tags: ["Energy", "Pacing", "Structure"],
+          posterSrc: "/assets/work/fitness-reel-poster.svg",
+          videoSrc: "/assets/videos/diamten/bracen.mp4",
+          alt: "Poster frame for a high-energy diamond-cut reel",
+          videoAriaLabel: "High-energy social reel editing proof",
+        },
+        {
+          title: "Campaign moment — layered build",
+          type: "Brand Moment",
+          description: "Layered reveals and controlled tension for a premium campaign feel.",
+          tags: ["Layers", "Tension", "Brand"],
+          posterSrc: "/assets/work/night-drive-poster.svg",
+          videoSrc: "/assets/videos/diamten/diamanten_2.mp4",
+          alt: "Poster frame for a layered brand moment edit",
+          videoAriaLabel: "Brand moment edit with layered pacing",
+        },
+        {
+          title: "Portrait performance — tight framing",
+          type: "Creator Cut",
+          description: "Performance-first framing with social-native pacing.",
+          tags: ["Framing", "Creator", "Pacing"],
+          posterSrc: "/assets/work/creator-performance-poster.svg",
+          videoSrc: "/assets/videos/diamten/mario%20festhalten%20neu.mp4",
+          alt: "Poster frame for a portrait performance edit",
+          videoAriaLabel: "Creator portrait performance editing example",
+        },
+        {
+          title: "Mood study — contrast & tone",
+          type: "Atmospheric Edit",
+          description: "Contrast-driven tone shaping with deliberate pacing.",
+          tags: ["Tone", "Contrast", "Mood"],
+          posterSrc: "/assets/work/fitness-reel-poster.svg",
+          videoSrc: "/assets/videos/diamten/negative%20final.mp4",
+          alt: "Poster frame for a moody contrast-driven edit",
+          videoAriaLabel: "Atmospheric editing with contrast and tone",
+        },
+        {
+          title: "Series trailer — hook forward",
+          type: "Trailer",
+          description: "Hook-first structure built for retention and clarity.",
+          tags: ["Hook", "Trailer", "Retention"],
+          posterSrc: "/assets/work/night-drive-poster.svg",
+          videoSrc: "/assets/videos/podcast%20trailer/PODCAST_TRAILER.mp4",
+          alt: "Poster frame for a series trailer edit",
+          videoAriaLabel: "Series trailer editing with hook-forward pacing",
+        },
+        {
+          title: "Weekly drop — fast turnaround",
+          type: "Weekly Edit",
+          description: "Tight turnaround pacing with consistent visual language.",
+          tags: ["Weekly", "Speed", "Consistency"],
+          posterSrc: "/assets/work/creator-performance-poster.svg",
+          videoSrc: "/assets/videos/podcast%20trailer/Podvast10.05.mp4",
+          alt: "Poster frame for a weekly drop edit",
+          videoAriaLabel: "Weekly content drop editing example",
+        },
+        {
+          title: "Episode teaser — cliffhanger rhythm",
+          type: "Teaser",
+          description: "Micro-tension and rhythm tuned for a teaser format.",
+          tags: ["Teaser", "Rhythm", "Tension"],
+          posterSrc: "/assets/work/fitness-reel-poster.svg",
+          videoSrc: "/assets/videos/podcast%20trailer/trailer%20f15.mp4",
+          alt: "Poster frame for an episode teaser edit",
+          videoAriaLabel: "Episode teaser editing with cliffhanger rhythm",
+        },
+        {
+          title: "Long-form cut — narrative arc",
+          type: "Long-form",
+          description: "Macro pacing and chapter-like structure for longer storytelling.",
+          tags: ["Narrative", "Arc", "Pacing"],
+          posterSrc: "/assets/work/night-drive-poster.svg",
+          videoSrc: "/assets/videos/podcast%20trailer/trailer%20folge%2014.mp4",
+          alt: "Poster frame for a long-form narrative edit",
+          videoAriaLabel: "Long-form narrative editing example",
+        },
+        {
+          title: "Finance explain — clarity first",
+          type: "Explain Edit",
+          description: "Clarity-first pacing for information-heavy visuals.",
+          tags: ["Clarity", "Explain", "Structure"],
+          posterSrc: "/assets/work/creator-performance-poster.svg",
+          videoSrc: "/assets/videos/random/investment.mp4",
+          alt: "Poster frame for a finance explain edit",
+          videoAriaLabel: "Finance content editing with clarity-first pacing",
+        },
+        {
+          title: "Food spot — playful rhythm",
+          type: "Product Spot",
+          description: "Playful rhythm and tight product beats for social delivery.",
+          tags: ["Product", "Rhythm", "Social"],
+          posterSrc: "/assets/work/fitness-reel-poster.svg",
+          videoSrc: "/assets/videos/random/mealplans%20leiser.mp4",
+          alt: "Poster frame for a playful food product edit",
+          videoAriaLabel: "Food product spot editing with playful rhythm",
+        },
+      ],
+    },
+    impactSnapshot: {
+      ariaLabel: "Engagement metrics — likes, views, comments and shares",
+      statementLines: ["More likes.", "More views.", "More attention."] as const,
+      cards: [
+        {
+          label: "Likes",
+          targetValue: 892,
+          decimals: 0,
+          suffix: "K",
+          icon: "heart",
+        },
+        {
+          label: "Views",
+          targetValue: 1.24,
+          decimals: 2,
+          suffix: "M",
+          icon: "eye",
+        },
+        {
+          label: "Comments",
+          targetValue: 24.5,
+          decimals: 1,
+          suffix: "K",
+          icon: "message",
+        },
+        {
+          label: "Shares",
+          targetValue: 9.4,
+          decimals: 1,
+          suffix: "K",
+          icon: "share2",
         },
       ],
     },
@@ -401,6 +557,8 @@ const dictionaries: Record<Locale, Dictionary> = {
         "Ein erster Blick auf Pacing, Rhythmus und visuelle Richtung in Social Edits, Brand Content und Creator-Videos.",
       collaborationsCtaLabel: "Mehr Collaborations",
       collaborationsCtaHref: "#collaborations",
+      viewMoreWork: "Mehr Work anzeigen",
+      showLessWork: "Weniger anzeigen",
       items: [
         {
           title: "Fitness — Cinematic Reel",
@@ -432,6 +590,142 @@ const dictionaries: Record<Locale, Dictionary> = {
           videoSrc: "/assets/videos/random/ayo.mp4",
           alt: "Posterbild eines Creator Performance Edits",
           videoAriaLabel: "Social-Media-Reel als Editing-Proof",
+        },
+      ],
+      moreItems: [
+        {
+          title: "Diamond Cut — Energy Edit",
+          type: "Social Reel",
+          description: "Direkter Rhythmus, klare Struktur und eine starke visuelle Haltung.",
+          tags: ["Energy", "Pacing", "Struktur"],
+          posterSrc: "/assets/work/fitness-reel-poster.svg",
+          videoSrc: "/assets/videos/diamten/bracen.mp4",
+          alt: "Vorschau eines energiegeladenen Diamond-Cut-Reels",
+          videoAriaLabel: "Social-Reel-Proof mit hoher Energie",
+        },
+        {
+          title: "Campaign Moment — Layered Build",
+          type: "Brand Moment",
+          description: "Geschichtete Reveals und kontrollierte Spannung für Premium-Feeling.",
+          tags: ["Layers", "Spannung", "Brand"],
+          posterSrc: "/assets/work/night-drive-poster.svg",
+          videoSrc: "/assets/videos/diamten/diamanten_2.mp4",
+          alt: "Vorschau eines geschichteten Brand-Moment-Edits",
+          videoAriaLabel: "Brand-Moment-Edit mit geschichtetem Pacing",
+        },
+        {
+          title: "Portrait Performance — Tight Framing",
+          type: "Creator Cut",
+          description: "Performance-first Framing mit social-nativem Pacing.",
+          tags: ["Framing", "Creator", "Pacing"],
+          posterSrc: "/assets/work/creator-performance-poster.svg",
+          videoSrc: "/assets/videos/diamten/mario%20festhalten%20neu.mp4",
+          alt: "Vorschau eines Portrait-Performance-Edits",
+          videoAriaLabel: "Creator-Portrait-Performance-Editing",
+        },
+        {
+          title: "Mood Study — Kontrast & Ton",
+          type: "Atmospheric Edit",
+          description: "Kontrastgetriebene Tonführung mit bewusstem Pacing.",
+          tags: ["Ton", "Kontrast", "Mood"],
+          posterSrc: "/assets/work/fitness-reel-poster.svg",
+          videoSrc: "/assets/videos/diamten/negative%20final.mp4",
+          alt: "Vorschau eines moody Kontrast-Edits",
+          videoAriaLabel: "Atmosphärisches Editing mit Kontrast und Ton",
+        },
+        {
+          title: "Serien-Trailer — Hook forward",
+          type: "Trailer",
+          description: "Hook-first Struktur für Retention und klare Lesbarkeit.",
+          tags: ["Hook", "Trailer", "Retention"],
+          posterSrc: "/assets/work/night-drive-poster.svg",
+          videoSrc: "/assets/videos/podcast%20trailer/PODCAST_TRAILER.mp4",
+          alt: "Vorschau eines Serien-Trailer-Edits",
+          videoAriaLabel: "Serien-Trailer-Editing mit Hook-forward-Pacing",
+        },
+        {
+          title: "Weekly Drop — schnelle Turnaround",
+          type: "Weekly Edit",
+          description: "Straffes Turnaround-Pacing mit konsistenter Bildsprache.",
+          tags: ["Weekly", "Speed", "Konsistenz"],
+          posterSrc: "/assets/work/creator-performance-poster.svg",
+          videoSrc: "/assets/videos/podcast%20trailer/Podvast10.05.mp4",
+          alt: "Vorschau eines Weekly-Drop-Edits",
+          videoAriaLabel: "Weekly-Content-Drop als Editing-Beispiel",
+        },
+        {
+          title: "Episode Teaser — Cliffhanger-Rhythmus",
+          type: "Teaser",
+          description: "Mikro-Spannung und Rhythmus im Teaser-Format.",
+          tags: ["Teaser", "Rhythmus", "Spannung"],
+          posterSrc: "/assets/work/fitness-reel-poster.svg",
+          videoSrc: "/assets/videos/podcast%20trailer/trailer%20f15.mp4",
+          alt: "Vorschau eines Episode-Teaser-Edits",
+          videoAriaLabel: "Episode-Teaser mit Cliffhanger-Rhythmus",
+        },
+        {
+          title: "Long-form Cut — narrative Arc",
+          type: "Long-form",
+          description: "Makro-Pacing und kapitelartige Struktur für längere Stories.",
+          tags: ["Narrativ", "Arc", "Pacing"],
+          posterSrc: "/assets/work/night-drive-poster.svg",
+          videoSrc: "/assets/videos/podcast%20trailer/trailer%20folge%2014.mp4",
+          alt: "Vorschau eines Long-form-Narrativ-Edits",
+          videoAriaLabel: "Long-form-Narrativ-Editing",
+        },
+        {
+          title: "Finance Explain — Klarheit zuerst",
+          type: "Explain Edit",
+          description: "Klarheits-first Pacing für informationsreiche Visuals.",
+          tags: ["Klarheit", "Explain", "Struktur"],
+          posterSrc: "/assets/work/creator-performance-poster.svg",
+          videoSrc: "/assets/videos/random/investment.mp4",
+          alt: "Vorschau eines Finance-Explain-Edits",
+          videoAriaLabel: "Finance-Content-Editing mit Klarheits-Fokus",
+        },
+        {
+          title: "Food Spot — spielerischer Rhythmus",
+          type: "Product Spot",
+          description: "Spielerischer Rhythmus und präzise Produkt-Beats für Social.",
+          tags: ["Produkt", "Rhythmus", "Social"],
+          posterSrc: "/assets/work/fitness-reel-poster.svg",
+          videoSrc: "/assets/videos/random/mealplans%20leiser.mp4",
+          alt: "Vorschau eines spielerischen Food-Produkt-Edits",
+          videoAriaLabel: "Food-Produkt-Spot mit spielerischem Rhythmus",
+        },
+      ],
+    },
+    impactSnapshot: {
+      ariaLabel: "Engagement-Kennzahlen — Likes, Aufrufe, Kommentare und Shares",
+      statementLines: ["Mehr Likes.", "Mehr Views.", "Mehr Aufmerksamkeit."] as const,
+      cards: [
+        {
+          label: "Likes",
+          targetValue: 892,
+          decimals: 0,
+          suffix: "K",
+          icon: "heart",
+        },
+        {
+          label: "Aufrufe",
+          targetValue: 1.24,
+          decimals: 2,
+          suffix: "M",
+          icon: "eye",
+        },
+        {
+          label: "Kommentare",
+          targetValue: 24.5,
+          decimals: 1,
+          suffix: "K",
+          icon: "message",
+        },
+        {
+          label: "Shares",
+          targetValue: 9.4,
+          decimals: 1,
+          suffix: "K",
+          icon: "share2",
         },
       ],
     },

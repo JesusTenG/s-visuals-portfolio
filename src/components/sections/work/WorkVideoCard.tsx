@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import styles from "./WorkVideoCard.module.css";
 
@@ -14,8 +14,7 @@ export type WorkVideoCardProps = Readonly<{
   videoSrc: string;
   alt: string;
   videoAriaLabel: string;
-  preload?: "none" | "metadata";
-  isPreviewPaused: boolean;
+  isLightboxOpen: boolean;
   onOpen: () => void;
 }>;
 
@@ -28,74 +27,96 @@ export function WorkVideoCard({
   videoSrc,
   alt,
   videoAriaLabel,
-  preload = "none",
-  isPreviewPaused,
+  isLightboxOpen,
   onOpen,
 }: WorkVideoCardProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [canHoverPreview, setCanHoverPreview] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const syncPreference = () => setPrefersReducedMotion(mediaQuery.matches);
+    const hoverMq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const reducedMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => {
+      setCanHoverPreview(hoverMq.matches && !reducedMq.matches);
+    };
+    sync();
+    hoverMq.addEventListener("change", sync);
+    reducedMq.addEventListener("change", sync);
+    return () => {
+      hoverMq.removeEventListener("change", sync);
+      reducedMq.removeEventListener("change", sync);
+    };
+  }, []);
 
-    syncPreference();
-    mediaQuery.addEventListener("change", syncPreference);
-    return () => mediaQuery.removeEventListener("change", syncPreference);
+  const stopPreview = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.pause();
+    video.currentTime = 0;
   }, []);
 
   useEffect(() => {
+    if (!canHoverPreview) return;
+    if (isLightboxOpen) stopPreview();
+  }, [canHoverPreview, isLightboxOpen, stopPreview]);
+
+  useEffect(() => {
     const video = videoRef.current;
-    if (!video || prefersReducedMotion) return;
+    if (!video || !canHoverPreview) return;
 
-    if (isPreviewPaused) {
+    const syncPausedFrame = () => {
       video.pause();
-      return;
-    }
+      video.currentTime = 0;
+    };
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          void video.play().catch(() => {});
-          return;
-        }
-        video.pause();
-      },
-      { threshold: 0.35 },
-    );
+    video.addEventListener("loadeddata", syncPausedFrame);
+    if (video.readyState >= 2) syncPausedFrame();
 
-    observer.observe(video);
-    return () => observer.disconnect();
-  }, [prefersReducedMotion, videoSrc, isPreviewPaused]);
+    return () => {
+      video.removeEventListener("loadeddata", syncPausedFrame);
+    };
+  }, [canHoverPreview, videoSrc]);
+
+  const onMediaEnter = () => {
+    if (!canHoverPreview || isLightboxOpen) return;
+    void videoRef.current?.play().catch(() => {});
+  };
+
+  const onMediaLeave = () => {
+    stopPreview();
+  };
 
   return (
-    <article className={styles["work-video-card"]}>
+    <article className={styles["work-video-card"]} data-work-reveal-card>
       <button
         type="button"
         className={styles["work-video-card__media-trigger"]}
         aria-label={`Open video: ${videoAriaLabel}`}
         onClick={onOpen}
+        onMouseEnter={onMediaEnter}
+        onMouseLeave={onMediaLeave}
       >
         <div className={styles["work-video-card__media"]}>
-          {prefersReducedMotion ? (
+          {canHoverPreview ? (
+            <video
+              ref={videoRef}
+              key={videoSrc}
+              className={styles["work-video-card__video-preview"]}
+              src={videoSrc}
+              poster={posterSrc}
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-hidden="true"
+            />
+          ) : (
             <Image
-              className={styles["work-video-card__poster"]}
+              className={styles["work-video-card__poster-layer"]}
               src={posterSrc}
               alt={alt}
               fill
               sizes="(max-width: 768px) 92vw, (max-width: 980px) 45vw, 30vw"
-            />
-          ) : (
-            <video
-              ref={videoRef}
-              className={styles["work-video-card__video"]}
-              src={videoSrc}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload={preload}
-              aria-hidden="true"
             />
           )}
           <span className={styles["work-video-card__play"]} aria-hidden="true">
