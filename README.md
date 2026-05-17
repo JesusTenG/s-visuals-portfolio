@@ -6,15 +6,11 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+**LAN / phone testing:** start with `npm run dev:lan`, then open `http://<your-lan-ip>:3000` (e.g. `http://192.168.0.45:3000`). If your IP differs, add it to `allowedDevOrigins` in `next.config.ts`.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 

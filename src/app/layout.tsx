@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Bebas_Neue, Geist_Mono, Inter } from "next/font/google";
+
+import { SmoothScrollHandler } from "@/components/layout/SmoothScrollHandler.client";
+
 import "./globals.css";
 
 /** UI / body — navbar, labels, buttons (replaces previous Geist Sans). */
@@ -37,7 +40,10 @@ export default function RootLayout({
       lang="en"
       className={`dark ${inter.variable} ${bebasNeue.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <SmoothScrollHandler />
+        {children}
+      </body>
     </html>
   );
 }

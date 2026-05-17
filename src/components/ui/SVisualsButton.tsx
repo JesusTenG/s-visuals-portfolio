@@ -28,19 +28,29 @@ function isLinkProps(p: Props): p is LinkProps {
 }
 
 export default function SVisualsButton(props: Props) {
-  const content = props.children ?? props.label ?? "";
+  const {
+    label: _label,
+    children,
+    ariaLabel,
+    className,
+    variant,
+    showIcon: showIconProp,
+    ...domProps
+  } = props;
+
+  const content = children ?? _label ?? "";
   const variantClass =
-    props.variant === "quiet" ? styles["svisuals-button--quiet"] : styles["svisuals-button--primary"];
-  const btnClass = `${styles["svisuals-button"]} ${variantClass} ${props.className ?? ""}`.trim();
-  const showIcon = props.showIcon ?? props.variant === "quiet";
+    variant === "quiet" ? styles["svisuals-button--quiet"] : styles["svisuals-button--primary"];
+  const btnClass = `${styles["svisuals-button"]} ${variantClass} ${className ?? ""}`.trim();
+  const showIcon = showIconProp ?? variant === "quiet";
 
   const computedAriaLabel =
-    props.ariaLabel ?? (typeof content === "string" ? content : undefined);
+    ariaLabel ?? (typeof content === "string" ? content : undefined);
 
   if (isLinkProps(props)) {
-    const { href, ...rest } = props;
+    const { href, ...anchorProps } = domProps as Omit<LinkProps, keyof CommonProps>;
     return (
-      <a href={href} {...rest} className={btnClass} aria-label={computedAriaLabel}>
+      <a href={href} {...anchorProps} className={btnClass} aria-label={computedAriaLabel}>
         <span className={styles["svisuals-button__label"]}>{content}</span>
         {showIcon ? (
           <svg
@@ -61,14 +71,14 @@ export default function SVisualsButton(props: Props) {
     );
   }
 
-  const { href: _href, ...rest } = props;
+  const { href: _href, ...buttonProps } = domProps as Omit<NativeButtonProps, keyof CommonProps>;
   void _href;
   return (
     <button
-      {...rest}
+      {...buttonProps}
       className={btnClass}
       aria-label={computedAriaLabel}
-      type={(rest as ButtonHTMLAttributes<HTMLButtonElement>).type ?? "button"}
+      type={buttonProps.type ?? "button"}
     >
       <span className={styles["svisuals-button__label"]}>{content}</span>
       {showIcon ? (

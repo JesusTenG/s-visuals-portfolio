@@ -551,6 +551,7 @@
   html {
     font-family: var(--font-ui);
     height: 100%;
+    scroll-behavior: smooth;
   }
 
   body {
