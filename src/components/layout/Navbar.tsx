@@ -137,12 +137,6 @@ export function Navbar({ locale, dict }: Props) {
           </div>
 
           <div className={styles["navbar-mobile-actions"]}>
-            <div
-              className={styles["navbar-mobile-lang"]}
-              onClick={(event) => event.stopPropagation()}
-            >
-              {langToggle}
-            </div>
             <button
               type="button"
               className={styles["navbar-mobile-menu-toggle"]}
@@ -169,6 +163,7 @@ export function Navbar({ locale, dict }: Props) {
         dict={dict}
         items={mobileNavItems}
         panelId={MOBILE_NAV_PANEL_ID}
+        langToggle={langToggle}
       />
     </header>
   );

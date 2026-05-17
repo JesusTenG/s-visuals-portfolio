@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, type ReactNode } from "react";
 import { Instagram } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -23,6 +23,7 @@ type Props = Readonly<{
   dict: Dictionary;
   items: readonly NavItem[];
   panelId: string;
+  langToggle: ReactNode;
 }>;
 
 const INSTAGRAM_URL = "https://www.instagram.com/simon__saad/";
@@ -36,6 +37,7 @@ export function MobileNavMenu({
   dict,
   items,
   panelId,
+  langToggle,
 }: Props) {
   const pathname = usePathname();
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
@@ -121,6 +123,12 @@ export function MobileNavMenu({
             />
             <span className={styles["navbar-mobile-instagram-label"]}>{INSTAGRAM_HANDLE}</span>
           </a>
+          <div
+            className={styles["navbar-mobile-footer-lang"]}
+            onClick={(event) => event.stopPropagation()}
+          >
+            {langToggle}
+          </div>
         </div>
       </div>
     </div>
