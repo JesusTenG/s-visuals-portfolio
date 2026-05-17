@@ -1,12 +1,12 @@
-/* KPI metrics strip (between work & focus) */
-.section {
+/* Attention curve — thin editorial proof strip */
+.kpiSection {
   position: relative;
-  padding-block: clamp(2.35rem, 5vw, 3.15rem);
+  padding-block: clamp(2rem, 4.5vw, 3.25rem);
   border-top: 1px solid var(--color-border-faint);
   color: var(--color-text-primary);
 }
 
-.shell {
+.kpiShell {
   width: 100%;
   max-width: min(1520px, 100%);
   margin-inline: auto;
@@ -14,49 +14,56 @@
 }
 
 @media (min-width: 520px) {
-  .shell {
+  .kpiShell {
     padding-inline: 1.5rem;
   }
 }
 
-.panel {
-  padding: clamp(1.65rem, 3.4vw, 2.5rem);
+.kpiInner {
+  display: grid;
+  align-items: center;
+  gap: clamp(1.5rem, 3.5vw, 2.75rem);
+  padding: clamp(1.15rem, 2.2vw, 1.65rem) clamp(1.1rem, 2.5vw, 1.75rem);
   border-radius: var(--sv-radius-ui);
   border: 1px solid color-mix(in srgb, var(--color-white) 5%, transparent);
   background:
     linear-gradient(
       168deg,
-      color-mix(in srgb, var(--color-white) 4.5%, transparent) 0%,
-      transparent 38%,
-      color-mix(in srgb, var(--color-gray-975) 35%, transparent) 100%
+      color-mix(in srgb, var(--color-white) 4%, transparent) 0%,
+      transparent 42%,
+      color-mix(in srgb, var(--color-gray-975) 32%, transparent) 100%
     ),
-    color-mix(in srgb, var(--color-gray-925) 74%, transparent);
-  backdrop-filter: blur(20px);
+    color-mix(in srgb, var(--color-gray-925) 72%, transparent);
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--color-purple-500) 6%, transparent),
-    0 24px 48px -40px color-mix(in srgb, var(--color-purple-500) 12%, transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--color-white) 4.5%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--color-purple-500) 5%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--color-white) 4%, transparent);
+  -webkit-backdrop-filter: blur(16px);
 }
 
-.layout {
-  display: grid;
-  gap: clamp(1.5rem, 3vw, 2.5rem);
-  align-items: center;
-}
-
-@media (min-width: 1024px) {
-  .layout {
-    grid-template-columns: minmax(320px, 0.85fr) minmax(640px, 1.15fr);
-    column-gap: clamp(1.75rem, 3.2vw, 2.75rem);
+@supports (backdrop-filter: blur(1px)) {
+  .kpiInner {
+    backdrop-filter: blur(16px);
   }
 }
 
-.copy {
-  width: 100%;
+@media (min-width: 900px) {
+  .kpiInner {
+    grid-template-columns: minmax(220px, 0.48fr) minmax(0, 1.52fr);
+    gap: clamp(1.75rem, 4vw, 3.25rem);
+  }
+}
+
+.kpiCopy {
   min-width: 0;
 }
 
-.statementHeading {
+@media (max-width: 899px) {
+  .kpiCopy {
+    text-align: center;
+  }
+}
+
+.kpiHeadline {
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -66,222 +73,252 @@
   letter-spacing: -0.045em;
 }
 
-.statementLine {
-  display: block;
-  font-size: clamp(2rem, 4.8vw, 3.35rem);
-  color: var(--color-text-primary);
-  opacity: 0;
-  transform: translateY(14px);
-  transition:
-    opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1),
-    transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.statementLine:nth-child(1) {
-  transition-delay: 0.05s;
-}
-
-.statementLine:nth-child(2) {
-  transition-delay: 0.11s;
-}
-
-.statementLine:nth-child(3) {
-  transition-delay: 0.17s;
-}
-
-.statementLineAccent {
-  color: var(--color-purple-500);
-}
-
-.section--revealed .statementLine {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.kpiGrid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: clamp(1rem, 2vw, 1.25rem);
-  grid-template-columns: 1fr;
-  align-items: stretch;
-}
-
-@media (min-width: 520px) {
-  .kpiGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (max-width: 899px) {
+  .kpiHeadline {
+    align-items: center;
   }
 }
 
-.tile {
-  --tile-stagger: 0ms;
-  position: relative;
-  overflow: visible;
-  isolation: isolate;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  min-height: clamp(7.25rem, 12vw, 9rem);
-  padding: clamp(1.2rem, 2.4vw, 1.55rem);
-  border-radius: calc(var(--sv-radius-ui) - 2px);
-  border: 1px solid color-mix(in srgb, var(--color-white) 7%, transparent);
-  background: color-mix(in srgb, var(--color-gray-950) 56%, transparent);
+.kpiHeadlineLine {
+  display: block;
+  white-space: nowrap;
+  font-size: clamp(1.65rem, 4.2vw, 2.75rem);
+  color: var(--color-text-primary);
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(10px);
   transition:
-    opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1),
-    transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
-  transition-delay: calc(0.32s + var(--tile-stagger));
+    opacity 0.45s cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-.section--revealed .tile {
+.kpiHeadlineLine:nth-child(1) {
+  transition-delay: 0.04s;
+}
+
+.kpiHeadlineLine:nth-child(2) {
+  transition-delay: 0.1s;
+}
+
+.kpiHeadlineLine:nth-child(3) {
+  transition-delay: 0.16s;
+}
+
+.kpiHeadlineLineAccent {
+  color: var(--color-purple-500);
+}
+
+.kpiSection--revealed .kpiHeadlineLine {
   opacity: 1;
   transform: translateY(0);
 }
 
-.tileMain {
+.kpiCurveArea {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.65rem, 1.8vw, 1rem);
+  width: 100%;
+  min-width: 0;
+}
+
+.kpiCurveChart {
   position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  gap: 0;
-  min-width: 0;
+  width: 100%;
+  height: clamp(6.5rem, 16vw, 9.5rem);
+  min-height: clamp(6.5rem, 16vw, 9.5rem);
+  overflow: visible;
+}
+
+.kpiCurveWrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   min-height: 0;
+  overflow: visible;
 }
 
-.tileRow {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: clamp(1rem, 2.2vw, 1.35rem);
-  width: 100%;
-  min-width: 0;
-}
-
-.tileIconWrap {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: clamp(3.25rem, 5.5vw, 4rem);
-  height: clamp(3.25rem, 5.5vw, 4rem);
-  border-radius: calc(var(--sv-radius-ui) - 4px);
-  color: color-mix(in srgb, var(--color-purple-500) 92%, var(--color-text-muted));
-  background: color-mix(in srgb, var(--color-purple-500) 11%, transparent);
-  border: 1px solid color-mix(in srgb, var(--color-purple-500) 26%, transparent);
-}
-
-.tileIconSvg {
-  width: clamp(1.5rem, 2.6vw, 1.85rem);
-  height: clamp(1.5rem, 2.6vw, 1.85rem);
-  display: block;
-}
-
-.tileMeta {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  min-width: 0;
-  flex: 1 1 auto;
-}
-
-.tileValueRow {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: clamp(0.35rem, 1.2vw, 0.65rem);
-  width: 100%;
-  min-width: 0;
-}
-
-.tileLabel {
-  margin: 0;
-  font-size: 0.6875rem;
-  font-weight: 650;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--color-purple-500) 55%, var(--color-text-muted));
-  line-height: 1.2;
-}
-
-.tileValue {
-  margin: 0;
-  flex-shrink: 0;
-  font-size: clamp(1.85rem, 3.2vw, 2.45rem);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.04em;
-  font-variant-numeric: tabular-nums;
-  color: var(--color-text-primary);
-}
-
-.tileSparklineWrap {
-  flex: 1 1 0;
-  min-width: clamp(3.25rem, 12vw, 5rem);
-  max-width: min(7.25rem, 38%);
-  height: clamp(2rem, 3.8vw, 2.55rem);
-  flex-shrink: 1;
-}
-
-.tileSparklineSvg {
+.kpiCurveSvg {
   display: block;
   width: 100%;
   height: 100%;
   overflow: visible;
-  color: color-mix(in srgb, var(--color-purple-500) 88%, var(--color-text-muted));
 }
 
-.tileSparklinePath {
+.kpiCurvePath {
   fill: none;
-  stroke: currentColor;
-  stroke-width: 2.35;
+  stroke: #8659ce;
+  stroke-width: 3;
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--color-purple-500) 38%, transparent));
-  transition: stroke-dashoffset 1.15s cubic-bezier(0.22, 0.82, 0.28, 1);
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--color-purple-500) 38%, transparent));
 }
 
-.tileSparklineDot {
-  fill: currentColor;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  transition-delay: 0.95s;
+.kpiCurveWrap--drawing .kpiCurvePath {
+  animation: kpiCurveDraw var(--curve-duration, 2200ms) ease-out forwards;
 }
 
-.tile--spark-drawn .tileSparklinePath {
+.kpiCurveWrap--drawn .kpiCurvePath,
+.kpiCurveWrap--instant .kpiCurvePath {
   stroke-dashoffset: 0;
+  animation: none;
 }
 
-.tile--spark-drawn .tileSparklineDot {
+@keyframes kpiCurveDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.kpiCurveArrowWrap {
+  pointer-events: none;
+}
+
+.kpiCurveArrowHead {
+  fill: none;
+  stroke: #8659ce;
+  stroke-width: 3.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--color-purple-500) 42%, transparent));
+}
+
+.kpiCurveWrap--drawing .kpiCurveArrowHead {
+  animation: kpiArrowDraw var(--arrow-duration, 320ms) ease-out forwards;
+  animation-delay: var(--arrow-delay, 1760ms);
+}
+
+.kpiCurveWrap--drawn .kpiCurveArrowHead,
+.kpiCurveWrap--instant .kpiCurveArrowHead {
+  stroke-dashoffset: 0;
+  animation: none;
+}
+
+@keyframes kpiArrowDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.kpiNodesRow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.5rem, 2vw, 1.25rem);
+  align-items: end;
+  padding-top: clamp(0.35rem, 1vw, 0.5rem);
+  border-top: 1px solid color-mix(in srgb, var(--color-white) 6%, transparent);
+}
+
+.kpiNode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  min-width: 0;
+  text-align: center;
+  transform: translateY(8px) scale(0.94);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.kpiNode--visible {
   opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.kpiIcon {
+  display: block;
+  width: clamp(1.35rem, 2.4vw, 1.65rem);
+  height: clamp(1.35rem, 2.4vw, 1.65rem);
+  color: color-mix(in srgb, var(--color-purple-500) 94%, var(--color-text-muted));
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--color-purple-500) 35%, transparent));
+}
+
+.kpiLabel {
+  font-size: 0.625rem;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-purple-500) 52%, var(--color-text-muted));
+  line-height: 1.2;
+}
+
+.kpiValue {
+  font-size: clamp(1.15rem, 2.4vw, 1.65rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-primary);
+}
+
+@media (max-width: 899px) {
+  .kpiCurveChart {
+    height: clamp(5.5rem, 14vw, 7.5rem);
+    min-height: clamp(5.5rem, 14vw, 7.5rem);
+  }
+
+  .kpiValue {
+    font-size: clamp(1rem, 3.6vw, 1.35rem);
+  }
+}
+
+@media (max-width: 380px) {
+  .kpiHeadlineLine {
+    font-size: clamp(1.35rem, 7.5vw, 1.65rem);
+  }
+}
+
+@media (max-width: 479px) {
+  .kpiNodesRow {
+    gap: 0.35rem;
+  }
+
+  .kpiLabel {
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+  }
+
+  .kpiValue {
+    font-size: clamp(0.9rem, 4.5vw, 1.1rem);
+  }
+
+  .kpiIcon {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .statementLine {
+  .kpiHeadlineLine {
     opacity: 1;
     transform: none;
     transition: none;
   }
 
-  .tile {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  .tileSparklinePath {
+  .kpiCurvePath {
     stroke-dashoffset: 0;
-    transition: none;
+    animation: none;
   }
 
-  .tileSparklineDot {
+  .kpiCurveArrowHead {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+
+  .kpiNode {
     opacity: 1;
+    transform: none;
     transition: none;
   }
 }
