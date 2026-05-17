@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Eye, Heart, MessageCircle, Share2 } from "lucide-react";
+import { Eye, Heart, MessageCircle, Send } from "lucide-react";
 
 import type { Locale } from "@/i18n/config";
 import type { Dictionary, ImpactSnapshotCardDict, ImpactSnapshotCardIcon } from "@/i18n/dictionaries";
@@ -50,7 +50,7 @@ function ImpactNodeIcon({ icon }: { icon: ImpactSnapshotCardIcon }) {
     case "message":
       return <MessageCircle {...common} />;
     case "share2":
-      return <Share2 {...common} />;
+      return <Send {...common} />;
   }
 }
 

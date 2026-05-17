@@ -224,7 +224,7 @@ const dictionaries: Record<Locale, Dictionary> = {
         "A first look at pacing, rhythm and visual direction across social edits, brand content and creator-focused videos.",
       collaborationsCtaLabel: "View deeper collaborations",
       collaborationsCtaHref: "#collaborations",
-      viewMoreWork: "View more work",
+      viewMoreWork: "View more",
       showLessWork: "Show less",
       items: [
         {
@@ -592,7 +592,7 @@ const dictionaries: Record<Locale, Dictionary> = {
         "Ein erster Blick auf Pacing, Rhythmus und visuelle Richtung in Social Edits, Brand Content und Creator-Videos.",
       collaborationsCtaLabel: "Mehr Collaborations",
       collaborationsCtaHref: "#collaborations",
-      viewMoreWork: "Mehr Work anzeigen",
+      viewMoreWork: "Mehr anzeigen",
       showLessWork: "Weniger anzeigen",
       items: [
         {
@@ -767,7 +767,7 @@ const dictionaries: Record<Locale, Dictionary> = {
     },
     impactSnapshot: {
       ariaLabel: "Engagement-Kennzahlen — Likes, Aufrufe, Kommentare und Shares",
-      statementLines: ["Mehr Likes.", "Mehr Views.", "Mehr Aufmerksamkeit."] as const,
+      statementLines: ["Mehr Likes.", "Mehr Views.", "Mehr Wachstum."] as const,
       cards: [
         {
           label: "Likes",
