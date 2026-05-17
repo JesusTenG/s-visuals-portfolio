@@ -226,6 +226,16 @@
   .work-section__grid {
     grid-template-columns: 1fr;
   }
+
+  /* Touch: Cards sofort sichtbar — hohe Section erreicht 40%-Reveal oft nie */
+  .work-section:not(.work-section--revealed) .work-section__grid > [data-work-reveal-card] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .work-section__grid > [data-work-reveal-card] {
+    transition: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

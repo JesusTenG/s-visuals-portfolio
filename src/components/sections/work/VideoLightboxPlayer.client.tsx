@@ -21,7 +21,13 @@ function formatTime(seconds: number): string {
   return `${mins}:${secs.toString().padStart(2, "0")}`;
 }
 
+function encodePublicAssetSrc(src: string): string {
+  return src.replace(/ /g, "%20");
+}
+
 export function VideoLightboxPlayer({ lightboxSrc, label, poster }: VideoLightboxPlayerProps) {
+  const encodedLightboxSrc = encodePublicAssetSrc(lightboxSrc);
+  const encodedPoster = poster ? encodePublicAssetSrc(poster) : undefined;
   const videoRef = useRef<HTMLVideoElement>(null);
   const volumeBeforeMuteRef = useRef(INITIAL_VOLUME);
 
@@ -77,7 +83,7 @@ export function VideoLightboxPlayer({ lightboxSrc, label, poster }: VideoLightbo
       video.removeEventListener("play", onPlay);
       video.removeEventListener("pause", onPause);
     };
-  }, [lightboxSrc]);
+  }, [encodedLightboxSrc]);
 
   const togglePlay = () => {
     const video = videoRef.current;
@@ -121,11 +127,11 @@ export function VideoLightboxPlayer({ lightboxSrc, label, poster }: VideoLightbo
         <video
           ref={videoRef}
           className={styles["lightbox__video"]}
-          src={lightboxSrc}
+          src={encodedLightboxSrc}
           playsInline
           preload="metadata"
           disablePictureInPicture
-          {...(poster ? { poster } : {})}
+          {...(encodedPoster ? { poster: encodedPoster } : {})}
           aria-label={label}
           onClick={togglePlay}
         />

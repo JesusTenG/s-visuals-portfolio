@@ -5,6 +5,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import styles from "./WorkVideoCard.module.css";
 
+/** Encodes spaces in public asset paths for reliable loading on all devices. */
+function encodePublicAssetSrc(src: string): string {
+  return src.replace(/ /g, "%20");
+}
+
 export type WorkVideoCardProps = Readonly<{
   title: string;
   type: string;
@@ -80,10 +85,15 @@ export function WorkVideoCard({
 
   const posterClassName = [
     styles["work-video-card__poster-layer"],
-    isPreviewReady && shouldLoadPreview ? styles["work-video-card__poster-layer--hidden"] : "",
+    canHoverPreview && isPreviewReady && shouldLoadPreview
+      ? styles["work-video-card__poster-layer--hidden"]
+      : "",
   ]
     .filter(Boolean)
     .join(" ");
+
+  const encodedPosterSrc = encodePublicAssetSrc(posterSrc);
+  const encodedPreviewSrc = encodePublicAssetSrc(previewSrc);
 
   const videoClassName = [
     styles["work-video-card__video-preview"],
@@ -99,15 +109,15 @@ export function WorkVideoCard({
         className={styles["work-video-card__media-trigger"]}
         aria-label={`Open video: ${videoAriaLabel}`}
         onClick={onOpen}
-        onMouseEnter={activatePreview}
-        onMouseLeave={deactivatePreview}
-        onFocus={activatePreview}
-        onBlur={deactivatePreview}
+        onMouseEnter={canHoverPreview ? activatePreview : undefined}
+        onMouseLeave={canHoverPreview ? deactivatePreview : undefined}
+        onFocus={canHoverPreview ? activatePreview : undefined}
+        onBlur={canHoverPreview ? deactivatePreview : undefined}
       >
         <div className={styles["work-video-card__media"]}>
           <Image
             className={posterClassName}
-            src={posterSrc}
+            src={encodedPosterSrc}
             alt={alt}
             fill
             sizes="(max-width: 768px) 92vw, (max-width: 980px) 45vw, 30vw"
@@ -116,9 +126,9 @@ export function WorkVideoCard({
           {shouldLoadPreview ? (
             <video
               ref={videoRef}
-              key={previewSrc}
+              key={encodedPreviewSrc}
               className={videoClassName}
-              src={previewSrc}
+              src={encodedPreviewSrc}
               muted
               loop
               autoPlay

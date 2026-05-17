@@ -48,9 +48,11 @@
   position: relative;
   width: 100%;
   aspect-ratio: 9 / 16;
+  min-height: 12rem;
   border-radius: var(--sv-radius-ui);
   overflow: hidden;
   border: 1px solid var(--color-border-faint);
+  background: var(--color-gray-925, #141414);
   transition: border-color var(--sv-transition-fast);
 }
 
@@ -176,6 +178,12 @@
 }
 
 /*//////////////REDUCED MOTION//////////////////*/
+@media (max-width: 768px) and (hover: none) {
+  .work-video-card__play {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .work-video-card,
   .work-video-card__poster-layer,
