@@ -32,7 +32,8 @@ export function WorkVideoCard({
 }: WorkVideoCardProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [canHoverPreview, setCanHoverPreview] = useState(false);
-  const [isPreviewActive, setIsPreviewActive] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  const [isPreviewReady, setIsPreviewReady] = useState(false);
 
   useEffect(() => {
     const hoverMq = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -49,22 +50,47 @@ export function WorkVideoCard({
     };
   }, []);
 
-  const showPreviewVideo =
-    canHoverPreview && isPreviewActive && !isLightboxOpen;
+  const shouldLoadPreview = canHoverPreview && isHovering && !isLightboxOpen;
+
+  const markPreviewReady = useCallback(() => {
+    setIsPreviewReady(true);
+  }, []);
 
   const activatePreview = useCallback(() => {
     if (!canHoverPreview || isLightboxOpen) return;
-    setIsPreviewActive(true);
+    setIsHovering(true);
+    setIsPreviewReady(false);
   }, [canHoverPreview, isLightboxOpen]);
 
   const deactivatePreview = useCallback(() => {
-    setIsPreviewActive(false);
+    setIsHovering(false);
+    setIsPreviewReady(false);
+    const video = videoRef.current;
+    if (!video) return;
+    video.pause();
+    video.currentTime = 0;
   }, []);
 
   useEffect(() => {
-    if (!showPreviewVideo) return;
-    void videoRef.current?.play().catch(() => {});
-  }, [showPreviewVideo, previewSrc]);
+    if (!shouldLoadPreview) return;
+    const video = videoRef.current;
+    if (!video) return;
+    void video.play().catch(() => {});
+  }, [shouldLoadPreview, previewSrc]);
+
+  const posterClassName = [
+    styles["work-video-card__poster-layer"],
+    isPreviewReady && shouldLoadPreview ? styles["work-video-card__poster-layer--hidden"] : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const videoClassName = [
+    styles["work-video-card__video-preview"],
+    isPreviewReady ? styles["work-video-card__video-preview--visible"] : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <article className={styles["work-video-card"]} data-work-reveal-card>
@@ -79,11 +105,19 @@ export function WorkVideoCard({
         onBlur={deactivatePreview}
       >
         <div className={styles["work-video-card__media"]}>
-          {showPreviewVideo ? (
+          <Image
+            className={posterClassName}
+            src={posterSrc}
+            alt={alt}
+            fill
+            sizes="(max-width: 768px) 92vw, (max-width: 980px) 45vw, 30vw"
+            loading="lazy"
+          />
+          {shouldLoadPreview ? (
             <video
               ref={videoRef}
               key={previewSrc}
-              className={styles["work-video-card__video-preview"]}
+              className={videoClassName}
               src={previewSrc}
               muted
               loop
@@ -91,17 +125,11 @@ export function WorkVideoCard({
               playsInline
               preload="none"
               aria-label={videoAriaLabel}
+              onLoadedData={markPreviewReady}
+              onCanPlay={markPreviewReady}
+              onPlaying={markPreviewReady}
             />
-          ) : (
-            <Image
-              className={styles["work-video-card__poster-layer"]}
-              src={posterSrc}
-              alt={alt}
-              fill
-              sizes="(max-width: 768px) 92vw, (max-width: 980px) 45vw, 30vw"
-              loading="lazy"
-            />
-          )}
+          ) : null}
           <span className={styles["work-video-card__play"]} aria-hidden="true">
             Play
           </span>

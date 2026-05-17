@@ -1,12 +1,15 @@
 "use client";
 
-import { useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 
 import type { WorkVideoItem } from "@/i18n/dictionaries";
 
 import { VideoLightbox, type VideoLightboxItem } from "./VideoLightbox.client";
+import { preloadPreviewVideos } from "./preloadPreviewVideos";
 import { WorkVideoCard } from "./WorkVideoCard";
 import styles from "./WorkSection.module.css";
+
+const INITIAL_PRELOAD_COUNT = 3;
 
 const MOBILE_MAX_PX = 768;
 const MORE_COUNT_DESKTOP = 9;
@@ -61,6 +64,27 @@ export function WorkVideoGrid({
   }, [moreItems, isMobileLayout]);
 
   const isLightboxOpen = activeVideo !== null;
+  const preloadedSrcsRef = useRef(new Set<string>());
+
+  useEffect(() => {
+    const initialSrcs = featuredItems
+      .slice(0, INITIAL_PRELOAD_COUNT)
+      .map((item) => item.previewSrc)
+      .filter((src) => !preloadedSrcsRef.current.has(src));
+    if (initialSrcs.length === 0) return;
+    for (const src of initialSrcs) preloadedSrcsRef.current.add(src);
+    return preloadPreviewVideos(initialSrcs, { delay: 400, concurrency: 1 });
+  }, [featuredItems]);
+
+  useEffect(() => {
+    if (!isExpanded) return;
+    const moreSrcs = visibleMoreItems
+      .map((item) => item.previewSrc)
+      .filter((src) => !preloadedSrcsRef.current.has(src));
+    if (moreSrcs.length === 0) return;
+    for (const src of moreSrcs) preloadedSrcsRef.current.add(src);
+    return preloadPreviewVideos(moreSrcs, { delay: 150, concurrency: 1 });
+  }, [isExpanded, visibleMoreItems]);
 
   const renderCard = (item: WorkVideoItem) => (
     <WorkVideoCard
