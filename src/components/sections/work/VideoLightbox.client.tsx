@@ -6,7 +6,7 @@ import { VideoLightboxPlayer } from "./VideoLightboxPlayer.client";
 import styles from "./VideoLightbox.module.css";
 
 export type VideoLightboxItem = Readonly<{
-  src: string;
+  lightboxSrc: string;
   label: string;
   poster?: string;
 }>;
@@ -60,8 +60,8 @@ export function VideoLightbox({ video, onClose }: Props) {
         </button>
 
         <VideoLightboxPlayer
-          key={video.src}
-          src={video.src}
+          key={video.lightboxSrc}
+          lightboxSrc={video.lightboxSrc}
           label={video.label}
           poster={video.poster}
         />

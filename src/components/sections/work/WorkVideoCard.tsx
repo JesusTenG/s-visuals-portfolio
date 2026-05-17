@@ -11,7 +11,7 @@ export type WorkVideoCardProps = Readonly<{
   description: string;
   tags: string[];
   posterSrc: string;
-  videoSrc: string;
+  previewSrc: string;
   alt: string;
   videoAriaLabel: string;
   isLightboxOpen: boolean;
@@ -24,7 +24,7 @@ export function WorkVideoCard({
   description,
   tags,
   posterSrc,
-  videoSrc,
+  previewSrc,
   alt,
   videoAriaLabel,
   isLightboxOpen,
@@ -32,6 +32,7 @@ export function WorkVideoCard({
 }: WorkVideoCardProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [canHoverPreview, setCanHoverPreview] = useState(false);
+  const [isPreviewActive, setIsPreviewActive] = useState(false);
 
   useEffect(() => {
     const hoverMq = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -48,43 +49,22 @@ export function WorkVideoCard({
     };
   }, []);
 
-  const stopPreview = useCallback(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.pause();
-    video.currentTime = 0;
+  const showPreviewVideo =
+    canHoverPreview && isPreviewActive && !isLightboxOpen;
+
+  const activatePreview = useCallback(() => {
+    if (!canHoverPreview || isLightboxOpen) return;
+    setIsPreviewActive(true);
+  }, [canHoverPreview, isLightboxOpen]);
+
+  const deactivatePreview = useCallback(() => {
+    setIsPreviewActive(false);
   }, []);
 
   useEffect(() => {
-    if (!canHoverPreview) return;
-    if (isLightboxOpen) stopPreview();
-  }, [canHoverPreview, isLightboxOpen, stopPreview]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video || !canHoverPreview) return;
-
-    const syncPausedFrame = () => {
-      video.pause();
-      video.currentTime = 0;
-    };
-
-    video.addEventListener("loadeddata", syncPausedFrame);
-    if (video.readyState >= 2) syncPausedFrame();
-
-    return () => {
-      video.removeEventListener("loadeddata", syncPausedFrame);
-    };
-  }, [canHoverPreview, videoSrc]);
-
-  const onMediaEnter = () => {
-    if (!canHoverPreview || isLightboxOpen) return;
+    if (!showPreviewVideo) return;
     void videoRef.current?.play().catch(() => {});
-  };
-
-  const onMediaLeave = () => {
-    stopPreview();
-  };
+  }, [showPreviewVideo, previewSrc]);
 
   return (
     <article className={styles["work-video-card"]} data-work-reveal-card>
@@ -93,22 +73,24 @@ export function WorkVideoCard({
         className={styles["work-video-card__media-trigger"]}
         aria-label={`Open video: ${videoAriaLabel}`}
         onClick={onOpen}
-        onMouseEnter={onMediaEnter}
-        onMouseLeave={onMediaLeave}
+        onMouseEnter={activatePreview}
+        onMouseLeave={deactivatePreview}
+        onFocus={activatePreview}
+        onBlur={deactivatePreview}
       >
         <div className={styles["work-video-card__media"]}>
-          {canHoverPreview ? (
+          {showPreviewVideo ? (
             <video
               ref={videoRef}
-              key={videoSrc}
+              key={previewSrc}
               className={styles["work-video-card__video-preview"]}
-              src={videoSrc}
-              poster={posterSrc}
+              src={previewSrc}
               muted
               loop
+              autoPlay
               playsInline
-              preload="metadata"
-              aria-hidden="true"
+              preload="none"
+              aria-label={videoAriaLabel}
             />
           ) : (
             <Image
@@ -117,6 +99,7 @@ export function WorkVideoCard({
               alt={alt}
               fill
               sizes="(max-width: 768px) 92vw, (max-width: 980px) 45vw, 30vw"
+              loading="lazy"
             />
           )}
           <span className={styles["work-video-card__play"]} aria-hidden="true">

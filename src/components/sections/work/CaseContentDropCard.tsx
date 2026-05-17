@@ -9,7 +9,7 @@ export type CaseContentDropCardProps = Readonly<{
   title: string;
   type: string;
   posterSrc: string;
-  videoSrc?: string;
+  previewSrc?: string;
   alt: string;
 }>;
 
@@ -17,19 +17,19 @@ export function CaseContentDropCard({
   title,
   type,
   posterSrc,
-  videoSrc,
+  previewSrc,
   alt,
 }: CaseContentDropCardProps) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const canPlay = Boolean(videoSrc);
+  const canPlay = Boolean(previewSrc);
 
   return (
     <article className={styles["case-drop-card"]}>
       <div className={styles["case-drop-card__media"]}>
-        {isPlaying && videoSrc ? (
+        {isPlaying && previewSrc ? (
           <video
             className={styles["case-drop-card__video"]}
-            src={videoSrc}
+            src={previewSrc}
             poster={posterSrc}
             controls
             playsInline

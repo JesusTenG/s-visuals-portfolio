@@ -55,7 +55,7 @@ export function WorkCaseDetailView({ locale, dict, workCase }: Props) {
               title={drop.title}
               type={drop.type}
               posterSrc={drop.posterSrc}
-              videoSrc={drop.videoSrc}
+              previewSrc={drop.previewSrc}
               alt={drop.alt}
             />
           ))}

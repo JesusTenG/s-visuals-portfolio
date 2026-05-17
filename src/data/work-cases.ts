@@ -2,7 +2,8 @@ export type WorkCaseContentDrop = {
   title: string;
   type: string;
   posterSrc: string;
-  videoSrc?: string;
+  previewSrc?: string;
+  lightboxSrc?: string;
   alt: string;
 };
 
@@ -30,7 +31,6 @@ export const workCases: WorkCase[] = [
         title: "Campaign Reel 01",
         type: "Reel",
         posterSrc: "/assets/clients/client-one/drop-01-poster.svg",
-        videoSrc: "/assets/clients/client-one/drop-01.mp4",
         alt: "Poster image for Client One campaign reel",
       },
     ],

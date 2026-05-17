@@ -8,7 +8,7 @@ import styles from "./VideoLightbox.module.css";
 const INITIAL_VOLUME = 0.05;
 
 export type VideoLightboxPlayerProps = Readonly<{
-  src: string;
+  lightboxSrc: string;
   label: string;
   poster?: string;
 }>;
@@ -21,7 +21,7 @@ function formatTime(seconds: number): string {
   return `${mins}:${secs.toString().padStart(2, "0")}`;
 }
 
-export function VideoLightboxPlayer({ src, label, poster }: VideoLightboxPlayerProps) {
+export function VideoLightboxPlayer({ lightboxSrc, label, poster }: VideoLightboxPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const volumeBeforeMuteRef = useRef(INITIAL_VOLUME);
 
@@ -61,10 +61,6 @@ export function VideoLightboxPlayer({ src, label, poster }: VideoLightboxPlayerP
     const onPlay = () => setIsPlaying(true);
     const onPause = () => setIsPlaying(false);
 
-    const tryAutoplay = () => {
-      void video.play().catch(() => setIsPlaying(false));
-    };
-
     video.addEventListener("loadedmetadata", syncDuration);
     video.addEventListener("durationchange", syncDuration);
     video.addEventListener("timeupdate", onTimeUpdate);
@@ -72,8 +68,6 @@ export function VideoLightboxPlayer({ src, label, poster }: VideoLightboxPlayerP
     video.addEventListener("pause", onPause);
 
     if (video.readyState >= 1) syncDuration();
-    if (video.readyState >= 2) tryAutoplay();
-    else video.addEventListener("loadeddata", tryAutoplay, { once: true });
 
     return () => {
       video.pause();
@@ -83,7 +77,7 @@ export function VideoLightboxPlayer({ src, label, poster }: VideoLightboxPlayerP
       video.removeEventListener("play", onPlay);
       video.removeEventListener("pause", onPause);
     };
-  }, [src]);
+  }, [lightboxSrc]);
 
   const togglePlay = () => {
     const video = videoRef.current;
@@ -127,16 +121,14 @@ export function VideoLightboxPlayer({ src, label, poster }: VideoLightboxPlayerP
         <video
           ref={videoRef}
           className={styles["lightbox__video"]}
-          autoPlay
+          src={lightboxSrc}
           playsInline
           preload="metadata"
           disablePictureInPicture
           {...(poster ? { poster } : {})}
           aria-label={label}
           onClick={togglePlay}
-        >
-          <source src={src} type="video/mp4" />
-        </video>
+        />
 
         <div
           className={styles["lightbox-player__controls"]}

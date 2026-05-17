@@ -35,7 +35,7 @@ type Props = Readonly<{
 
 function toLightboxItem(item: WorkVideoItem): VideoLightboxItem {
   return {
-    src: item.videoSrc,
+    lightboxSrc: item.lightboxSrc,
     label: item.videoAriaLabel,
     poster: item.posterSrc,
   };
@@ -64,13 +64,13 @@ export function WorkVideoGrid({
 
   const renderCard = (item: WorkVideoItem) => (
     <WorkVideoCard
-      key={`${item.videoSrc}-${item.title}`}
+      key={`${item.previewSrc}-${item.title}`}
       title={item.title}
       type={item.type}
       description={item.description}
       tags={item.tags}
       posterSrc={item.posterSrc}
-      videoSrc={item.videoSrc}
+      previewSrc={item.previewSrc}
       alt={item.alt}
       videoAriaLabel={item.videoAriaLabel}
       isLightboxOpen={isLightboxOpen}
