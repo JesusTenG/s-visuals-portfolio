@@ -45,21 +45,28 @@
   box-shadow: var(--shadow-button-primary);
 }
 
-.svisuals-button--quiet {
-  background: var(--color-bg-button-quiet);
-  background-color: var(--color-bg-button-quiet-solid);
-  color: var(--color-text-on-accent);
-  border-color: var(--color-border-button-quiet);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: var(--shadow-button-quiet);
+/* Secondary — glass (backdrop-filter needs translucent fill + @supports split for Turbopack) */
+.svisuals-button--secondary {
+  min-height: 2.75rem;
+  padding: 0.55rem 1.75rem;
+  border-color: var(--color-accent-border-interactive);
+  background: color-mix(in srgb, var(--color-bg-nav-glass) 88%, transparent);
+  color: var(--color-text-primary);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  box-shadow: 0 0 20px var(--color-accent-glow-soft);
+  -webkit-backdrop-filter: blur(16px) saturate(135%);
 }
 
-.svisuals-button--quiet:hover {
-  filter: brightness(1.05);
-  background-color: var(--color-bg-button-quiet-hover);
-  border-color: var(--color-border-button-quiet-hover);
-  box-shadow: var(--shadow-button-quiet-hover);
+@supports (backdrop-filter: blur(1px)) {
+  .svisuals-button--secondary {
+    backdrop-filter: blur(16px) saturate(135%);
+  }
+}
+
+.svisuals-button--secondary::before {
+  display: none;
 }
 
 .svisuals-button:focus-visible {
@@ -96,6 +103,14 @@
   box-shadow: var(--shadow-button-primary-hover);
 }
 
+.svisuals-button--secondary:hover {
+  transform: translateY(-1px);
+  filter: none;
+  border-color: var(--color-accent-border-interactive);
+  background: color-mix(in srgb, var(--color-bg-nav-glass) 95%, var(--color-accent-surface-badge));
+  box-shadow: 0 0 28px var(--color-accent-glow-medium);
+}
+
 .svisuals-button:hover .svisuals-button__icon {
   transform: translateX(0px) scale(1.02);
 }
@@ -118,7 +133,7 @@
   animation: svisuals-button-shine var(--button-shine-duration) ease-out infinite;
 }
 
-.svisuals-button--quiet:hover::before {
+.svisuals-button--secondary:hover::before {
   animation: none;
 }
 
@@ -141,6 +156,11 @@
   .svisuals-button {
     padding: 0.7rem 1rem;
   }
+
+  .svisuals-button--secondary {
+    padding: 0.55rem 1.75rem;
+  }
+
   .svisuals-button__icon {
     width: 30px;
     height: 30px;

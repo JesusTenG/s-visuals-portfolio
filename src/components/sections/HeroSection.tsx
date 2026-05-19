@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import type { Dictionary } from "@/i18n/dictionaries";
 import SVisualsButton from "@/components/ui/SVisualsButton";
+import { introCssProperties } from "@/lib/introAnimationTiming";
 import Image from "next/image";
 
 import styles from "./HeroSection.module.css";
@@ -16,19 +17,31 @@ const HERO_FRAMES = [
   "/assets/hero/hero-frame-05-closeup-lens.webp",
 ] as const;
 
+const HERO_PANEL_CENTER_INDEX = (HERO_FRAMES.length - 1) / 2;
+
 type Props = Readonly<{
   dict: Dictionary;
 }>;
 
 export function HeroSection({ dict }: Props) {
   return (
-    <section className={styles.hero} aria-labelledby="hero-heading">
+    <section
+      className={styles.hero}
+      style={introCssProperties()}
+      aria-labelledby="hero-heading"
+    >
       <div className={styles["hero-panels"]} aria-hidden="true">
         {HERO_FRAMES.map((src, index) => (
           <div
             key={src}
             className={styles["hero-panel"]}
-            style={{ ["--hero-panel-i" as string]: index } as CSSProperties}
+            style={
+              {
+                ["--hero-panel-ring" as string]: Math.abs(
+                  index - HERO_PANEL_CENTER_INDEX,
+                ),
+              } as CSSProperties
+            }
           >
             <Image
               src={src}
@@ -91,7 +104,7 @@ export function HeroSection({ dict }: Props) {
             </SVisualsButton>
             <SVisualsButton
               href={dict.hero.secondaryCtaHref}
-              variant="quiet"
+              variant="secondary"
               showIcon={false}
             >
               {dict.hero.secondaryCta}
@@ -100,9 +113,7 @@ export function HeroSection({ dict }: Props) {
         </div>
       </div>
 
-      <div
-        className={`${styles["hero-scroll"]} ${styles["hero-enter"]} ${styles["hero-enter-d6"]}`}
-      >
+      <div className={`${styles["hero-scroll"]} ${styles["hero-scroll-intro"]}`}>
         <span className={styles["hero-scroll-line"]} aria-hidden="true" />
         <span className={styles["hero-scroll-label"]}>{dict.hero.scrollLabel}</span>
       </div>

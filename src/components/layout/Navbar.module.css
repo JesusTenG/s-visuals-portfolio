@@ -39,22 +39,33 @@
 .site-nav-inner {
   position: relative;
   z-index: 1;
-  animation: site-nav-enter 0.62s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes site-nav-enter {
+.site-nav[data-intro-seq="true"] {
+  opacity: 0;
+  transform: translate3d(0, calc(-100% - 1px), 0);
+  animation: site-nav-intro var(--intro-navbar-duration, 0.62s)
+    var(--intro-ease-out, cubic-bezier(0.22, 1, 0.36, 1)) both;
+  animation-delay: var(--intro-navbar-delay, 1.75s);
+  will-change: transform, opacity;
+}
+
+@keyframes site-nav-intro {
   from {
     opacity: 0;
-    transform: translate3d(0, -12px, 0);
+    transform: translate3d(0, calc(-100% - 1px), 0);
   }
+
   to {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    /* `none` — not translate3d(0,0,0); otherwise fixed mobile overlay
+       is positioned relative to this header instead of the viewport. */
+    transform: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-nav-inner {
+  .site-nav[data-intro-seq="true"] {
     animation: none;
     opacity: 1;
     transform: none;

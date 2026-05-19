@@ -1,7 +1,10 @@
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { defaultLocale } from "@/i18n/config";
+import { negotiateLocaleFromAcceptLanguage } from "@/i18n/negotiate-locale";
 
-export default function Home() {
-  redirect(`/${defaultLocale}`);
+export default async function Home() {
+  const headerList = await headers();
+  const locale = negotiateLocaleFromAcceptLanguage(headerList.get("accept-language"));
+  redirect(`/${locale}`);
 }

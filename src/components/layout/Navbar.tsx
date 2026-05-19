@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Globe } from "lucide-react";
@@ -10,6 +10,8 @@ import { otherLocale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import SVisualsButton from "@/components/ui/SVisualsButton";
 
+import { introCssProperties } from "@/lib/introAnimationTiming";
+
 import { MobileNavMenu } from "./MobileNavMenu.client";
 import styles from "./Navbar.module.css";
 
@@ -18,15 +20,33 @@ const MOBILE_NAV_PANEL_ID = "mobile-navigation-panel";
 type Props = Readonly<{
   locale: Locale;
   dict: Dictionary;
+  /** Homepage intro: slide in after hero content (see introAnimationTiming). */
+  introAnimation?: boolean;
 }>;
 
-export function Navbar({ locale, dict }: Props) {
+export function Navbar({ locale, dict, introAnimation = false }: Props) {
   const switchTo = otherLocale(locale);
   const switchLabel =
     switchTo === "en" ? "Switch language to English" : "Sprache auf Deutsch wechseln";
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [introFinished, setIntroFinished] = useState(!introAnimation);
   const home = `/${locale}`;
+
+  useEffect(() => {
+    if (!introAnimation || introFinished) return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mq.matches) setIntroFinished(true);
+  }, [introAnimation, introFinished]);
+
+  const handleIntroAnimationEnd = useCallback(
+    (event: React.AnimationEvent<HTMLElement>) => {
+      if (!introAnimation || introFinished) return;
+      if (event.currentTarget !== event.target) return;
+      setIntroFinished(true);
+    },
+    [introAnimation, introFinished],
+  );
 
   const toggleMenu = () => {
     setMobileOpen((open) => !open);
@@ -98,6 +118,9 @@ export function Navbar({ locale, dict }: Props) {
     <header
       className={styles["site-nav"]}
       data-menu-open={mobileOpen ? "true" : "false"}
+      data-intro-seq={introAnimation && !introFinished ? "true" : undefined}
+      style={introAnimation && !introFinished ? introCssProperties() : undefined}
+      onAnimationEnd={handleIntroAnimationEnd}
     >
       <nav className={styles["site-nav-inner"]} aria-label="Main navigation">
         <div className={styles["nav-inner"]}>

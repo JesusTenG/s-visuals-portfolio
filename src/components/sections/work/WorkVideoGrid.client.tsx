@@ -6,6 +6,8 @@ import type { WorkVideoItem } from "@/i18n/dictionaries";
 
 import { VideoLightbox, type VideoLightboxItem } from "./VideoLightbox.client";
 import { preloadPreviewVideos } from "./preloadPreviewVideos";
+import SVisualsButton from "@/components/ui/SVisualsButton";
+
 import { WorkVideoCard } from "./WorkVideoCard";
 import styles from "./WorkSection.module.css";
 
@@ -118,15 +120,16 @@ export function WorkVideoGrid({
       ) : null}
 
       <div className={styles["work-section__toggle-wrap"]}>
-        <button
+        <SVisualsButton
           type="button"
-          className={styles["work-section__toggle-more"]}
+          variant="secondary"
+          showIcon={false}
           aria-expanded={isExpanded}
           aria-controls={isExpanded ? "work-section-expanded-grid" : undefined}
           onClick={() => setIsExpanded((open) => !open)}
         >
           {isExpanded ? showLessWork : viewMoreWork}
-        </button>
+        </SVisualsButton>
       </div>
 
       {activeVideo ? (

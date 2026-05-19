@@ -18,7 +18,7 @@ export function FinalCtaSection({ dict }: Props) {
             <p className={styles.description}>{dict.contact.description}</p>
             <div className={styles["cta-row"]}>
               <SVisualsButton href="#contact">{dict.contact.cta}</SVisualsButton>
-              <SVisualsButton href="#services" variant="quiet" showIcon={false}>
+              <SVisualsButton href="#services" variant="secondary" showIcon={false}>
                 {dict.services.title}
               </SVisualsButton>
             </div>

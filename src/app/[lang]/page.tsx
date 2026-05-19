@@ -26,7 +26,7 @@ export default async function LangHomePage({ params }: Props) {
 
   return (
     <>
-      <Navbar locale={locale} dict={dict} />
+      <Navbar locale={locale} dict={dict} introAnimation />
       <main className="flex-1">
         <HeroSection dict={dict} />
         <ImpactSnapshotSection dict={dict} locale={locale} />

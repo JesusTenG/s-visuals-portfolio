@@ -7,7 +7,7 @@ type CommonProps = {
   children?: ReactNode;
   ariaLabel?: string;
   className?: string;
-  variant?: "primary" | "quiet";
+  variant?: "primary" | "secondary";
   showIcon?: boolean;
 };
 
@@ -40,9 +40,11 @@ export default function SVisualsButton(props: Props) {
 
   const content = children ?? _label ?? "";
   const variantClass =
-    variant === "quiet" ? styles["svisuals-button--quiet"] : styles["svisuals-button--primary"];
+    variant === "secondary"
+      ? styles["svisuals-button--secondary"]
+      : styles["svisuals-button--primary"];
   const btnClass = `${styles["svisuals-button"]} ${variantClass} ${className ?? ""}`.trim();
-  const showIcon = showIconProp ?? variant === "quiet";
+  const showIcon = showIconProp ?? false;
 
   const computedAriaLabel =
     ariaLabel ?? (typeof content === "string" ? content : undefined);

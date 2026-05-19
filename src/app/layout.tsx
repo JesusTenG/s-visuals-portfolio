@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, Geist_Mono, Inter } from "next/font/google";
+import { Bebas_Neue, Geist_Mono, Inter, Orbitron } from "next/font/google";
 
 import { SmoothScrollHandler } from "@/components/layout/SmoothScrollHandler.client";
 
@@ -12,11 +12,19 @@ const inter = Inter({
   display: "swap",
 });
 
-/** Display — large condensed hero word “VISUALS”. */
+/** Display — legacy condensed (available for other UI if needed). */
 const bebasNeue = Bebas_Neue({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-bebas",
+  display: "swap",
+});
+
+/** Hero headline — “VISUALS”. */
+const orbitron = Orbitron({
+  weight: ["600", "700"],
+  subsets: ["latin"],
+  variable: "--font-orbitron",
   display: "swap",
 });
 
@@ -38,7 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${inter.variable} ${bebasNeue.variable} ${geistMono.variable} h-full antialiased`}
+      className={`dark ${inter.variable} ${bebasNeue.variable} ${orbitron.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <SmoothScrollHandler />
