@@ -100,6 +100,8 @@
   --color-bg-button-quiet: color-mix(in srgb, var(--color-white) 2.5%, transparent);
   --color-bg-button-quiet-solid: color-mix(in srgb, var(--color-white) 3.5%, transparent);
   --color-bg-button-quiet-hover: color-mix(in srgb, var(--color-white) 6%, transparent);
+  --color-bg-button-secondary: color-mix(in srgb, var(--color-gray-910) 92%, var(--color-black));
+  --color-bg-button-secondary-hover: color-mix(in srgb, var(--color-gray-880) 85%, var(--color-gray-910));
   --color-bg-glass-card-top: color-mix(in srgb, var(--color-white) 5.5%, transparent);
   --color-bg-glass-card-bottom: color-mix(in srgb, var(--color-gray-880) 78%, transparent);
   --color-bg-final-cta-panel-top: color-mix(in srgb, var(--color-white) 4.5%, transparent);
@@ -267,6 +269,10 @@
 
   /*//////////////MOTION TOKENS//////////////////*/
   --sv-transition-fast: 160ms ease;
+  --sv-transition-card-hover: 520ms cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-card-hover-depth: 0 14px 32px color-mix(in srgb, var(--color-black) 46%, transparent);
+  --shadow-card-hover-glow: 0 0 36px var(--color-accent-glow-medium),
+    0 0 56px var(--color-accent-primary-button-glow-inner);
 
   /*//////////////S-VISUALS BUTTON SHINE//////////////////*/
   --button-shine-width: 140px;

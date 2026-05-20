@@ -61,13 +61,14 @@ export type Dictionary = {
     secondaryCtaHref: string;
     scrollLabel: string;
   };
-  focus: {
-    title: string;
-    items: Array<{ title: string; description: string }>;
-  };
   services: {
     title: string;
-    items: Array<{ title: string; description: string }>;
+    intro: string;
+    items: Array<{
+      title: string;
+      description: string;
+      icon: "smartphone" | "monitor-play" | "megaphone" | "clapperboard";
+    }>;
   };
   about: {
     title: string;
@@ -88,6 +89,9 @@ export type Dictionary = {
     ariaLabel: string;
     statementLines: readonly [string, string, string];
     cards: ImpactSnapshotCardDict[];
+  };
+  testimonials: {
+    title: string;
   };
   clientStories: {
     eyebrow: string;
@@ -150,49 +154,34 @@ const dictionaries: Record<Locale, Dictionary> = {
       secondaryCtaHref: "#work",
       scrollLabel: "SCROLL",
     },
-    focus: {
-      title: "Focus",
-      items: [
-        {
-          title: "Pacing & rhythm",
-          description: "Cuts that breathe with the story — clarity without noise.",
-        },
-        {
-          title: "Visual intent",
-          description: "Every frame earns its place; emotion before decoration.",
-        },
-        {
-          title: "Sound design sensibility",
-          description: "Music and ambience treated as part of the picture.",
-        },
-        {
-          title: "Delivery-ready exports",
-          description: "Formats and specs aligned with platform expectations.",
-        },
-      ],
-    },
     services: {
-      title: "SERVICES",
+      title: "Editing built for impact",
+      intro:
+        "Reels, YouTube, campaigns and cinematic formats. Cleanly edited, clearly structured and built to feel premium.",
       items: [
         {
-          title: "Reel Editing",
-          description: "Vertical edits with punchy rhythm and clean storytelling.",
+          title: "Shortform Editing",
+          description:
+            "Reels, TikToks and shorts with fast pacing, clean cuts and a look built for social.",
+          icon: "smartphone",
+        },
+        {
+          title: "YouTube & Longform",
+          description:
+            "Longer videos, interviews and episodes with clean structure, flow and clear viewer guidance.",
+          icon: "monitor-play",
+        },
+        {
+          title: "Ads & Campaign Cuts",
+          description:
+            "Campaign and product videos with strong hooks, a clear message and fast visual impact.",
+          icon: "megaphone",
         },
         {
           title: "Cinematic Content",
-          description: "Long-form scenes, mood and atmosphere — narrative-first.",
-        },
-        {
-          title: "Ads",
-          description: "Sharp commercial cuts designed to hold attention fast.",
-        },
-        {
-          title: "YouTube",
-          description: "Retention-aware pacing for titles, chapters and hooks.",
-        },
-        {
-          title: "Music Videos",
-          description: "Performance-forward edits built around track energy.",
+          description:
+            "Trailers, podcasts, recaps and atmospheric edits for content that should feel more premium.",
+          icon: "clapperboard",
         },
       ],
     },
@@ -430,6 +419,9 @@ const dictionaries: Record<Locale, Dictionary> = {
         },
       ],
     },
+    testimonials: {
+      title: "What clients say about working together",
+    },
     clientStories: {
       eyebrow: "COLLABORATIONS",
       title: "Long-term visual systems for creators and brands.",
@@ -518,49 +510,34 @@ const dictionaries: Record<Locale, Dictionary> = {
       secondaryCtaHref: "#work",
       scrollLabel: "SCROLL",
     },
-    focus: {
-      title: "FOKUS",
-      items: [
-        {
-          title: "Pacing & Rhythmus",
-          description: "Schnitte mit Luft und Präzision — Klarheit statt Lärm.",
-        },
-        {
-          title: "Visuelle Intention",
-          description: "Jedes Bild hat Gewicht; Emotion vor Dekoration.",
-        },
-        {
-          title: "Sound-Sinn",
-          description: "Musik und Ambiente als Teil des Bildes gedacht.",
-        },
-        {
-          title: "Delivery-ready Exports",
-          description: "Formate und Specs, die zu Plattformen passen.",
-        },
-      ],
-    },
     services: {
-      title: "SERVICES",
+      title: "Schnitt, der Content stärker macht",
+      intro:
+        "Reels, YouTube, Kampagnen und cineastische Formate. Präzise geschnitten, klar geführt, hochwertig umgesetzt.",
       items: [
         {
-          title: "Reel Editing",
-          description: "Vertikale Edits mit klarer Dramaturgie und Drive.",
+          title: "Shortform-Schnitt",
+          description:
+            "Reels, TikToks und Shorts mit schnellem Pacing, klaren Cuts und einem Look, der auf Social funktioniert.",
+          icon: "smartphone",
         },
         {
-          title: "Cinematic Content",
-          description: "Langform mit Atmosphäre — Story und Stimmung zuerst.",
+          title: "YouTube & Longform",
+          description:
+            "Längere Videos, Interviews und Episoden mit sauberer Struktur, Flow und klarer Zuschauerführung.",
+          icon: "monitor-play",
         },
         {
-          title: "Ads",
-          description: "Commercial-Schnitte mit sofortiger Aufmerksamkeit.",
+          title: "Werbevideos",
+          description:
+            "Kampagnen- und Produktvideos mit starken Hooks, klarer Botschaft und schneller visueller Wirkung.",
+          icon: "megaphone",
         },
         {
-          title: "YouTube",
-          description: "Retention-orientiertes Timing für Hooks und Kapitel.",
-        },
-        {
-          title: "Music Videos",
-          description: "Performance-zentrierte Cuts im Rhythmus des Tracks.",
+          title: "Cineastische Formate",
+          description:
+            "Trailer, Podcasts, Recaps und atmosphärische Edits für Content, der hochwertiger wirken soll.",
+          icon: "clapperboard",
         },
       ],
     },
@@ -798,6 +775,9 @@ const dictionaries: Record<Locale, Dictionary> = {
           icon: "share2",
         },
       ],
+    },
+    testimonials: {
+      title: "Was Kunden über die Zusammenarbeit sagen",
     },
     clientStories: {
       eyebrow: "COLLABORATIONS",

@@ -97,7 +97,7 @@ export function HeroSection({ dict }: Props) {
           </ul>
 
           <div
-            className={`${styles["hero-actions"]} ${styles["hero-enter"]} ${styles["hero-enter-d5"]}`}
+            className={`${styles["hero-actions"]} ${styles["hero-enter-fade"]} ${styles["hero-enter-d5"]}`}
           >
             <SVisualsButton href={dict.hero.primaryCtaHref} showIcon={false}>
               {dict.hero.primaryCta}

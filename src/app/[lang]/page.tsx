@@ -5,8 +5,8 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { Navbar } from "@/components/layout/Navbar";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { WorkSection } from "@/components/sections/work/WorkSection";
+import { TestimonialSection } from "@/components/testimonials/TestimonialSection";
 import { ImpactSnapshotSection } from "@/components/sections/impact-snapshot/ImpactSnapshotSection";
-import { FocusSection } from "@/components/sections/FocusSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { ProcessSection } from "@/components/sections/ProcessSection";
 import { ClientStoriesSection } from "@/components/sections/client-stories/ClientStoriesSection";
@@ -31,9 +31,9 @@ export default async function LangHomePage({ params }: Props) {
         <HeroSection dict={dict} />
         <ImpactSnapshotSection dict={dict} locale={locale} />
         <WorkSection dict={dict} />
-
-        <FocusSection dict={dict} />
         <ServicesSection dict={dict} />
+        <TestimonialSection locale={locale} dict={dict} />
+
         <ProcessSection dict={dict} />
         <ClientStoriesSection locale={locale} dict={dict} />
         <FinalCtaSection dict={dict} />

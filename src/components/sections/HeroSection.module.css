@@ -291,9 +291,30 @@
   }
 }
 
+@keyframes hero-content-enter-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 .hero-enter {
   opacity: 0;
   animation: hero-content-enter var(--intro-content-duration, 0.62s)
+    var(--intro-ease-out, cubic-bezier(0.22, 1, 0.36, 1)) forwards;
+  animation-delay: calc(
+    var(--intro-content-delay, 0.9s) + var(--intro-content-i, 0) *
+      var(--intro-content-stagger, 0.12s)
+  );
+}
+
+/* CTAs: opacity only — parent transform breaks button backdrop-filter */
+.hero-enter-fade {
+  opacity: 0;
+  animation: hero-content-enter-fade var(--intro-content-duration, 0.62s)
     var(--intro-ease-out, cubic-bezier(0.22, 1, 0.36, 1)) forwards;
   animation-delay: calc(
     var(--intro-content-delay, 0.9s) + var(--intro-content-i, 0) *
@@ -343,6 +364,7 @@
 /*//////////////HERO — ACCESSIBILITY//////////////////*/
 @media (prefers-reduced-motion: reduce) {
   .hero-enter,
+  .hero-enter-fade,
   .hero-scroll-intro {
     animation: none;
     opacity: 1;

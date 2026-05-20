@@ -28,7 +28,6 @@
   box-shadow: var(--shadow-button-default);
 
   transform-origin: center;
-  will-change: transform;
 
   transition:
     transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -45,24 +44,18 @@
   box-shadow: var(--shadow-button-primary);
 }
 
-/* Secondary — glass (backdrop-filter needs translucent fill + @supports split for Turbopack) */
+/* Secondary — solid dark fill (see --color-bg-button-secondary in globals.css) */
 .svisuals-button--secondary {
   min-height: 2.75rem;
   padding: 0.55rem 1.75rem;
   border-color: var(--color-accent-border-interactive);
-  background: color-mix(in srgb, var(--color-bg-nav-glass) 88%, transparent);
+  background: var(--color-bg-button-secondary);
+  background-color: var(--color-bg-button-secondary);
   color: var(--color-text-primary);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   box-shadow: 0 0 20px var(--color-accent-glow-soft);
-  -webkit-backdrop-filter: blur(16px) saturate(135%);
-}
-
-@supports (backdrop-filter: blur(1px)) {
-  .svisuals-button--secondary {
-    backdrop-filter: blur(16px) saturate(135%);
-  }
 }
 
 .svisuals-button--secondary::before {
@@ -107,7 +100,8 @@
   transform: translateY(-1px);
   filter: none;
   border-color: var(--color-accent-border-interactive);
-  background: color-mix(in srgb, var(--color-bg-nav-glass) 95%, var(--color-accent-surface-badge));
+  background: var(--color-bg-button-secondary-hover);
+  background-color: var(--color-bg-button-secondary-hover);
   box-shadow: 0 0 28px var(--color-accent-glow-medium);
 }
 

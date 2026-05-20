@@ -1,5 +1,7 @@
 /*//////////////WORK VIDEO CARD//////////////////*/
 .work-video-card {
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   gap: var(--sv-space-4);
@@ -9,15 +11,33 @@
   box-shadow: var(--shadow-glass-card);
   padding: var(--sv-space-4);
   transition:
-    border-color var(--sv-transition-fast),
-    box-shadow var(--sv-transition-fast),
-    transform var(--sv-transition-fast);
+    border-color var(--sv-transition-card-hover),
+    box-shadow var(--sv-transition-card-hover),
+    transform var(--sv-transition-card-hover);
 }
 
-.work-video-card:hover {
-  border-color: var(--color-border-strong);
-  box-shadow: var(--shadow-button-primary-hover);
-  transform: translateY(-2px);
+.work-video-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: var(--shadow-card-hover-glow);
+  opacity: 0;
+  transition: opacity var(--sv-transition-card-hover);
+}
+
+@media (hover: hover) {
+  .work-video-card:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-card-hover-depth);
+    transform: translateY(-2px);
+  }
+
+  .work-video-card:hover::before {
+    opacity: 1;
+  }
 }
 
 .work-video-card__media-trigger {
@@ -31,8 +51,8 @@
   text-align: inherit;
   border-radius: var(--sv-radius-ui);
   transition:
-    transform var(--sv-transition-fast),
-    box-shadow var(--sv-transition-fast);
+    transform var(--sv-transition-card-hover),
+    box-shadow var(--sv-transition-card-hover);
 }
 
 .work-video-card__media-trigger:hover {
@@ -53,7 +73,7 @@
   overflow: hidden;
   border: 1px solid var(--color-border-faint);
   background: var(--color-gray-925, #141414);
-  transition: border-color var(--sv-transition-fast);
+  transition: border-color var(--sv-transition-card-hover);
 }
 
 .work-video-card__media-trigger:hover .work-video-card__media {
@@ -81,7 +101,7 @@
   text-transform: uppercase;
   box-shadow: var(--shadow-button-quiet);
   opacity: 0;
-  transition: opacity var(--sv-transition-fast);
+  transition: opacity var(--sv-transition-card-hover);
   pointer-events: none;
 }
 
@@ -97,8 +117,8 @@
   object-fit: cover;
   opacity: 1;
   transition:
-    opacity 180ms ease,
-    transform var(--sv-transition-fast);
+    opacity var(--sv-transition-card-hover),
+    transform var(--sv-transition-card-hover);
 }
 
 .work-video-card__poster-layer--hidden {
@@ -121,7 +141,7 @@
   display: block;
   opacity: 0;
   background: transparent;
-  transition: opacity 180ms ease;
+  transition: opacity var(--sv-transition-card-hover);
 }
 
 .work-video-card__video-preview--visible {
@@ -186,6 +206,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .work-video-card,
+  .work-video-card::before,
+  .work-video-card__media-trigger,
+  .work-video-card__media,
+  .work-video-card__play,
   .work-video-card__poster-layer,
   .work-video-card__video-preview {
     transition: none;
@@ -193,6 +217,10 @@
 
   .work-video-card:hover {
     transform: none;
+  }
+
+  .work-video-card:hover::before {
+    opacity: 1;
   }
 
   .work-video-card__media-trigger:hover .work-video-card__poster-layer,
