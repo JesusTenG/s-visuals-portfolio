@@ -55,6 +55,51 @@
     box-shadow var(--sv-transition-card-hover);
 }
 
+.work-video-card__label {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 0.32rem;
+  padding: clamp(2rem, 4vw, 2.5rem) clamp(0.8rem, 1.5vw, 1rem) clamp(0.85rem, 1.35vw, 1rem);
+  pointer-events: none;
+  text-align: left;
+  transition: opacity var(--sv-transition-card-hover);
+}
+
+.work-video-card__label::before {
+  content: "";
+  position: absolute;
+  inset: -35% 0 0;
+  z-index: -1;
+  border-radius: 0 0 var(--sv-radius-ui) var(--sv-radius-ui);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--color-black) 42%, transparent) 22%,
+    color-mix(in srgb, var(--color-black) 78%, transparent) 52%,
+    color-mix(in srgb, var(--color-black) 90%, transparent) 100%
+  );
+}
+
+.work-video-card__label-title {
+  font-size: clamp(0.8rem, 0.98vw, 0.9rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.015em;
+  color: color-mix(in srgb, var(--color-white) 96%, transparent);
+}
+
+.work-video-card__label-description {
+  font-size: clamp(0.66rem, 0.78vw, 0.72rem);
+  line-height: 1.48;
+  letter-spacing: 0.01em;
+  color: color-mix(in srgb, var(--color-white) 72%, transparent);
+  text-wrap: pretty;
+}
+
 .work-video-card__media-trigger:hover {
   transform: scale(1.015);
 }
@@ -148,53 +193,22 @@
   opacity: 1;
 }
 
-.work-video-card__content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sv-space-2);
+/*//////////////WORK VIDEO CARD — LABEL//////////////////*/
+@media (hover: hover) and (pointer: fine) {
+  .work-video-card__label {
+    opacity: 0;
+  }
+
+  .work-video-card__media-trigger:hover .work-video-card__label,
+  .work-video-card__media-trigger:focus-visible .work-video-card__label {
+    opacity: 1;
+  }
 }
 
-.work-video-card__type {
-  margin: 0;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-}
-
-.work-video-card__title {
-  margin: 0;
-  font-size: 1.05rem;
-  line-height: 1.25;
-  color: var(--color-text-primary);
-}
-
-.work-video-card__description {
-  margin: 0;
-  font-size: 0.875rem;
-  line-height: 1.55;
-  color: var(--color-text-muted);
-}
-
-.work-video-card__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--sv-space-2);
-  margin: var(--sv-space-2) 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.work-video-card__tag {
-  padding: 0.2rem 0.55rem;
-  border-radius: var(--sv-radius-ui);
-  border: 1px solid var(--color-accent-border-badge);
-  background: var(--color-accent-surface-badge);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--color-text-primary);
+@media (max-width: 768px), (hover: none) {
+  .work-video-card__label {
+    opacity: 0.92;
+  }
 }
 
 /*//////////////REDUCED MOTION//////////////////*/
@@ -231,5 +245,9 @@
   .work-video-card__media-trigger:hover .work-video-card__play,
   .work-video-card__media-trigger:focus-visible .work-video-card__play {
     opacity: 1;
+  }
+
+  .work-video-card__label {
+    opacity: 0.92;
   }
 }

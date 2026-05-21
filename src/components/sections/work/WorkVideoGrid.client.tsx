@@ -90,11 +90,9 @@ export function WorkVideoGrid({
 
   const renderCard = (item: WorkVideoItem) => (
     <WorkVideoCard
-      key={`${item.previewSrc}-${item.title}`}
+      key={item.previewSrc}
       title={item.title}
-      type={item.type}
       description={item.description}
-      tags={item.tags}
       posterSrc={item.posterSrc}
       previewSrc={item.previewSrc}
       alt={item.alt}

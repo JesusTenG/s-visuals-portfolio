@@ -12,9 +12,7 @@ function encodePublicAssetSrc(src: string): string {
 
 export type WorkVideoCardProps = Readonly<{
   title: string;
-  type: string;
   description: string;
-  tags: string[];
   posterSrc: string;
   previewSrc: string;
   alt: string;
@@ -25,9 +23,7 @@ export type WorkVideoCardProps = Readonly<{
 
 export function WorkVideoCard({
   title,
-  type,
   description,
-  tags,
   posterSrc,
   previewSrc,
   alt,
@@ -107,7 +103,7 @@ export function WorkVideoCard({
       <button
         type="button"
         className={styles["work-video-card__media-trigger"]}
-        aria-label={`Open video: ${videoAriaLabel}`}
+        aria-label={videoAriaLabel}
         onClick={onOpen}
         onMouseEnter={canHoverPreview ? activatePreview : undefined}
         onMouseLeave={canHoverPreview ? deactivatePreview : undefined}
@@ -143,22 +139,12 @@ export function WorkVideoCard({
           <span className={styles["work-video-card__play"]} aria-hidden="true">
             Play
           </span>
+          <span className={styles["work-video-card__label"]}>
+            <span className={styles["work-video-card__label-title"]}>{title}</span>
+            <span className={styles["work-video-card__label-description"]}>{description}</span>
+          </span>
         </div>
       </button>
-
-      <div className={styles["work-video-card__content"]}>
-        <p className={styles["work-video-card__type"]}>{type}</p>
-        <h3 className={styles["work-video-card__title"]}>{title}</h3>
-        <p className={styles["work-video-card__description"]}>{description}</p>
-
-        <ul className={styles["work-video-card__tags"]} aria-label="Edit focus">
-          {tags.map((tag) => (
-            <li className={styles["work-video-card__tag"]} key={tag}>
-              {tag}
-            </li>
-          ))}
-        </ul>
-      </div>
     </article>
   );
 }

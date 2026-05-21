@@ -75,7 +75,33 @@ export function VideoLightboxPlayer({ lightboxSrc, label, poster }: VideoLightbo
 
     if (video.readyState >= 1) syncDuration();
 
+    const tryAutoplay = async () => {
+      try {
+        await video.play();
+      } catch {
+        const wasMuted = video.muted;
+        video.muted = true;
+        try {
+          await video.play();
+          video.muted = wasMuted;
+          video.volume = INITIAL_VOLUME;
+        } catch {
+          setIsPlaying(false);
+        }
+      }
+    };
+
+    const onCanPlay = () => {
+      void tryAutoplay();
+    };
+
+    video.addEventListener("canplay", onCanPlay, { once: true });
+    if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+      void tryAutoplay();
+    }
+
     return () => {
+      video.removeEventListener("canplay", onCanPlay);
       video.pause();
       video.removeEventListener("loadedmetadata", syncDuration);
       video.removeEventListener("durationchange", syncDuration);
@@ -128,8 +154,9 @@ export function VideoLightboxPlayer({ lightboxSrc, label, poster }: VideoLightbo
           ref={videoRef}
           className={styles["lightbox__video"]}
           src={encodedLightboxSrc}
+          autoPlay
           playsInline
-          preload="metadata"
+          preload="auto"
           disablePictureInPicture
           {...(encodedPoster ? { poster: encodedPoster } : {})}
           aria-label={label}

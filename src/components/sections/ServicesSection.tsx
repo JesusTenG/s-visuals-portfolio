@@ -1,5 +1,5 @@
 import {
-  Clapperboard,
+  Camera,
   Megaphone,
   MonitorPlay,
   Smartphone,
@@ -20,7 +20,7 @@ const SERVICE_ICONS: Record<ServiceIconId, LucideIcon> = {
   smartphone: Smartphone,
   "monitor-play": MonitorPlay,
   megaphone: Megaphone,
-  clapperboard: Clapperboard,
+  camera: Camera,
 };
 
 export function ServicesSection({ dict }: Props) {
