@@ -19,6 +19,9 @@ const HERO_FRAMES = [
 
 const HERO_PANEL_CENTER_INDEX = (HERO_FRAMES.length - 1) / 2;
 
+/** Layout debug: panel stripes, center line, boxes around VISUALS. Set to false when done. */
+const HERO_LAYOUT_DEBUG = false;
+
 type Props = Readonly<{
   dict: Dictionary;
 }>;
@@ -26,7 +29,7 @@ type Props = Readonly<{
 export function HeroSection({ dict }: Props) {
   return (
     <section
-      className={styles.hero}
+      className={`${styles.hero}${HERO_LAYOUT_DEBUG ? ` ${styles["hero--layout-debug"]}` : ""}`}
       style={introCssProperties()}
       aria-labelledby="hero-heading"
     >
@@ -69,11 +72,12 @@ export function HeroSection({ dict }: Props) {
             {dict.hero.eyebrow}
           </p>
 
-          <div
-            className={`${styles["hero-headline"]} ${styles["hero-enter"]} ${styles["hero-enter-d2"]}`}
-            aria-hidden="true"
-          >
-            <span className={styles["hero-headline-text"]}>{dict.hero.headline}</span>
+          <div className={styles["hero-headline"]} aria-hidden="true">
+            <span
+              className={`${styles["hero-headline-text"]} ${styles["hero-enter"]} ${styles["hero-enter-d2"]}`}
+            >
+              {dict.hero.headline}
+            </span>
           </div>
 
           <p

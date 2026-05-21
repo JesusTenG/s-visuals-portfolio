@@ -110,28 +110,40 @@
 .hero-inner {
   position: relative;
   z-index: 2;
+  box-sizing: border-box;
   min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(6.5rem, 12vw, 8.5rem) 1.25rem 5.5rem;
   width: 100%;
   max-width: min(100%, 120rem);
   margin-inline: auto;
+  padding: clamp(6.5rem, 12vw, 8.5rem) clamp(1rem, 3vw, 2rem) 5.5rem;
 }
 
 .hero-content {
+  container-type: inline-size;
+  container-name: hero-content;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-width: min(100%, 56rem);
+  align-items: stretch;
+  width: min(100%, 56rem);
+  min-width: 0;
   margin-inline: auto;
+  overflow-x: clip;
+  text-align: center;
   font-family: var(--font-ui, system-ui, sans-serif);
   /* Type scale */
   --hero-eyebrow-size: clamp(0.88rem, 0.45rem + 1.35vw, 1.42rem);
   --hero-subline-size: clamp(0.625rem, 0.3rem + 1.05vw, 1.05rem);
   --hero-headline-size: clamp(2.5rem, 0.65rem + 8.25vw, 7rem);
+  --hero-headline-scale: 1.25;
+  --hero-headline-cqw: 13.4;
+  --hero-headline-fit: min(
+    calc(var(--hero-headline-size) * var(--hero-headline-scale)),
+    calc(var(--hero-headline-cqw) * var(--hero-headline-scale) * 1cqw)
+  );
   --hero-service-size: clamp(0.55rem, 0.2rem + 0.5vw, 0.7rem);
   /* Vertical rhythm between hero blocks */
   --hero-gap-eyebrow-headline: clamp(0.2rem, 0.15rem + 0.35vw, 0.45rem);
@@ -141,53 +153,67 @@
 }
 
 .hero-eyebrow {
+  width: 100%;
   margin: 0 0 var(--hero-gap-eyebrow-headline);
+  padding: 0;
   color: var(--color-accent);
   text-transform: uppercase;
   letter-spacing: 0.4em;
   font-size: var(--hero-eyebrow-size);
   font-weight: 700;
   line-height: 1.2;
-  padding-left: 0.28em;
+  text-indent: 0.4em;
   text-shadow: var(--hero-text-shadow);
 }
 
 .hero-headline {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
   margin: 0;
-  display: flex;
-  justify-content: center;
-  max-width: 100%;
-  padding-block: 0;
+  padding: 0;
+  overflow-x: clip;
 }
 
 /*//////////////HERO — DISPLAY WORD//////////////////*/
 .hero-headline-text {
-  display: inline-block;
+  --hero-headline-tracking: clamp(0.02em, 0.1vw, 0.045em);
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
   max-width: 100%;
+  margin: 0;
+  padding-inline: clamp(0.35rem, 1.5vw, 0.85rem);
   font-family: var(--font-hero-display);
   text-transform: uppercase;
   color: var(--color-text-on-accent);
-  font-size: var(--hero-headline-size);
-  line-height: 0.9;
-  letter-spacing: clamp(0.02em, 0.12vw, 0.055em);
+  font-size: var(--hero-headline-fit);
+  line-height: 0.92;
+  letter-spacing: var(--hero-headline-tracking);
   font-weight: 700;
+  text-align: center;
   text-shadow: var(--hero-text-shadow-strong);
+  overflow-x: clip;
+  word-break: keep-all;
 }
 
 .hero-subline {
+  width: 100%;
   margin: var(--hero-gap-headline-subline) 0 0;
+  padding: 0;
   text-transform: uppercase;
   letter-spacing: 0.28em;
   font-size: var(--hero-subline-size);
   color: var(--color-text-hero-subline);
   font-weight: 600;
   line-height: 1.3;
-  padding-left: 0.2em;
+  text-indent: 0.28em;
   text-shadow: var(--hero-text-shadow);
 }
 
 .hero-service-list {
   list-style: none;
+  width: 100%;
   margin: var(--hero-gap-subline-services) 0 0;
   padding: 0;
   display: flex;
@@ -200,7 +226,6 @@
   font-size: var(--hero-service-size);
   color: var(--color-text-hero-services);
   font-weight: 600;
-  max-width: 100%;
   text-shadow: var(--hero-text-shadow);
 }
 
@@ -428,17 +453,18 @@
     --hero-eyebrow-size: clamp(0.78rem, 3.4vw, 1rem);
     --hero-subline-size: clamp(0.56rem, 2.6vw, 0.78rem);
     --hero-headline-size: clamp(2.15rem, 9.5vw, 3.65rem);
+    --hero-headline-cqw: 15.5;
     --hero-service-size: clamp(0.5rem, 2.2vw, 0.62rem);
   }
 
   .hero-eyebrow {
     letter-spacing: 0.26em;
-    padding-left: 0.18em;
+    text-indent: 0.26em;
   }
 
   .hero-subline {
     letter-spacing: 0.16em;
-    padding-left: 0.12em;
+    text-indent: 0.16em;
   }
 
   .hero-service-list {
@@ -461,6 +487,7 @@
 @media (min-width: 561px) and (max-width: 899px) {
   .hero-content {
     --hero-headline-size: clamp(3.25rem, 10vw, 5.75rem);
+    --hero-headline-cqw: 14.2;
     --hero-eyebrow-size: clamp(0.9rem, 0.45rem + 1.25vw, 1.18rem);
     --hero-subline-size: clamp(0.68rem, 0.35rem + 1.1vw, 0.98rem);
     --hero-gap-subline-services: clamp(0.9rem, 1.2vw, 1.35rem);
@@ -471,6 +498,7 @@
 @media (min-width: 900px) {
   .hero-content {
     --hero-headline-size: clamp(5rem, 8.5vw, 10.5rem);
+    --hero-headline-cqw: 13.4;
     --hero-eyebrow-size: clamp(1rem, 0.45rem + 0.95vw, 1.48rem);
     --hero-subline-size: clamp(0.8rem, 0.35rem + 0.75vw, 1.2rem);
     --hero-service-size: clamp(0.58rem, 0.25rem + 0.35vw, 0.72rem);
@@ -479,25 +507,103 @@
     --hero-gap-subline-services: clamp(1.15rem, 0.75rem + 0.85vw, 1.65rem);
     --hero-gap-services-actions: clamp(1.65rem, 1rem + 1.1vw, 2.5rem);
   }
+
+  .hero-headline-text {
+    padding-inline: clamp(0.5rem, 2vw, 1.25rem);
+  }
 }
 
 @media (min-width: 1280px) {
   .hero-content {
     --hero-headline-size: clamp(5.75rem, 9vw, 11.25rem);
+    --hero-headline-cqw: 12.85;
     --hero-eyebrow-size: clamp(1.05rem, 0.5rem + 0.7vw, 1.55rem);
     --hero-subline-size: clamp(0.85rem, 0.4rem + 0.55vw, 1.28rem);
   }
 }
 
 @media (max-width: 768px) {
-  .hero-inner {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
   .hero-actions > a {
     min-height: 44px;
     padding-inline: 1.25rem;
     box-sizing: border-box;
   }
+}
+
+/*//////////////HERO — LAYOUT DEBUG (toggle HERO_LAYOUT_DEBUG in HeroSection.tsx)//////////////////*/
+.hero--layout-debug .hero-panels {
+  box-shadow: inset 0 0 0 2px #ff0;
+}
+
+.hero--layout-debug .hero-panel:nth-child(odd) {
+  box-shadow: inset 0 0 0 9999px rgb(255 0 0 / 28%);
+}
+
+.hero--layout-debug .hero-panel:nth-child(even) {
+  box-shadow: inset 0 0 0 9999px rgb(0 200 0 / 28%);
+}
+
+.hero--layout-debug .hero-panel {
+  outline: 2px solid rgb(255 0 0 / 85%);
+  outline-offset: -2px;
+}
+
+/* Viewport center (lime) */
+.hero--layout-debug::after {
+  content: "";
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  margin-left: -1.5px;
+  background: #0f0;
+  box-shadow: 0 0 0 1px #000;
+  pointer-events: none;
+}
+
+.hero--layout-debug .hero-inner {
+  outline: 2px dashed rgb(255 255 0 / 90%);
+  outline-offset: -2px;
+}
+
+.hero--layout-debug .hero-content {
+  position: relative;
+  outline: 2px dashed #0ff;
+  outline-offset: 4px;
+  background: rgb(0 255 255 / 6%);
+}
+
+/* Content block center (yellow) */
+.hero--layout-debug .hero-content::before {
+  content: "";
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  margin-left: -1px;
+  background: #ff0;
+  box-shadow: 0 0 0 1px #000;
+  pointer-events: none;
+}
+
+.hero--layout-debug .hero-headline {
+  outline: 2px dashed #0f0;
+  outline-offset: 2px;
+  background: rgb(0 255 0 / 10%);
+}
+
+.hero--layout-debug .hero-headline-text {
+  outline: 3px solid #f00;
+  outline-offset: 0;
+  background: rgb(255 0 0 / 14%);
+  box-shadow: 0 0 0 1px #f00 inset;
+}
+
+.hero--layout-debug .hero-eyebrow,
+.hero--layout-debug .hero-subline {
+  outline: 1px dotted rgb(255 255 255 / 55%);
 }
