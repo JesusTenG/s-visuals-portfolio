@@ -87,5 +87,7 @@ export const testimonials: Testimonial[] = [
 const SECTION_CARD_COUNT = 3;
 
 export function getSectionTestimonials(locale: Locale): Testimonial[] {
-  return testimonials.filter((item) => item.locale === locale).slice(0, SECTION_CARD_COUNT);
+  return testimonials
+    .filter((item) => item.locale === locale && !item.isPlaceholder)
+    .slice(0, SECTION_CARD_COUNT);
 }

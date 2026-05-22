@@ -1,0 +1,32 @@
+/* Premium section shell — dark base, faint rule, optional accent glow */
+.shell {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: var(--sv-section-padding);
+  border-top: 1px solid var(--color-border-faint);
+  color: var(--color-text-primary);
+  font-family: var(--font-ui, system-ui, sans-serif);
+  background: var(--color-gray-950);
+}
+
+.shell__glow {
+  position: absolute;
+  inset: 8% 10% auto;
+  z-index: 0;
+  height: min(26rem, 48vw);
+  pointer-events: none;
+  border-radius: 999px;
+  background: radial-gradient(
+    ellipse 70% 65% at 50% 40%,
+    color-mix(in srgb, var(--color-purple-500) 16%, transparent),
+    transparent 72%
+  );
+  filter: blur(52px);
+  opacity: 0.7;
+}
+
+.shell__inner {
+  position: relative;
+  z-index: 1;
+}

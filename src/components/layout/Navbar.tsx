@@ -13,6 +13,7 @@ import { contactCtaClassNames } from "@/components/ui/contactCtaButton";
 import SVisualsButton from "@/components/ui/SVisualsButton";
 
 import { introCssProperties } from "@/lib/introAnimationTiming";
+import { switchLocalePath } from "@/lib/locale-path";
 
 import { MobileNavMenu } from "./MobileNavMenu.client";
 import styles from "./Navbar.module.css";
@@ -121,9 +122,11 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
     [home, dict.nav.links],
   );
 
+  const langSwitchHref = switchLocalePath(pathname ?? `/${locale}`, switchTo);
+
   const langToggle = (
     <Link
-      href={`/${switchTo}`}
+      href={langSwitchHref}
       className={styles["lang-toggle"]}
       data-active-locale={locale}
       aria-label={switchLabel}

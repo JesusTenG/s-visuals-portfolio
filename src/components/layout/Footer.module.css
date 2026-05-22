@@ -1,48 +1,83 @@
-/*//////////////FOOTER//////////////////*/
 .footer {
-  border-top: 1px solid var(--color-border-medium);
+  border-top: 1px solid var(--color-border-faint);
+  background: color-mix(in srgb, var(--color-gray-975) 88%, transparent);
+  font-family: var(--font-ui, system-ui, sans-serif);
 }
 
 .inner {
-  padding: var(--sv-space-10) 0;
+  padding: clamp(2rem, 4vw, 2.75rem) 0;
   display: flex;
   flex-direction: column;
-  gap: var(--sv-space-6);
+  gap: clamp(1.25rem, 2.5vw, 1.75rem);
 }
 
-.row {
+.top {
   display: flex;
   flex-direction: column;
-  gap: var(--sv-space-6);
+  gap: var(--sv-space-4);
 }
 
 .copy {
-  font-size: 0.85rem;
-  color: var(--sv-text-muted);
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-white) 42%, transparent);
+}
+
+.instagram {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-accent-mix-nav-link);
+  transition:
+    color var(--sv-transition-fast),
+    text-shadow var(--sv-transition-fast);
+}
+
+.instagram:hover,
+.instagram:focus-visible {
+  color: var(--color-accent-hover);
+  text-shadow: 0 0 12px var(--color-accent-glow-soft);
 }
 
 .links {
   display: flex;
   flex-wrap: wrap;
-  column-gap: var(--sv-space-6);
-  row-gap: var(--sv-space-2);
-  font-size: 0.85rem;
-  color: var(--sv-text-muted);
+  column-gap: clamp(1rem, 2.5vw, 1.75rem);
+  row-gap: 0.65rem;
 }
 
 .links a {
+  position: relative;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
   text-decoration: none;
-  color: inherit;
-  transition: color var(--sv-transition-fast);
+  color: color-mix(in srgb, var(--color-white) 58%, transparent);
+  padding: 0.2rem 0;
+  transition:
+    color var(--sv-transition-fast),
+    text-shadow var(--sv-transition-fast);
 }
 
-.links a:hover {
-  color: var(--sv-text);
+.links a:hover,
+.links a:focus-visible {
+  color: var(--color-accent-mix-nav-link);
+  text-shadow: 0 0 10px var(--color-accent-glow-soft);
 }
 
-/*//////////////FOOTER — RESPONSIVE//////////////////*/
+.links a:focus-visible {
+  outline: 2px solid var(--color-accent-outline-focus);
+  outline-offset: 3px;
+}
+
 @media (min-width: 768px) {
-  .row {
+  .top {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;

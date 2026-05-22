@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Bebas_Neue, Geist_Mono, Inter, Orbitron } from "next/font/google";
+import { headers } from "next/headers";
 
 import { SmoothScrollHandler } from "@/components/layout/SmoothScrollHandler.client";
+import { readLocaleFromHeaders } from "@/lib/locale-header";
+import { siteUrl } from "@/lib/seo";
 
 import "./globals.css";
 
@@ -34,18 +37,26 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "S-Visuals",
-  description: "Premium short-form video editing.",
+  metadataBase: siteUrl,
+  title: {
+    default: "Simon Saad Visuals",
+    template: "%s",
+  },
+  description:
+    "Premium video editing and production for brands and creators.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headerList = await headers();
+  const lang = readLocaleFromHeaders(headerList.get("x-locale"));
+
   return (
     <html
-      lang="en"
+      lang={lang}
       className={`dark ${inter.variable} ${bebasNeue.variable} ${orbitron.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">

@@ -8,6 +8,8 @@ import {
 
 import type { Dictionary } from "@/i18n/dictionaries";
 
+import { SectionHeader } from "./SectionHeader";
+import shellStyles from "./SectionShell.module.css";
 import styles from "./ServicesSection.module.css";
 
 type Props = Readonly<{
@@ -29,17 +31,18 @@ export function ServicesSection({ dict }: Props) {
   return (
     <section
       id="services"
-      className={styles["services-section"]}
+      className={`${shellStyles.shell} ${styles["services-section"]}`}
       aria-labelledby="services-section-title"
     >
       <div className={styles["services-section__glow"]} aria-hidden="true" />
-      <div className={`container-base ${styles["services-section__inner"]}`}>
-        <header className={styles["services-section__header"]}>
-          <h2 id="services-section-title" className={styles["services-section__title"]}>
-            {services.title}
-          </h2>
-          <p className={styles["services-section__intro"]}>{services.intro}</p>
-        </header>
+      <div className={`container-base ${shellStyles.shell__inner} ${styles["services-section__inner"]}`}>
+        <SectionHeader
+          eyebrow={services.eyebrow}
+          title={services.title}
+          intro={services.intro}
+          titleId="services-section-title"
+          align="center"
+        />
 
         <div className={styles["services-section__grid"]}>
           {services.items.map((item) => {

@@ -8,15 +8,8 @@ export type WorkVideoItem = {
   lightboxSrc: string;
   alt: string;
   videoAriaLabel: string;
-};
-
-export type ClientStoryItem = {
-  title: string;
-  label: string;
-  description: string;
-  href: string;
-  imageSrc: string;
-  alt: string;
+  /** Links this portfolio clip to a collaboration case page. */
+  caseSlug?: string;
 };
 
 export type ImpactSnapshotCardIcon = "eye" | "heart" | "message" | "share2";
@@ -62,6 +55,7 @@ export type Dictionary = {
     scrollLabel: string;
   };
   services: {
+    eyebrow: string;
     title: string;
     intro: string;
     items: Array<{
@@ -70,9 +64,21 @@ export type Dictionary = {
       icon: "smartphone" | "monitor-play" | "megaphone" | "camera";
     }>;
   };
-  about: {
+  identity: {
+    eyebrow: string;
     title: string;
+    paragraphs: string[];
+  };
+  about: {
+    eyebrow: string;
+    title: string;
+    intro: string;
     steps: Array<{ title: string; description: string }>;
+  };
+  faq: {
+    eyebrow: string;
+    title: string;
+    items: Array<{ question: string; answer: string }>;
   };
   work: {
     eyebrow: string;
@@ -91,43 +97,59 @@ export type Dictionary = {
     cards: ImpactSnapshotCardDict[];
   };
   testimonials: {
+    eyebrow: string;
     title: string;
   };
   clientStories: {
     eyebrow: string;
     title: string;
     intro: string;
-    items: ClientStoryItem[];
     viewCase: string;
   };
   contact: {
     title: string;
     description: string;
     cta: string;
+    instagramLabel: string;
+    instagramCta: string;
   };
   caseDetail: {
     back: string;
+    overviewTitle: string;
+    scopeTitle: string;
+    roleTitle: string;
+    platformsTitle: string;
+    formatsTitle: string;
     contentGridTitle: string;
+    servicesLink: string;
+    servicesHref: string;
     cta: string;
     ctaHref: string;
   };
   footer: {
     copyright: string;
+    instagramLabel: string;
     links: {
       work: string;
       services: string;
       about: string;
       contact: string;
+      impressum: string;
+      datenschutz: string;
     };
+  };
+  legal: {
+    impressum: { title: string; sections: Array<{ heading: string; body: string }> };
+    datenschutz: { title: string; sections: Array<{ heading: string; body: string }> };
   };
 };
 
 const dictionaries: Record<Locale, Dictionary> = {
   en: {
     meta: {
-      title: "Simon Saad Visuals — High Impact Video Editing",
+      title: "Simon Saad Visuals — High Impact Video Editing for Brands & Creators",
       description:
-        "Cinematic video editing and high impact visuals for brands, artists and creators.",
+        "Premium video editing and production for brands and creators in Germany — reels, YouTube, ads and filming. Remote collaborations nationwide.",
     },
     nav: {
       wordmark: "Simon Saad Visuals",
@@ -148,7 +170,8 @@ const dictionaries: Record<Locale, Dictionary> = {
       eyebrow: "SIMON SAAD",
       headline: "VISUALS",
       subline: "FOR BRANDS & CREATORS",
-      seoH1: "Simon Saad Visuals — High Impact Video Editing for Brands and Creators",
+      seoH1:
+        "High Impact Video Editing for Brands and Creators — Simon Saad Visuals",
       services: ["REEL EDITING", "YOUTUBE", "ADS", "FILMING"],
       primaryCta: "REQUEST PROJECT",
       primaryCtaHref: "#contact",
@@ -156,15 +179,25 @@ const dictionaries: Record<Locale, Dictionary> = {
       secondaryCtaHref: "#work",
       scrollLabel: "SCROLL",
     },
+    identity: {
+      eyebrow: "PREMIUM SOCIAL EDITOR",
+      title: "About Simon",
+      paragraphs: [
+        "Simon Saad Visuals is a premium video editing and production portfolio for creators, influencers and brands that need social-native content with a high-end look.",
+        "Based in Germany and working remotely nationwide, Simon focuses on short-form edits, YouTube, commercial cuts and on-set filming — with clear communication and an editor-first mindset.",
+        "This is not budget bulk editing. Every project is shaped for impact, rhythm and brand clarity.",
+      ],
+    },
     services: {
+      eyebrow: "SERVICES",
       title: "Editing built for impact",
       intro:
-        "Reels, YouTube, campaigns and on-set filming. Cleanly edited, clearly structured and built to feel premium.",
+        "Reels, TikToks, YouTube, commercial videos and filming — cleanly edited, clearly structured and built to feel premium.",
       items: [
         {
           title: "Shortform Editing",
           description:
-            "Reels, TikToks and shorts with fast pacing, clean cuts and a look built for social.",
+            "Reels, TikToks and YouTube Shorts with fast pacing, clean cuts and a look built for social — ideal when you want short-form video editing for creators and brands.",
           icon: "smartphone",
         },
         {
@@ -176,41 +209,73 @@ const dictionaries: Record<Locale, Dictionary> = {
         {
           title: "Ads & Campaign Cuts",
           description:
-            "Campaign and product videos with strong hooks, a clear message and fast visual impact.",
+            "Commercial and campaign videos with strong hooks — social media ads and product films with fast visual impact.",
           icon: "megaphone",
         },
         {
           title: "Filming",
           description:
-            "On-set capture for brands, creators and campaigns, with planned shots, clean footage and a look built to edit well.",
+            "On-set capture for brands, creators and campaigns — social media video production with footage built to edit well.",
           icon: "camera",
         },
       ],
     },
     about: {
-      title: "ABOUT",
+      eyebrow: "PROCESS",
+      title: "How we work",
+      intro:
+        "From first message to final export — a clear process built for premium collaborations with creators and brands.",
       steps: [
         {
-          title: "Editor-first mindset",
-          description: "Cutting is decision-making — what stays, what moves, what lands.",
+          title: "01 — Project inquiry",
+          description:
+            "You share goal, formats, references and timeline. We align on scope before editing starts.",
         },
         {
-          title: "Story before trends",
-          description: "Technique serves the narrative; style follows substance.",
+          title: "02 — Edit & direction",
+          description:
+            "Simon shapes pacing, structure and visual direction — story-first, platform-aware.",
         },
         {
-          title: "Rhythm you can feel",
-          description: "Micro-timing and macro-structure tuned for emotional pull.",
+          title: "03 — Feedback rounds",
+          description: "Clear revision loops with focused notes — fewer rounds, stronger results.",
         },
         {
-          title: "Collaboration",
-          description: "Clear feedback loops — fewer iterations, stronger outcomes.",
+          title: "04 — Delivery",
+          description:
+            "Final exports optimized for your platforms — ready to publish or run as ads.",
+        },
+      ],
+    },
+    faq: {
+      eyebrow: "QUESTIONS",
+      title: "FAQ",
+      items: [
+        {
+          question: "Do you edit reels, TikToks and YouTube Shorts?",
+          answer:
+            "Yes. Short-form editing for Instagram, TikTok and YouTube Shorts is a core service — including hooks, pacing and platform-native structure.",
+        },
+        {
+          question: "Do you work with clients across Germany?",
+          answer:
+            "Yes. Collaborations run remotely across Germany. Filming can be planned where needed.",
+        },
+        {
+          question: "What is the difference between editing and filming?",
+          answer:
+            "Editing covers cutting and finishing existing footage. Filming includes on-set capture so the project is planned for a strong edit from day one.",
+        },
+        {
+          question: "Who is Simon Saad Visuals not for?",
+          answer:
+            "Wedding-only requests, bulk budget editing or photography-first projects are not a fit. The focus is premium social and commercial video for creators and brands.",
         },
       ],
     },
     work: {
       eyebrow: "SELECTED WORK",
-      title: "Proof in motion.",
+      title: "Proof in motion",
       intro:
         "A first look at pacing, rhythm and visual direction across social edits, brand content and creator-focused videos.",
       collaborationsCtaLabel: "View deeper collaborations",
@@ -225,8 +290,9 @@ const dictionaries: Record<Locale, Dictionary> = {
           posterSrc: "/assets/videos/posters/random/PIZZZZZA-poster.webp",
           previewSrc: "/assets/videos/preview/random/PIZZZZZA-web.mp4",
           lightboxSrc: "/assets/videos/lightbox/random/PIZZZZZA-lightbox.mp4",
-          alt: "Poster frame for Prep My Meal commercial edit",
+          alt: "Poster frame for Prep My Meal commercial edit by Simon Saad Visuals",
           videoAriaLabel: "Open Prep My Meal commercial edit",
+          caseSlug: "prep-my-meal-leon-haegele",
         },
         {
           title: "Educational Reel",
@@ -395,79 +461,104 @@ const dictionaries: Record<Locale, Dictionary> = {
       ],
     },
     testimonials: {
+      eyebrow: "TRUST",
       title: "What clients say about working together",
     },
     clientStories: {
       eyebrow: "COLLABORATIONS",
-      title: "Long-term visual systems for creators and brands.",
+      title: "Long-term visual systems for creators and brands",
       intro:
-        "Explore ongoing collaborations with recurring edits, campaign visuals and content built around a consistent visual direction.",
+        "Explore collaborations with recurring edits, campaign visuals and content built around a consistent visual direction.",
       viewCase: "View case",
-      items: [
-        {
-          title: "Client One",
-          label: "Ongoing Social Edits",
-          description:
-            "Recurring reels, campaign cuts and visual direction across multiple content drops.",
-          href: "/work/client-one",
-          imageSrc: "/assets/clients/client-one-poster.svg",
-          alt: "Preview image for Client One collaboration",
-        },
-        {
-          title: "Client Two",
-          label: "Creator Content System",
-          description:
-            "A consistent editing language across short-form videos, launches and social content.",
-          href: "/work/client-two",
-          imageSrc: "/assets/clients/client-two-poster.svg",
-          alt: "Preview image for Client Two collaboration",
-        },
-        {
-          title: "Client Three",
-          label: "Brand Visuals",
-          description: "Premium campaign edits and atmospheric visuals shaped for social platforms.",
-          href: "/work/client-three",
-          imageSrc: "/assets/clients/client-three-poster.svg",
-          alt: "Preview image for Client Three collaboration",
-        },
-      ],
     },
     contact: {
       title: "Let’s build something sharp.",
       description:
-        "Tell me about your project, timeline and references — I’ll reply with next steps.",
+        "Tell me about your project, timeline and references — I’ll reply with next steps. Project inquiries via Instagram DM.",
       cta: "START A PROJECT",
+      instagramLabel: "@simon__saad",
+      instagramCta: "Message on Instagram",
     },
     caseDetail: {
       back: "Back to selected work",
-      contentGridTitle: "Content drops",
+      overviewTitle: "Project overview",
+      scopeTitle: "Scope",
+      roleTitle: "Role",
+      platformsTitle: "Platforms",
+      formatsTitle: "Formats",
+      contentGridTitle: "Content from this collaboration",
+      servicesLink: "View services",
+      servicesHref: "#services",
       cta: "Start a project",
       ctaHref: "#contact",
     },
     footer: {
       copyright: "© Simon Saad Visuals",
+      instagramLabel: "@simon__saad",
       links: {
         work: "WORK",
         services: "SERVICES",
         about: "ABOUT",
         contact: "CONTACT",
+        impressum: "IMPRINT",
+        datenschutz: "PRIVACY",
+      },
+    },
+    legal: {
+      impressum: {
+        title: "Imprint",
+        sections: [
+          {
+            heading: "Information pursuant to § 5 TMG",
+            body: "Simon Saad Visuals\n[Street and house number]\n[Postal code] [City]\nGermany\n\nContact: via Instagram @simon__saad or project inquiry on this website.\n\nResponsible for content: Simon Saad",
+          },
+          {
+            heading: "Note",
+            body: "Please replace the placeholder address with your legally required business details before publication.",
+          },
+        ],
+      },
+      datenschutz: {
+        title: "Privacy Policy",
+        sections: [
+          {
+            heading: "Overview",
+            body: "This website is operated by Simon Saad Visuals. Personal data is processed only to the extent necessary to operate the site and handle project inquiries.",
+          },
+          {
+            heading: "Hosting & server logs",
+            body: "When you visit this website, the hosting provider may process technical access data (e.g. IP address, timestamp, requested URL) in server logs for security and operation.",
+          },
+          {
+            heading: "External links",
+            body: "Links to Instagram and other third-party services are subject to the privacy policies of those providers. When you follow an external link, their terms apply.",
+          },
+          {
+            heading: "Your rights",
+            body: "You may have rights of access, rectification, erasure, restriction and objection under applicable data protection law. Contact Simon Saad for requests related to this website.",
+          },
+          {
+            heading: "Note",
+            body: "This is a baseline privacy text. Please review and complete it with your hosting provider details and legal counsel before publication.",
+          },
+        ],
       },
     },
   },
   de: {
     meta: {
-      title: "Simon Saad Visuals — High Impact Video Editing",
+      title: "Simon Saad Visuals — Premium Video Editing für Creator & Brands",
       description:
-        "Cinematic Video Editing und hochwertige Visuals für Brands, Artists und Creator.",
+        "Video Editing & Video Produktion in Deutschland: Reels, TikToks, YouTube, Werbevideos & Dreharbeiten für Creator, Influencer und Marken. Jetzt Projekt anfragen.",
     },
     nav: {
       wordmark: "Simon Saad Visuals",
       logoTop: "SIMON SAAD",
       logoBottom: "VISUALS",
       links: {
-        work: "WORK",
-        services: "SERVICES",
-        about: "ABOUT",
+        work: "ARBEIT",
+        services: "LEISTUNGEN",
+        about: "PROZESS",
         contact: "KONTAKT",
       },
       cta: "KONTAKT",
@@ -479,7 +570,8 @@ const dictionaries: Record<Locale, Dictionary> = {
       eyebrow: "SIMON SAAD",
       headline: "VISUALS",
       subline: "FÜR BRANDS & CREATORS",
-      seoH1: "Simon Saad Visuals — High Impact Video Editing für Brands und Creator",
+      seoH1:
+        "Premium Video Editing für Creator und Brands — Simon Saad Visuals",
       services: ["REEL EDITING", "YOUTUBE", "ADS", "FILMING"],
       primaryCta: "PROJEKT ANFRAGEN",
       primaryCtaHref: "#contact",
@@ -487,15 +579,25 @@ const dictionaries: Record<Locale, Dictionary> = {
       secondaryCtaHref: "#work",
       scrollLabel: "SCROLL",
     },
+    identity: {
+      eyebrow: "PREMIUM SOCIAL EDITOR",
+      title: "Über Simon",
+      paragraphs: [
+        "Simon Saad Visuals ist ein Premium-Portfolio für Video Editing und Produktion — für Creator, Influencer und Marken, die social-native Inhalte mit hochwertigem Look brauchen.",
+        "Aus Deutschland, deutschlandweit remote: Fokus auf Short-Form-Schnitt, YouTube, Werbevideos und Dreharbeiten — mit klarer Kommunikation und Editor-First-Denken.",
+        "Kein Budget-Massen-Schnitt. Jedes Projekt wird auf Wirkung, Rhythmus und Markenklarheit ausgelegt.",
+      ],
+    },
     services: {
+      eyebrow: "LEISTUNGEN",
       title: "Schnitt, der Content stärker macht",
       intro:
-        "Reels, YouTube, Kampagnen und Dreharbeiten. Präzise geschnitten, klar geführt, hochwertig umgesetzt.",
+        "Reels, TikToks, YouTube, Werbevideos und Dreharbeiten — präzise geschnitten, klar geführt, hochwertig umgesetzt.",
       items: [
         {
           title: "Shortform-Schnitt",
           description:
-            "Reels, TikToks und Shorts mit schnellem Pacing, klaren Cuts und einem Look, der auf Social funktioniert.",
+            "Reels, TikToks und YouTube Shorts schneiden lassen — mit schnellem Pacing, klaren Cuts und einem Look für Social Media.",
           icon: "smartphone",
         },
         {
@@ -507,41 +609,73 @@ const dictionaries: Record<Locale, Dictionary> = {
         {
           title: "Werbevideos",
           description:
-            "Kampagnen- und Produktvideos mit starken Hooks, klarer Botschaft und schneller visueller Wirkung.",
+            "Werbevideo schneiden oder erstellen lassen — Kampagnen- und Produktvideos mit starken Hooks und klarer Botschaft für Paid Social.",
           icon: "megaphone",
         },
         {
           title: "Filming",
           description:
-            "Dreharbeiten für Brands, Creator und Kampagnen mit geplanten Shots, sauberem Material und einem Look, der sich gut schneiden lässt.",
+            "Dreharbeiten und Social Media Video Produktion für Brands und Creator — geplante Shots, sauberes Material, Look der sich gut schneiden lässt.",
           icon: "camera",
         },
       ],
     },
     about: {
-      title: "ABOUT",
+      eyebrow: "PROZESS",
+      title: "So läuft die Zusammenarbeit",
+      intro:
+        "Von der ersten Anfrage bis zum finalen Export — ein klarer Ablauf für Premium-Projekte mit Creators und Marken.",
       steps: [
         {
-          title: "Editor-Denkweise",
-          description: "Schnitt ist Entscheiden — was bleibt, was trägt, was wirkt.",
+          title: "01 — Projektanfrage",
+          description:
+            "Du teilst Ziel, Formate, Referenzen und Timeline. Scope wird vor dem Schnitt abgestimmt.",
         },
         {
-          title: "Story vor Trend",
-          description: "Technik dient der Erzählung; Stil folgt Substanz.",
+          title: "02 — Schnitt & Richtung",
+          description:
+            "Simon formt Pacing, Struktur und visuelle Richtung — story-first und plattformgerecht.",
         },
         {
-          title: "Spürbarer Rhythmus",
-          description: "Mikro-Timing und Makro-Spannung für emotionale Zugkraft.",
+          title: "03 — Feedback",
+          description: "Klare Revisionsschleifen mit fokussiertem Feedback — weniger Runden, stärkere Ergebnisse.",
         },
         {
-          title: "Zusammenarbeit",
-          description: "Klare Feedback-Schleifen — weniger Runden, mehr Klarheit.",
+          title: "04 — Delivery",
+          description:
+            "Finale Exporte für deine Plattformen — ready to publish oder als Ads einsetzbar.",
+        },
+      ],
+    },
+    faq: {
+      eyebrow: "FRAGEN",
+      title: "Häufige Fragen",
+      items: [
+        {
+          question: "Schneidest du Reels, TikToks und YouTube Shorts?",
+          answer:
+            "Ja. Short-Form-Editing für Instagram, TikTok und YouTube Shorts gehört zum Kernangebot — inklusive Hooks, Pacing und plattformgerechter Struktur.",
+        },
+        {
+          question: "Arbeitest du deutschlandweit?",
+          answer:
+            "Ja. Zusammenarbeit läuft remote in ganz Deutschland. Dreharbeiten können bei Bedarf geplant werden.",
+        },
+        {
+          question: "Was ist der Unterschied zwischen Editing und Filming?",
+          answer:
+            "Editing ist der Schnitt und Finish aus vorhandenem Material. Filming umfasst Dreharbeiten, damit das Projekt von Anfang an auf einen starken Schnitt ausgelegt ist.",
+        },
+        {
+          question: "Für wen ist Simon Saad Visuals nicht geeignet?",
+          answer:
+            "Hochzeitsvideos, Billig-Massen-Schnitt oder Fotografie-first-Projekte passen nicht. Fokus: Premium Social- und Werbevideo für Creator und Marken.",
         },
       ],
     },
     work: {
-      eyebrow: "SELECTED WORK",
-      title: "Proof in motion.",
+      eyebrow: "AUSGEWÄHLTE ARBEIT",
+      title: "Proof in Motion",
       intro:
         "Ein erster Blick auf Pacing, Rhythmus und visuelle Richtung in Social Edits, Brand Content und Creator-Videos.",
       collaborationsCtaLabel: "Mehr Collaborations",
@@ -556,8 +690,9 @@ const dictionaries: Record<Locale, Dictionary> = {
           posterSrc: "/assets/videos/posters/random/PIZZZZZA-poster.webp",
           previewSrc: "/assets/videos/preview/random/PIZZZZZA-web.mp4",
           lightboxSrc: "/assets/videos/lightbox/random/PIZZZZZA-lightbox.mp4",
-          alt: "Posterbild für Prep My Meal Werbespot",
+          alt: "Posterbild für Prep My Meal Werbespot von Simon Saad Visuals",
           videoAriaLabel: "Prep My Meal Werbespot öffnen",
+          caseSlug: "prep-my-meal-leon-haegele",
         },
         {
           title: "Educational Reel",
@@ -727,62 +862,87 @@ const dictionaries: Record<Locale, Dictionary> = {
       ],
     },
     testimonials: {
+      eyebrow: "VERTRAUEN",
       title: "Was Kunden über die Zusammenarbeit sagen",
     },
     clientStories: {
-      eyebrow: "COLLABORATIONS",
-      title: "Langfristige Visual-Systeme für Creator und Marken.",
+      eyebrow: "KOOPERATIONEN",
+      title: "Langfristige Visual-Systeme für Creator und Marken",
       intro:
-        "Entdecke laufende Zusammenarbeiten mit wiederkehrenden Edits, Kampagnen-Visuals und Content mit klarer visueller Richtung.",
+        "Tiefere Einblicke in Zusammenarbeiten mit wiederkehrenden Edits, Kampagnen-Visuals und klarer visueller Richtung.",
       viewCase: "Case ansehen",
-      items: [
-        {
-          title: "Kunde Eins",
-          label: "Ongoing Social Edits",
-          description:
-            "Wiederkehrende Reels, Kampagnen-Cuts und visuelle Richtung über mehrere Content-Drops hinweg.",
-          href: "/work/client-one",
-          imageSrc: "/assets/clients/client-one-poster.svg",
-          alt: "Vorschaubild für die Zusammenarbeit mit Kunde Eins",
-        },
-        {
-          title: "Kunde Zwei",
-          label: "Creator Content System",
-          description:
-            "Eine konsistente Editing-Sprache für Short-Form-Videos, Launches und Social Content.",
-          href: "/work/client-two",
-          imageSrc: "/assets/clients/client-two-poster.svg",
-          alt: "Vorschaubild für die Zusammenarbeit mit Kunde Zwei",
-        },
-        {
-          title: "Kunde Drei",
-          label: "Brand Visuals",
-          description: "Premium Campaign Edits und atmosphärische Visuals für Social-Plattformen.",
-          href: "/work/client-three",
-          imageSrc: "/assets/clients/client-three-poster.svg",
-          alt: "Vorschaubild für die Zusammenarbeit mit Kunde Drei",
-        },
-      ],
     },
     contact: {
       title: "Lass uns etwas Präzises bauen.",
       description:
-        "Schreib mir zu Projekt, Timeline und Referenzen — ich melde mich mit den nächsten Schritten.",
+        "Schreib mir zu Projekt, Timeline und Referenzen — ich melde mich mit den nächsten Schritten. Projektanfragen per Instagram-DM.",
       cta: "PROJEKT STARTEN",
+      instagramLabel: "@simon__saad",
+      instagramCta: "Auf Instagram schreiben",
     },
     caseDetail: {
-      back: "Zurück zu Selected Work",
-      contentGridTitle: "Content Drops",
+      back: "Zurück zu ausgewählter Arbeit",
+      overviewTitle: "Projektüberblick",
+      scopeTitle: "Leistungsumfang",
+      roleTitle: "Rolle",
+      platformsTitle: "Plattformen",
+      formatsTitle: "Formate",
+      contentGridTitle: "Content aus dieser Kooperation",
+      servicesLink: "Leistungen ansehen",
+      servicesHref: "#services",
       cta: "Projekt starten",
       ctaHref: "#contact",
     },
     footer: {
       copyright: "© Simon Saad Visuals",
+      instagramLabel: "@simon__saad",
       links: {
-        work: "WORK",
-        services: "SERVICES",
-        about: "ABOUT",
+        work: "ARBEIT",
+        services: "LEISTUNGEN",
+        about: "PROZESS",
         contact: "KONTAKT",
+        impressum: "IMPRESSUM",
+        datenschutz: "DATENSCHUTZ",
+      },
+    },
+    legal: {
+      impressum: {
+        title: "Impressum",
+        sections: [
+          {
+            heading: "Angaben gemäß § 5 TMG",
+            body: "Simon Saad Visuals\n[Straße und Hausnummer]\n[PLZ] [Ort]\nDeutschland\n\nKontakt: über Instagram @simon__saad oder Projektanfrage über diese Website.\n\nVerantwortlich für den Inhalt: Simon Saad",
+          },
+          {
+            heading: "Hinweis",
+            body: "Bitte ersetze die Platzhalter-Adresse vor Veröffentlichung durch deine vollständigen Impressumsangaben.",
+          },
+        ],
+      },
+      datenschutz: {
+        title: "Datenschutz",
+        sections: [
+          {
+            heading: "Überblick",
+            body: "Diese Website wird von Simon Saad Visuals betrieben. Personenbezogene Daten werden nur verarbeitet, soweit das für den Betrieb der Website und die Bearbeitung von Projektanfragen erforderlich ist.",
+          },
+          {
+            heading: "Hosting & Server-Logs",
+            body: "Beim Besuch der Website kann der Hosting-Anbieter technische Zugriffsdaten (z. B. IP-Adresse, Zeitstempel, aufgerufene URL) in Server-Logs für Betrieb und Sicherheit verarbeiten.",
+          },
+          {
+            heading: "Externe Links",
+            body: "Links zu Instagram und anderen Diensten unterliegen den Datenschutzbestimmungen der jeweiligen Anbieter.",
+          },
+          {
+            heading: "Deine Rechte",
+            body: "Du hast nach geltendem Datenschutzrecht u. a. Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung und Widerspruch. Anfragen kannst du an Simon Saad richten.",
+          },
+          {
+            heading: "Hinweis",
+            body: "Dieser Text ist eine Basisversion. Bitte mit Hosting-Details und rechtlicher Prüfung vor Veröffentlichung ergänzen.",
+          },
+        ],
       },
     },
   },

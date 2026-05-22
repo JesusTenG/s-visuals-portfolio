@@ -1,5 +1,6 @@
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { INSTAGRAM_URL } from "@/lib/site";
 
 import styles from "./Footer.module.css";
 
@@ -13,28 +14,27 @@ export function Footer({ locale, dict }: Props) {
 
   return (
     <footer className={styles.footer}>
-      <div className="container-base">
-        <div className={styles.inner}>
-          <div className={styles.row}>
-            <div className={styles.copy}>{dict.footer.copyright}</div>
-            <nav className={styles.links}>
-              <a href={`${home}#work`}>
-                {dict.footer.links.work}
-              </a>
-              <a href={`${home}#services`}>
-                {dict.footer.links.services}
-              </a>
-              <a href={`${home}#about`}>
-                {dict.footer.links.about}
-              </a>
-              <a href={`${home}#contact`}>
-                {dict.footer.links.contact}
-              </a>
-            </nav>
-          </div>
+      <div className={`container-base ${styles.inner}`}>
+        <div className={styles.top}>
+          <p className={styles.copy}>{dict.footer.copyright}</p>
+          <a
+            href={INSTAGRAM_URL}
+            className={styles.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {dict.footer.instagramLabel}
+          </a>
         </div>
+        <nav className={styles.links} aria-label="Footer">
+          <a href={`${home}#work`}>{dict.footer.links.work}</a>
+          <a href={`${home}#services`}>{dict.footer.links.services}</a>
+          <a href={`${home}#about`}>{dict.footer.links.about}</a>
+          <a href={`${home}#contact`}>{dict.footer.links.contact}</a>
+          <a href={`/${locale}/impressum`}>{dict.footer.links.impressum}</a>
+          <a href={`/${locale}/datenschutz`}>{dict.footer.links.datenschutz}</a>
+        </nav>
       </div>
     </footer>
   );
 }
-

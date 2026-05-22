@@ -1,0 +1,56 @@
+/* Shared section headers — aligned with hero eyebrow + work headline rhythm */
+.header {
+  max-width: min(48rem, 100%);
+  margin-bottom: clamp(2.25rem, 4.5vw, 3.25rem);
+}
+
+.header--center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.header--start {
+  text-align: left;
+}
+
+.eyebrow {
+  margin: 0 0 var(--sv-space-3);
+  font-family: var(--font-ui, system-ui, sans-serif);
+  font-size: clamp(0.62rem, 0.28rem + 0.55vw, 0.78rem);
+  font-weight: 600;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  text-indent: 0.36em;
+  color: color-mix(in srgb, var(--color-white) 58%, var(--color-gray-500));
+  text-wrap: balance;
+}
+
+.header--center .eyebrow {
+  margin-inline: auto;
+}
+
+.title {
+  margin: 0 0 var(--sv-space-4);
+  font-family: var(--font-ui, system-ui, sans-serif);
+  font-size: clamp(1.75rem, 3.8vw, 2.65rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  color: var(--color-text-section-title);
+  text-wrap: balance;
+}
+
+.intro {
+  margin: 0;
+  max-width: 40rem;
+  font-family: var(--font-ui, system-ui, sans-serif);
+  font-size: clamp(0.9rem, 1.05vw, 1.02rem);
+  line-height: 1.65;
+  letter-spacing: 0.012em;
+  color: var(--color-text-muted);
+  text-wrap: pretty;
+}
+
+.header--center .intro {
+  margin-inline: auto;
+}

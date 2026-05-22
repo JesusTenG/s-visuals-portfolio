@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import type { WorkCase, WorkCaseLocaleContent } from "@/data/work-cases";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
-import type { WorkCase } from "@/data/work-cases";
 import SVisualsButton from "@/components/ui/SVisualsButton";
 
 import { CaseContentDropCard } from "./CaseContentDropCard";
@@ -13,11 +13,31 @@ type Props = Readonly<{
   locale: Locale;
   dict: Dictionary;
   workCase: WorkCase;
+  content: WorkCaseLocaleContent;
 }>;
 
-export function WorkCaseDetailView({ locale, dict, workCase }: Props) {
+function MetaList({
+  title,
+  items,
+}: Readonly<{ title: string; items: string[] }>) {
+  if (items.length === 0) return null;
+
+  return (
+    <div className={styles["work-case-detail__meta-block"]}>
+      <h3 className={styles["work-case-detail__meta-title"]}>{title}</h3>
+      <ul className={styles["work-case-detail__meta-list"]}>
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export function WorkCaseDetailView({ locale, dict, workCase, content }: Props) {
   const homeWorkHash = `/${locale}#work`;
   const contactHref = `/${locale}${dict.caseDetail.ctaHref}`;
+  const servicesHref = `/${locale}${dict.caseDetail.servicesHref}`;
 
   return (
     <article className={styles["work-case-detail"]}>
@@ -28,15 +48,15 @@ export function WorkCaseDetailView({ locale, dict, workCase }: Props) {
       </p>
 
       <header className={styles["work-case-detail__header"]}>
-        <p className={styles["work-case-detail__label"]}>{workCase.label}</p>
-        <h1 className={styles["work-case-detail__title"]}>{workCase.title}</h1>
-        <p className={styles["work-case-detail__description"]}>{workCase.description}</p>
+        <p className={styles["work-case-detail__label"]}>{content.label}</p>
+        <h1 className={styles["work-case-detail__title"]}>{content.title}</h1>
+        <p className={styles["work-case-detail__description"]}>{content.description}</p>
       </header>
 
       <div className={styles["work-case-detail__hero-media"]}>
         <Image
           src={workCase.posterSrc}
-          alt={workCase.alt}
+          alt={content.alt}
           fill
           className={styles["work-case-detail__hero-image"]}
           sizes="(max-width: 980px) 96vw, 72rem"
@@ -44,12 +64,28 @@ export function WorkCaseDetailView({ locale, dict, workCase }: Props) {
         />
       </div>
 
+      <section
+        className={styles["work-case-detail__overview"]}
+        aria-labelledby="case-overview-heading"
+      >
+        <h2 id="case-overview-heading" className={styles["work-case-detail__section-title"]}>
+          {dict.caseDetail.overviewTitle}
+        </h2>
+        <p className={styles["work-case-detail__overview-text"]}>{content.overview}</p>
+        <div className={styles["work-case-detail__meta-grid"]}>
+          <MetaList title={dict.caseDetail.roleTitle} items={content.role} />
+          <MetaList title={dict.caseDetail.platformsTitle} items={content.platforms} />
+          <MetaList title={dict.caseDetail.formatsTitle} items={content.formats} />
+          <MetaList title={dict.caseDetail.scopeTitle} items={content.scope} />
+        </div>
+      </section>
+
       <section className={styles["work-case-detail__drops"]} aria-labelledby="case-drops-heading">
-        <h2 id="case-drops-heading" className={styles["work-case-detail__drops-title"]}>
+        <h2 id="case-drops-heading" className={styles["work-case-detail__section-title"]}>
           {dict.caseDetail.contentGridTitle}
         </h2>
         <div className={styles["work-case-detail__drops-grid"]}>
-          {workCase.contentDrops.map((drop) => (
+          {content.contentDrops.map((drop) => (
             <CaseContentDropCard
               key={drop.title}
               title={drop.title}
@@ -64,6 +100,9 @@ export function WorkCaseDetailView({ locale, dict, workCase }: Props) {
 
       <div className={styles["work-case-detail__cta"]}>
         <SVisualsButton href={contactHref}>{dict.caseDetail.cta}</SVisualsButton>
+        <Link href={servicesHref} className={styles["work-case-detail__secondary-link"]}>
+          {dict.caseDetail.servicesLink}
+        </Link>
       </div>
     </article>
   );

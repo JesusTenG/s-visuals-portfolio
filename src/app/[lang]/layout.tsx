@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { defaultLocale, isLocale, type Locale } from "@/i18n/config";
+import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { buildPageMetadata } from "@/lib/seo";
 
 type Props = Readonly<{
   children: React.ReactNode;
@@ -10,7 +11,7 @@ type Props = Readonly<{
 }>;
 
 export async function generateStaticParams(): Promise<Array<{ lang: Locale }>> {
-  return [{ lang: "en" }, { lang: "de" }];
+  return [{ lang: "de" }, { lang: "en" }];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -19,18 +20,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const dict = await getDictionary(lang);
 
-  return {
+  return buildPageMetadata({
+    locale: lang,
     title: dict.meta.title,
     description: dict.meta.description,
-    alternates: {
-      canonical: `/${lang}`,
-      languages: {
-        en: "/en",
-        de: "/de",
-        "x-default": `/${defaultLocale}`,
-      },
-    },
-  };
+  });
 }
 
 export default async function LangLayout({ children, params }: Props) {
@@ -43,4 +37,3 @@ export default async function LangLayout({ children, params }: Props) {
     </div>
   );
 }
-

@@ -99,7 +99,7 @@ export function WorkVideoCard({
     .join(" ");
 
   return (
-    <article className={styles["work-video-card"]} data-work-reveal-card>
+    <article className={styles["work-video-card"]}>
       <button
         type="button"
         className={styles["work-video-card__media-trigger"]}

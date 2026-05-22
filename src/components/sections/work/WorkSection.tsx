@@ -1,4 +1,8 @@
+import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
+
+import { SectionHeader } from "@/components/sections/SectionHeader";
+import shellStyles from "@/components/sections/SectionShell.module.css";
 
 import { WorkVideoGrid } from "./WorkVideoGrid.client";
 import { WorkSectionRoot } from "./WorkSectionRoot.client";
@@ -6,27 +10,31 @@ import styles from "./WorkSection.module.css";
 
 type Props = Readonly<{
   dict: Dictionary;
+  locale: Locale;
 }>;
 
-export function WorkSection({ dict }: Props) {
+export function WorkSection({ dict, locale }: Props) {
   const { work } = dict;
 
   return (
     <WorkSectionRoot>
-      <div className={`container-base ${styles["work-section__inner"]}`}>
-        <header className={styles["work-section__header"]}>
-          <p className={styles["work-section__eyebrow"]}>{work.eyebrow}</p>
-          <h2 id="work-section-title" className={styles["work-section__title"]}>
-            {work.title}
-          </h2>
-          <p className={styles["work-section__intro"]}>{work.intro}</p>
-        </header>
+      <div className={shellStyles.shell__glow} aria-hidden="true" />
+      <div className={`container-base ${shellStyles.shell__inner} ${styles["work-section__inner"]}`}>
+        <SectionHeader
+          eyebrow={work.eyebrow}
+          title={work.title}
+          intro={work.intro}
+          titleId="work-section-title"
+          align="center"
+        />
 
         <WorkVideoGrid
+          locale={locale}
           featuredItems={work.items}
           moreItems={work.moreItems}
           viewMoreWork={work.viewMoreWork}
           showLessWork={work.showLessWork}
+          viewCaseLabel={dict.clientStories.viewCase}
         />
       </div>
     </WorkSectionRoot>

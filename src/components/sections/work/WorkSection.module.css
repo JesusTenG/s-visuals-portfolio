@@ -1,9 +1,13 @@
 /*//////////////WORK SECTION//////////////////*/
 .work-section {
   position: relative;
+  isolation: isolate;
+  overflow: hidden;
   padding-block: var(--sv-section-padding);
   border-top: 1px solid var(--color-border-faint);
   color: var(--color-text-primary);
+  font-family: var(--font-ui, system-ui, sans-serif);
+  background: var(--color-gray-950);
 }
 
 .work-section__inner {
@@ -11,16 +15,10 @@
   flex-direction: column;
 }
 
-.work-section__header {
-  max-width: min(48rem, 100%);
-  margin-inline: auto;
-  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
-  text-align: center;
-}
-
 /*//////////////SCROLL REVEAL — featured video cards (staggered)//////////////////*/
 /* data-work-reveal-card: stable hook — class work-video-card is hashed per CSS module */
-.work-section:not(.work-section--revealed) .work-section__grid > [data-work-reveal-card] {
+.work-section:not(.work-section--revealed) .work-section__grid > [data-work-reveal-card],
+.work-section:not(.work-section--revealed) .work-section__grid > .work-section__card-wrap {
   opacity: 0;
   transform: translateY(24px);
 }
@@ -49,39 +47,38 @@
   transition-delay: 0.5s;
 }
 
-.work-section__eyebrow {
-  margin: 0 auto var(--sv-space-3);
-  max-width: 42rem;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-}
-
-.work-section__title {
-  margin: 0 auto var(--sv-space-4);
-  max-width: min(22rem, 92vw);
-  font-size: clamp(1.875rem, 4.2vw, 2.875rem);
-  font-weight: 600;
-  line-height: 1.08;
-  letter-spacing: -0.035em;
-  color: var(--color-text-section-title);
-}
-
-.work-section__intro {
-  margin: 0 auto;
-  max-width: 36rem;
-  font-size: 0.9375rem;
-  line-height: 1.65;
-  letter-spacing: 0.012em;
-  color: var(--color-text-muted);
-}
-
 .work-section__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.work-section__card-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.work-section__case-link {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-accent-mix-nav-link);
+  transition:
+    color var(--sv-transition-fast),
+    text-shadow var(--sv-transition-fast);
+}
+
+.work-section__case-link:hover,
+.work-section__case-link:focus-visible {
+  color: var(--color-accent-hover);
+  text-shadow: 0 0 10px var(--color-accent-glow-soft);
+}
+
+.work-section__case-link:hover {
+  color: var(--color-accent-hover);
 }
 
 .work-section__toggle-wrap {
@@ -228,7 +225,8 @@
   }
 
   /* Touch: Cards sofort sichtbar — hohe Section erreicht 40%-Reveal oft nie */
-  .work-section:not(.work-section--revealed) .work-section__grid > [data-work-reveal-card] {
+  .work-section:not(.work-section--revealed) .work-section__grid > [data-work-reveal-card],
+.work-section:not(.work-section--revealed) .work-section__grid > .work-section__card-wrap {
     opacity: 1;
     transform: none;
   }
@@ -239,7 +237,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .work-section:not(.work-section--revealed) .work-section__grid > [data-work-reveal-card] {
+  .work-section:not(.work-section--revealed) .work-section__grid > [data-work-reveal-card],
+.work-section:not(.work-section--revealed) .work-section__grid > .work-section__card-wrap {
     opacity: 1;
     transform: none;
   }

@@ -1,6 +1,7 @@
 import type { Dictionary } from "@/i18n/dictionaries";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+import { SectionHeader } from "./SectionHeader";
+import shellStyles from "./SectionShell.module.css";
 import styles from "./ProcessSection.module.css";
 
 type Props = Readonly<{
@@ -8,27 +9,35 @@ type Props = Readonly<{
 }>;
 
 export function ProcessSection({ dict }: Props) {
+  const { about } = dict;
+
   return (
-    <section id="about" className={styles.section}>
-      <div className="container-base">
-        <h2 className="section-title">{dict.about.title}</h2>
-        <div className={styles.grid}>
-          {dict.about.steps.map((step, idx) => (
-            <Card key={step.title} className="glass-card">
-              <CardHeader className="flex-row items-start justify-between gap-3">
-                <CardTitle className="leading-snug">{step.title}</CardTitle>
-                <span className={styles["step-number"]}>
+    <section id="about" className={shellStyles.shell} aria-labelledby="about-section-title">
+      <div className={`container-base ${shellStyles.shell__inner}`}>
+        <SectionHeader
+          eyebrow={about.eyebrow}
+          title={about.title}
+          intro={about.intro}
+          titleId="about-section-title"
+          align="center"
+        />
+
+        <ol className={styles.steps}>
+          {about.steps.map((step, idx) => (
+            <li key={step.title} className={styles.step}>
+              <article className={styles["step-card"]}>
+                <span className={styles.index} aria-hidden="true">
                   {String(idx + 1).padStart(2, "0")}
                 </span>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm leading-6 text-muted-foreground">{step.description}</p>
-              </CardContent>
-            </Card>
+                <div className={styles.copy}>
+                  <h3 className={styles["step-title"]}>{step.title}</h3>
+                  <p className={styles["step-text"]}>{step.description}</p>
+                </div>
+              </article>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );
 }
-
