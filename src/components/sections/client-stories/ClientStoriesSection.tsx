@@ -6,7 +6,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 
 import styles from "./ClientStoriesSection.module.css";
 
-type Props = Readonly<{
+type Props = Readonly<{2
   locale: Locale;
   dict: Dictionary;
 }>;

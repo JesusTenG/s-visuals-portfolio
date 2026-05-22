@@ -46,6 +46,8 @@ export type Dictionary = {
     };
     cta: string;
     langSwitchLabel: string;
+    heroVideoPreviewToggle: string;
+    heroImageToggle: string;
   };
   hero: {
     eyebrow: string;
@@ -137,16 +139,18 @@ const dictionaries: Record<Locale, Dictionary> = {
         about: "ABOUT",
         contact: "CONTACT",
       },
-      cta: "LET'S TALK",
+      cta: "CONTACT",
       langSwitchLabel: "DE",
+      heroVideoPreviewToggle: "Video Preview",
+      heroImageToggle: "Image Hero",
     },
     hero: {
-      eyebrow: "HIGH IMPACT",
+      eyebrow: "SIMON SAAD",
       headline: "VISUALS",
       subline: "FOR BRANDS & CREATORS",
       seoH1: "Simon Saad Visuals — High Impact Video Editing for Brands and Creators",
       services: ["REEL EDITING", "YOUTUBE", "ADS", "FILMING"],
-      primaryCta: "LET'S TALK",
+      primaryCta: "REQUEST PROJECT",
       primaryCtaHref: "#contact",
       secondaryCta: "VIEW WORK",
       secondaryCtaHref: "#work",
@@ -466,16 +470,18 @@ const dictionaries: Record<Locale, Dictionary> = {
         about: "ABOUT",
         contact: "KONTAKT",
       },
-      cta: "ANFRAGEN",
+      cta: "KONTAKT",
       langSwitchLabel: "EN",
+      heroVideoPreviewToggle: "Video Preview",
+      heroImageToggle: "Bild-Hero",
     },
     hero: {
-      eyebrow: "HIGH IMPACT",
+      eyebrow: "SIMON SAAD",
       headline: "VISUALS",
-      subline: "FÜR BRANDS & CREATOR",
+      subline: "FÜR BRANDS & CREATORS",
       seoH1: "Simon Saad Visuals — High Impact Video Editing für Brands und Creator",
       services: ["REEL EDITING", "YOUTUBE", "ADS", "FILMING"],
-      primaryCta: "ANFRAGEN",
+      primaryCta: "PROJEKT ANFRAGEN",
       primaryCtaHref: "#contact",
       secondaryCta: "WORK ANSEHEN",
       secondaryCtaHref: "#work",

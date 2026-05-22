@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Globe } from "lucide-react";
@@ -8,6 +9,7 @@ import { Globe } from "lucide-react";
 import type { Locale } from "@/i18n/config";
 import { otherLocale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { contactCtaClassNames } from "@/components/ui/contactCtaButton";
 import SVisualsButton from "@/components/ui/SVisualsButton";
 
 import { introCssProperties } from "@/lib/introAnimationTiming";
@@ -16,6 +18,11 @@ import { MobileNavMenu } from "./MobileNavMenu.client";
 import styles from "./Navbar.module.css";
 
 const MOBILE_NAV_PANEL_ID = "mobile-navigation-panel";
+/** Bump when replacing `public/assets/logo/logo1.png` (avoids stale browser / Next image cache). */
+const NAV_LOGO_ASSET_VERSION = "2";
+const NAV_LOGO_SRC = `/assets/logo/logo1.png?v=${NAV_LOGO_ASSET_VERSION}`;
+const HERO_SECTION_ID = "hero";
+const DESKTOP_SCROLL_FALLBACK_PX = 32;
 
 type Props = Readonly<{
   locale: Locale;
@@ -31,7 +38,36 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [introFinished, setIntroFinished] = useState(!introAnimation);
+  const [scrolled, setScrolled] = useState(false);
   const home = `/${locale}`;
+
+  useEffect(() => {
+    const hero = document.getElementById(HERO_SECTION_ID);
+
+    const syncScroll = () => {
+      if (hero) {
+        setScrolled(hero.getBoundingClientRect().bottom <= 0);
+        return;
+      }
+      setScrolled(window.scrollY > DESKTOP_SCROLL_FALLBACK_PX);
+    };
+
+    syncScroll();
+    window.addEventListener("scroll", syncScroll, { passive: true });
+    window.addEventListener("resize", syncScroll, { passive: true });
+
+    let heroObserver: ResizeObserver | undefined;
+    if (hero && typeof ResizeObserver !== "undefined") {
+      heroObserver = new ResizeObserver(syncScroll);
+      heroObserver.observe(hero);
+    }
+
+    return () => {
+      window.removeEventListener("scroll", syncScroll);
+      window.removeEventListener("resize", syncScroll);
+      heroObserver?.disconnect();
+    };
+  }, [pathname]);
 
   useEffect(() => {
     if (!introAnimation || introFinished) return;
@@ -118,6 +154,7 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
     <header
       className={styles["site-nav"]}
       data-menu-open={mobileOpen ? "true" : "false"}
+      data-scrolled={scrolled ? "true" : undefined}
       data-intro-seq={introAnimation && !introFinished ? "true" : undefined}
       style={introAnimation && !introFinished ? introCssProperties() : undefined}
       onAnimationEnd={handleIntroAnimationEnd}
@@ -137,8 +174,15 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
             aria-label={dict.nav.wordmark}
             onClick={handleWordmarkClick}
           >
-            <span className={styles["nav-logo-main"]}>{dict.nav.logoTop}</span>
-            <span className={styles["nav-logo-sub"]}>{dict.nav.logoBottom}</span>
+            <Image
+              src={NAV_LOGO_SRC}
+              alt=""
+              width={172}
+              height={46}
+              className={styles["nav-logo-image"]}
+              priority
+              unoptimized
+            />
           </Link>
 
           <nav className={`${styles["nav-links"]} ${styles["navbar-desktop-links"]}`} aria-label="Primary">
@@ -152,7 +196,8 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
             <SVisualsButton
               href={`${home}#contact`}
               showIcon={false}
-              className={`${styles.cta} ${styles["cta-button"]}`}
+              enableStarBorder={false}
+              className={`${styles.cta} ${contactCtaClassNames.primary}`}
             >
               {dict.nav.cta}
             </SVisualsButton>

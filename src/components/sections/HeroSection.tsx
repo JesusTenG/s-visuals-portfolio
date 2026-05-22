@@ -1,23 +1,11 @@
-import type { CSSProperties } from "react";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { HeroSectionBackground } from "@/components/hero/HeroSectionBackground.client";
+import { HeroVisualModeToggle } from "@/components/hero/HeroVisualModeToggle.client";
+import { contactCtaClassNames } from "@/components/ui/contactCtaButton";
 import SVisualsButton from "@/components/ui/SVisualsButton";
 import { introCssProperties } from "@/lib/introAnimationTiming";
-import Image from "next/image";
 
 import styles from "./HeroSection.module.css";
-
-// NOTE: hero-frame-01 is referenced as -v2 to bust both browser cache and the
-// Next.js image-optimizer cache after the source asset was replaced on disk.
-// The file on disk is renamed to match. If you replace it again, bump to -v3.
-const HERO_FRAMES = [
-  "/assets/hero/hero-frame-01-camera-v2.webp",
-  "/assets/hero/hero-frame-02-fitness-filming.webp",
-  "/assets/hero/hero-frame-04-city-shot.webp",
-  "/assets/hero/hero-frame-03-cutter-desktop.webp",
-  "/assets/hero/hero-frame-05-closeup-lens.webp",
-] as const;
-
-const HERO_PANEL_CENTER_INDEX = (HERO_FRAMES.length - 1) / 2;
 
 /** Layout debug: panel stripes, center line, boxes around VISUALS. Set to false when done. */
 const HERO_LAYOUT_DEBUG = false;
@@ -29,34 +17,12 @@ type Props = Readonly<{
 export function HeroSection({ dict }: Props) {
   return (
     <section
+      id="hero"
       className={`${styles.hero}${HERO_LAYOUT_DEBUG ? ` ${styles["hero--layout-debug"]}` : ""}`}
       style={introCssProperties()}
       aria-labelledby="hero-heading"
     >
-      <div className={styles["hero-panels"]} aria-hidden="true">
-        {HERO_FRAMES.map((src, index) => (
-          <div
-            key={src}
-            className={styles["hero-panel"]}
-            style={
-              {
-                ["--hero-panel-ring" as string]: Math.abs(
-                  index - HERO_PANEL_CENTER_INDEX,
-                ),
-              } as CSSProperties
-            }
-          >
-            <Image
-              src={src}
-              alt=""
-              fill
-              className={styles["hero-panel-img"]}
-              sizes="(max-width: 768px) 22vw, 20vw"
-              priority={index === 2}
-            />
-          </div>
-        ))}
-      </div>
+      <HeroSectionBackground />
 
       <div className={styles["hero-overlay"]} aria-hidden="true" />
 
@@ -103,19 +69,18 @@ export function HeroSection({ dict }: Props) {
           <div
             className={`${styles["hero-actions"]} ${styles["hero-enter-fade"]} ${styles["hero-enter-d5"]}`}
           >
-            <SVisualsButton href={dict.hero.primaryCtaHref} showIcon={false}>
-              {dict.hero.primaryCta}
-            </SVisualsButton>
             <SVisualsButton
-              href={dict.hero.secondaryCtaHref}
-              variant="secondary"
+              href={dict.hero.primaryCtaHref}
               showIcon={false}
+              className={`${contactCtaClassNames.primary} ${contactCtaClassNames.prominent}`}
             >
-              {dict.hero.secondaryCta}
+              {dict.hero.primaryCta}
             </SVisualsButton>
           </div>
         </div>
       </div>
+
+      <HeroVisualModeToggle dict={dict} />
 
       <div className={`${styles["hero-scroll"]} ${styles["hero-scroll-intro"]}`}>
         <span className={styles["hero-scroll-line"]} aria-hidden="true" />

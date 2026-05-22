@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { HeroVisualModeProvider } from "@/components/hero/HeroVisualModeProvider.client";
 import { Navbar } from "@/components/layout/Navbar";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { WorkSection } from "@/components/sections/work/WorkSection";
@@ -25,7 +26,7 @@ export default async function LangHomePage({ params }: Props) {
   const dict = await getDictionary(locale);
 
   return (
-    <>
+    <HeroVisualModeProvider>
       <Navbar locale={locale} dict={dict} introAnimation />
       <main className="flex-1">
         <HeroSection dict={dict} />
@@ -39,6 +40,6 @@ export default async function LangHomePage({ params }: Props) {
         <FinalCtaSection dict={dict} />
       </main>
       <Footer locale={locale} dict={dict} />
-    </>
+    </HeroVisualModeProvider>
   );
 }

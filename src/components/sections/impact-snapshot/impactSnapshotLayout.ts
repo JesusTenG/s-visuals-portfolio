@@ -15,7 +15,7 @@ export const IMPACT_ARROW_START_DELAY_MS = Math.round(IMPACT_CURVE_DURATION_MS *
 export const IMPACT_KPI_STAGGER_MS = 200;
 
 /** Duration of each KPI count-up once its node is visible (ms). */
-export const IMPACT_KPI_COUNT_DURATION_MS = 1600;
+export const IMPACT_KPI_COUNT_DURATION_MS = 18600;
 
 export const IMPACT_CURVE_VIEWBOX = { width: 1000, height: 260 } as const;
 

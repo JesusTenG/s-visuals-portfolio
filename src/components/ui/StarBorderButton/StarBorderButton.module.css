@@ -1,0 +1,118 @@
+/*//////////////STAR BORDER BUTTON — edge-traveling glow (clipped to button)//////////////////*/
+.star-border-button {
+  --star-border-glow-color: var(--color-accent, #8659ce);
+  --star-border-speed: 5s;
+  --star-border-glow-strength: 0.72;
+  --star-border-thickness: 1px;
+
+  position: relative;
+  display: inline-flex;
+  max-width: 100%;
+  overflow: visible;
+  vertical-align: middle;
+}
+
+.star-border-button__surface {
+  position: relative;
+  display: inline-flex;
+  max-width: 100%;
+  border-radius: var(--sv-radius-ui);
+  overflow: hidden;
+  isolation: isolate;
+  padding: var(--star-border-thickness);
+  transition: filter 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.star-border-button:has(:hover) .star-border-button__surface,
+.star-border-button:has(:focus-visible) .star-border-button__surface {
+  filter: brightness(1.06);
+}
+
+.star-border-button__glow-top,
+.star-border-button__glow-bottom {
+  position: absolute;
+  width: 300%;
+  height: 48%;
+  border-radius: 999px;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--star-border-glow-strength);
+  filter: blur(5px);
+  background: radial-gradient(
+    circle,
+    var(--star-border-glow-color),
+    transparent 14%
+  );
+}
+
+.star-border-button__glow-bottom {
+  bottom: -32%;
+  right: -250%;
+  animation: star-border-move-bottom var(--star-border-speed) linear infinite;
+}
+
+.star-border-button__glow-top {
+  top: -32%;
+  left: -250%;
+  animation: star-border-move-top var(--star-border-speed) linear infinite;
+}
+
+.star-border-button__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  border-radius: calc(var(--sv-radius-ui) - var(--star-border-thickness));
+}
+
+.star-border-button__inner > * {
+  width: 100%;
+}
+
+.star-border-button--primary {
+  --star-border-glow-strength: 0.78;
+}
+
+.star-border-button--secondary {
+  --star-border-glow-strength: 0.45;
+}
+
+/* Endlos-Loop ohne Pause: kein alternate (kein Rücklauf / Wartezeit am Ende) */
+@keyframes star-border-move-bottom {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes star-border-move-top {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+.star-border-button__inner > :focus-visible {
+  outline: 2px solid var(--color-accent-outline-strong);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .star-border-button__glow-bottom,
+  .star-border-button__glow-top {
+    animation: none;
+    opacity: 0.4;
+  }
+
+  .star-border-button:has(:hover) .star-border-button__surface,
+  .star-border-button:has(:focus-visible) .star-border-button__surface {
+    filter: none;
+  }
+}

@@ -62,6 +62,27 @@
   display: none;
 }
 
+/* Inside StarBorderButton — no outer purple glow; border animation carries accent */
+.svisuals-button--within-star-border {
+  border: 1px solid color-mix(in srgb, var(--color-gray-600) 85%, transparent) !important;
+  box-shadow: none !important;
+}
+
+.svisuals-button--within-star-border.svisuals-button--primary {
+  box-shadow: none !important;
+}
+
+.svisuals-button--within-star-border.svisuals-button--primary:hover,
+.svisuals-button--within-star-border.svisuals-button--secondary:hover {
+  box-shadow: none !important;
+}
+
+.svisuals-button--within-star-border:hover,
+.svisuals-button--within-star-border:focus-visible {
+  transform: none !important;
+  filter: none;
+}
+
 .svisuals-button:focus-visible {
   outline: 2px solid var(--color-accent-outline-strong);
   outline-offset: 3px;
