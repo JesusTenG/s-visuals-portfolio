@@ -78,6 +78,23 @@
   --star-border-glow-strength: 0.45;
 }
 
+.star-border-button--block {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+.star-border-button--block .star-border-button__surface {
+  display: block;
+  width: 100%;
+  border-radius: var(--sv-radius-card);
+}
+
+.star-border-button--block .star-border-button__inner {
+  display: block;
+  border-radius: calc(var(--sv-radius-card) - var(--star-border-thickness));
+}
+
 /* Endlos-Loop ohne Pause: kein alternate (kein Rücklauf / Wartezeit am Ende) */
 @keyframes star-border-move-bottom {
   0% {

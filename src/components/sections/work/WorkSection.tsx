@@ -1,7 +1,8 @@
-import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 
-import { SectionHeader } from "@/components/sections/SectionHeader";
+import { SectionIntro } from "@/components/section-intro/SectionIntro";
+import { sectionIntroTuning } from "@/components/section-intro/sectionIntroTuning";
+import editorialLayout from "@/components/sections/editorialLayout.module.css";
 import shellStyles from "@/components/sections/SectionShell.module.css";
 
 import { WorkVideoGrid } from "./WorkVideoGrid.client";
@@ -10,32 +11,34 @@ import styles from "./WorkSection.module.css";
 
 type Props = Readonly<{
   dict: Dictionary;
-  locale: Locale;
 }>;
 
-export function WorkSection({ dict, locale }: Props) {
+export function WorkSection({ dict }: Props) {
   const { work } = dict;
 
   return (
     <WorkSectionRoot>
       <div className={shellStyles.shell__glow} aria-hidden="true" />
-      <div className={`container-base ${shellStyles.shell__inner} ${styles["work-section__inner"]}`}>
-        <SectionHeader
+      <div
+        className={`${shellStyles.shell__inner} ${editorialLayout["editorial-section-inner"]} ${styles["work-section__inner"]}`}
+      >
+        <SectionIntro
           eyebrow={work.eyebrow}
           title={work.title}
-          intro={work.intro}
+          subtitle={work.intro}
+          headlineSide="right"
           titleId="work-section-title"
-          align="center"
+          {...sectionIntroTuning.work}
         />
 
-        <WorkVideoGrid
-          locale={locale}
-          featuredItems={work.items}
-          moreItems={work.moreItems}
-          viewMoreWork={work.viewMoreWork}
-          showLessWork={work.showLessWork}
-          viewCaseLabel={dict.clientStories.viewCase}
-        />
+        <div className={editorialLayout["editorial-content-width"]}>
+          <WorkVideoGrid
+            featuredItems={work.items}
+            moreItems={work.moreItems}
+            viewMoreWork={work.viewMoreWork}
+            showLessWork={work.showLessWork}
+          />
+        </div>
       </div>
     </WorkSectionRoot>
   );

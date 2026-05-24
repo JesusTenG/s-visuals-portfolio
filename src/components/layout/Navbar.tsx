@@ -38,7 +38,11 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
     switchTo === "en" ? "Switch language to English" : "Sprache auf Deutsch wechseln";
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [introFinished, setIntroFinished] = useState(!introAnimation);
+  const [introFinished, setIntroFinished] = useState(() => {
+    if (!introAnimation) return true;
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
   const [scrolled, setScrolled] = useState(false);
   const home = `/${locale}`;
 
@@ -69,12 +73,6 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
       heroObserver?.disconnect();
     };
   }, [pathname]);
-
-  useEffect(() => {
-    if (!introAnimation || introFinished) return;
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mq.matches) setIntroFinished(true);
-  }, [introAnimation, introFinished]);
 
   const handleIntroAnimationEnd = useCallback(
     (event: React.AnimationEvent<HTMLElement>) => {
@@ -108,15 +106,15 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
         scrollToTop();
       }
     },
-    [home, pathname, scrollToTop],
+    [home, pathname, scrollToTop, setMobileOpen],
   );
 
   const mobileNavItems = useMemo(
     () =>
       [
-        { num: "01", href: `${home}#work`, label: dict.nav.links.work },
-        { num: "02", href: `${home}#services`, label: dict.nav.links.services },
-        { num: "03", href: `${home}#about`, label: dict.nav.links.about },
+        { num: "01", href: `${home}#services`, label: dict.nav.links.services },
+        { num: "02", href: `${home}#work`, label: dict.nav.links.work },
+        { num: "03", href: `${home}#process`, label: dict.nav.links.process },
         { num: "04", href: `${home}#contact`, label: dict.nav.links.contact },
       ] as const,
     [home, dict.nav.links],
@@ -189,9 +187,9 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
           </Link>
 
           <nav className={`${styles["nav-links"]} ${styles["navbar-desktop-links"]}`} aria-label="Primary">
-            <a href={`${home}#work`}>{dict.nav.links.work}</a>
             <a href={`${home}#services`}>{dict.nav.links.services}</a>
-            <a href={`${home}#about`}>{dict.nav.links.about}</a>
+            <a href={`${home}#work`}>{dict.nav.links.work}</a>
+            <a href={`${home}#process`}>{dict.nav.links.process}</a>
             <a href={`${home}#contact`}>{dict.nav.links.contact}</a>
           </nav>
 

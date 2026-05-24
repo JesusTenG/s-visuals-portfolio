@@ -53,6 +53,9 @@
 
 .links a {
   position: relative;
+  min-height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.24em;

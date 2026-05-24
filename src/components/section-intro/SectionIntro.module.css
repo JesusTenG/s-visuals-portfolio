@@ -1,0 +1,250 @@
+/*//////////////SECTION INTRO//////////////////*/
+.section-intro {
+  --section-intro-grid-width: 70rem;
+  --section-intro-rail-width: 105rem;
+  --section-intro-center-shift: 0px;
+  --section-intro-center-shift-desktop: var(--section-intro-center-shift);
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  margin-bottom: clamp(1rem, 2vw, 1.85rem);
+  box-sizing: border-box;
+}
+
+.section-intro__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: 0;
+  row-gap: clamp(0.65rem, 2.5vw, 0.95rem);
+  align-items: stretch;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.section-intro__headline-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  grid-column: 1;
+  grid-row: auto;
+}
+
+.section-intro__eyebrow {
+  width: 100%;
+  margin: 0 0 clamp(0.45rem, 1.75vw, 0.7rem);
+  font-family: var(--font-ui, system-ui, sans-serif);
+  font-size: clamp(0.6rem, 0.28rem + 0.45vw, 0.72rem);
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  text-align: left;
+  text-indent: 0;
+  color: color-mix(in srgb, var(--color-white) 58%, var(--color-gray-500));
+  text-wrap: balance;
+}
+
+.section-intro__title {
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  font-family: var(--font-ui, system-ui, sans-serif);
+  font-size: clamp(1.75rem, 7vw, 2.45rem);
+  font-weight: 600;
+  line-height: 0.94;
+  letter-spacing: -0.05em;
+  color: var(--color-text-section-title);
+  text-wrap: balance;
+}
+
+.section-intro__title-line {
+  display: block;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.section-intro__title-line--multiline {
+  white-space: normal;
+}
+
+.section-intro__subtitle-col {
+  min-width: 0;
+  max-width: 100%;
+  grid-column: 1;
+  grid-row: auto;
+  justify-self: stretch;
+  text-align: left;
+}
+
+.section-intro__subtitle {
+  margin: 0;
+  max-width: 100%;
+  font-family: var(--font-ui, system-ui, sans-serif);
+  font-size: clamp(0.88rem, 2.6vw, 0.98rem);
+  line-height: 1.6;
+  letter-spacing: 0.012em;
+  color: var(--color-text-muted);
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+.section-intro--compact {
+  margin-bottom: clamp(0.85rem, 1.75vw, 1.35rem);
+}
+
+.section-intro--compact .section-intro__title {
+  font-size: clamp(1.55rem, 6.2vw, 2.1rem);
+}
+
+/*//////////////SECTION INTRO — SMALL PHONES (≤430px)//////////////////*/
+@media (max-width: 430px) {
+  .section-intro {
+    margin-bottom: clamp(0.85rem, 3vw, 1.15rem);
+  }
+
+  .section-intro__grid {
+    row-gap: clamp(0.55rem, 2vw, 0.75rem);
+  }
+
+  .section-intro__eyebrow {
+    margin-bottom: clamp(0.35rem, 1.5vw, 0.55rem);
+    letter-spacing: 0.28em;
+  }
+
+  .section-intro__title {
+    font-size: clamp(1.62rem, 7.5vw, 2.2rem);
+    line-height: 0.95;
+  }
+
+  .section-intro--compact .section-intro__title {
+    font-size: clamp(1.48rem, 6.8vw, 2rem);
+  }
+
+  .section-intro__subtitle {
+    font-size: clamp(0.84rem, 3.2vw, 0.92rem);
+    line-height: 1.58;
+  }
+}
+
+/*//////////////SECTION INTRO — SPLIT AXIS (≥980px)//////////////////*/
+@media (min-width: 980px) {
+  .section-intro {
+    width: min(var(--section-intro-grid-width), 100%);
+    max-width: var(--section-intro-grid-width);
+    margin-bottom: clamp(1.15rem, 2.25vw, 1.85rem);
+  }
+
+  .section-intro__grid {
+    grid-template-columns:
+      minmax(0, calc(50% + var(--section-intro-center-shift, 0px)))
+      minmax(0, calc(50% - var(--section-intro-center-shift, 0px)));
+    column-gap: clamp(1.25rem, 3vw, 3rem);
+    row-gap: clamp(0.75rem, 1.75vw, 1rem);
+    align-items: end;
+  }
+
+  .section-intro__eyebrow {
+    margin-bottom: clamp(0.85rem, 1.75vw, 1.15rem);
+    font-size: clamp(0.62rem, 0.28rem + 0.55vw, 0.78rem);
+    letter-spacing: 0.36em;
+    text-align: center;
+  }
+
+  .section-intro__title {
+    font-size: clamp(1.85rem, 3.8vw, 2.75rem);
+    line-height: 0.92;
+    letter-spacing: -0.06em;
+  }
+
+  .section-intro__subtitle-col {
+    max-width: min(26.875rem, 100%);
+  }
+
+  .section-intro__subtitle {
+    font-size: clamp(0.9rem, 1.05vw, 1.02rem);
+    line-height: 1.65;
+  }
+
+  .section-intro--compact .section-intro__title {
+    font-size: clamp(1.4rem, 3.5vw, 2.25rem);
+  }
+
+  .section-intro--headline-left .section-intro__headline-col {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    max-width: 100%;
+    justify-self: stretch;
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .section-intro--headline-left .section-intro__title {
+    text-align: right;
+  }
+
+  .section-intro--headline-left .section-intro__subtitle-col {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: start;
+    text-align: left;
+  }
+
+  .section-intro--headline-left .section-intro__subtitle {
+    text-align: left;
+  }
+
+  .section-intro--headline-right .section-intro__headline-col {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    max-width: 100%;
+    justify-self: stretch;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .section-intro--headline-right .section-intro__title {
+    text-align: left;
+  }
+
+  .section-intro--headline-right .section-intro__subtitle-col {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: end;
+    text-align: right;
+  }
+
+  .section-intro--headline-right .section-intro__subtitle {
+    text-align: right;
+  }
+}
+
+/*//////////////SECTION INTRO — DESKTOP RAIL (≥1200px)//////////////////*/
+@media (min-width: 1200px) {
+  .section-intro {
+    width: min(var(--section-intro-rail-width), 100%);
+    max-width: min(var(--section-intro-rail-width), 100%);
+  }
+
+  .section-intro__grid {
+    grid-template-columns:
+      minmax(0, calc(50% + var(--section-intro-center-shift-desktop, 0px)))
+      minmax(0, calc(50% - var(--section-intro-center-shift-desktop, 0px)));
+    column-gap: clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .section-intro__title {
+    font-size: clamp(3rem, 5.5vw, 6.75rem);
+    line-height: 0.92;
+    letter-spacing: -0.06em;
+  }
+
+  .section-intro--compact .section-intro__title {
+    font-size: clamp(2.1rem, 4.5vw, 4.25rem);
+  }
+}

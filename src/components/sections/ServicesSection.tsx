@@ -6,9 +6,11 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import { SectionIntro } from "@/components/section-intro/SectionIntro";
+import { sectionIntroTuning } from "@/components/section-intro/sectionIntroTuning";
 import type { Dictionary } from "@/i18n/dictionaries";
 
-import { SectionHeader } from "./SectionHeader";
+import editorialLayout from "./editorialLayout.module.css";
 import shellStyles from "./SectionShell.module.css";
 import styles from "./ServicesSection.module.css";
 
@@ -34,14 +36,20 @@ export function ServicesSection({ dict }: Props) {
       className={`${shellStyles.shell} ${styles["services-section"]}`}
       aria-labelledby="services-section-title"
     >
-      <div className={styles["services-section__glow"]} aria-hidden="true" />
-      <div className={`container-base ${shellStyles.shell__inner} ${styles["services-section__inner"]}`}>
-        <SectionHeader
+      <div className={styles["services-section__bleed"]} aria-hidden="true">
+        <div className={styles["services-section__glow"]} />
+      </div>
+
+      <div
+        className={`${shellStyles.shell__inner} ${editorialLayout["editorial-section-inner"]}`}
+      >
+        <SectionIntro
           eyebrow={services.eyebrow}
           title={services.title}
-          intro={services.intro}
+          subtitle={services.intro}
+          headlineSide="left"
           titleId="services-section-title"
-          align="center"
+          {...sectionIntroTuning.services}
         />
 
         <div className={styles["services-section__grid"]}>

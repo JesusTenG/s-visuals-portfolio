@@ -1,25 +1,40 @@
-.steps {
+/*//////////////PROCESS SECTION//////////////////*/
+.process-section__steps {
+  --process-card-max: 15.75rem;
+
+  position: relative;
+  z-index: 1;
   margin: 0;
   padding: 0;
   list-style: none;
   display: grid;
+  grid-template-columns: minmax(0, var(--process-card-max));
+  justify-content: center;
   gap: clamp(0.85rem, 1.5vw, 1.1rem);
-  max-width: var(--sv-container);
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
   margin-inline: auto;
+  box-sizing: border-box;
+  overflow-x: clip;
 }
 
-.step {
+.process-section__step {
   margin: 0;
+  min-width: 0;
+  width: min(100%, var(--process-card-max));
 }
 
-.step-card {
+.process-section__card {
   position: relative;
   isolation: isolate;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: clamp(1rem, 2vw, 1.35rem);
-  align-items: start;
-  padding: clamp(1.25rem, 2.2vw, 1.55rem) clamp(1.2rem, 2.4vw, 1.65rem);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  width: 100%;
+  min-height: 100%;
+  padding: clamp(1.25rem, 2.2vw, 1.55rem);
   border-radius: var(--sv-radius-card);
   border: 1px solid var(--color-border-faint);
   background: var(--gradient-glass-card);
@@ -29,7 +44,7 @@
     box-shadow var(--sv-transition-card-hover);
 }
 
-.step-card::before {
+.process-section__card::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -41,73 +56,82 @@
   transition: opacity var(--sv-transition-card-hover);
 }
 
-.index {
+@supports (backdrop-filter: blur(1px)) {
+  .process-section__card {
+    -webkit-backdrop-filter: blur(var(--glass-backdrop-blur));
+    backdrop-filter: blur(var(--glass-backdrop-blur));
+  }
+}
+
+.process-section__icon-wrap {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 2.5rem;
-  height: 2.5rem;
-  padding: 0 0.35rem;
-  border-radius: var(--sv-radius-ui);
-  border: 1px solid var(--color-accent-border-badge);
-  background: var(--color-accent-surface-badge);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  color: var(--color-accent-mix-nav-link);
+  flex: 0 0 auto;
+  align-self: flex-start;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: clamp(1rem, 1.8vw, 1.25rem);
+  color: color-mix(in srgb, var(--color-white) 68%, transparent);
+  transition: color var(--sv-transition-card-hover);
 }
 
-.copy {
-  min-width: 0;
+.process-section__icon {
+  width: clamp(2.35rem, 2.8vw, 2.75rem);
+  height: clamp(2.35rem, 2.8vw, 2.75rem);
+  stroke-width: 1.35;
 }
 
-.step-title {
-  margin: 0 0 0.45rem;
-  font-size: clamp(0.92rem, 1.05vw, 1rem);
-  font-weight: 650;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+.process-section__card-title {
+  margin: 0 0 clamp(0.65rem, 1.2vw, 0.8rem);
+  font-size: clamp(0.95rem, 2.8vw, 1.05rem);
+  font-weight: 600;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
   color: var(--color-text-primary);
+  text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
-.step-text {
+.process-section__card-text {
   margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.62;
+  flex: 1 1 auto;
+  font-size: clamp(0.84rem, 0.92vw, 0.88rem);
+  line-height: 1.58;
   color: var(--color-text-muted);
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
 }
 
 @media (hover: hover) {
-  .step-card:hover {
+  .process-section__card:hover {
     border-color: var(--color-border-strong);
     box-shadow: var(--shadow-card-hover-depth);
   }
 
-  .step-card:hover::before {
+  .process-section__card:hover::before {
     opacity: 1;
   }
-}
 
-@media (min-width: 768px) {
-  .steps {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .process-section__card:hover .process-section__icon-wrap {
+    color: color-mix(in srgb, var(--color-accent) 82%, var(--color-white));
   }
 }
 
 @media (min-width: 980px) {
-  .steps {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .step-card {
-    grid-template-columns: 1fr;
-    gap: 0.85rem;
+  .process-section__steps {
+    --process-card-max: 16.25rem;
+    grid-template-columns: repeat(4, minmax(0, var(--process-card-max)));
+    gap: clamp(1rem, 1.75vw, 1.25rem);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .step-card,
-  .step-card::before {
+  .process-section__card,
+  .process-section__card::before,
+  .process-section__icon-wrap {
     transition: none;
+  }
+
+  .process-section__card:hover::before {
+    opacity: 1;
   }
 }

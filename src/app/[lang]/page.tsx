@@ -7,8 +7,8 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { FinalCtaSection } from "@/components/sections/FinalCtaSection";
 import { HeroSection } from "@/components/sections/HeroSection";
-import { IdentitySection } from "@/components/sections/IdentitySection";
 import { ImpactSnapshotSection } from "@/components/sections/impact-snapshot/ImpactSnapshotSection";
+import { ApproachSection } from "@/components/sections/ApproachSection";
 import { ProcessSection } from "@/components/sections/ProcessSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { ClientStoriesSection } from "@/components/sections/client-stories/ClientStoriesSection";
@@ -38,11 +38,11 @@ export default async function LangHomePage({ params }: Props) {
       <main className="flex-1">
         <HeroSection dict={dict} />
         <ServicesSection dict={dict} />
-        <WorkSection dict={dict} locale={locale} />
+        <WorkSection dict={dict} />
         <ImpactSnapshotSection dict={dict} locale={locale} />
-        <IdentitySection dict={dict} />
-        <TestimonialSection locale={locale} dict={dict} />
+        <ApproachSection dict={dict} />
         <ProcessSection dict={dict} />
+        <TestimonialSection locale={locale} dict={dict} />
         <ClientStoriesSection locale={locale} dict={dict} />
         <FaqSection dict={dict} />
         <FinalCtaSection dict={dict} />

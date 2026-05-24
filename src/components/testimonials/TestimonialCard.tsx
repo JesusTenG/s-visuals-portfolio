@@ -22,23 +22,12 @@ function getInstagramAriaLabel(authorName: string): string {
 }
 
 export function TestimonialCard({ testimonial, className }: Props) {
-  const { quote, authorName, brandName, avatarSrc, instagramUrl, isPlaceholder } = testimonial;
+  const { quote, authorName, brandName, avatarSrc, instagramUrl } = testimonial;
 
-  const rootClass = [
-    styles["testimonial-card"],
-    isPlaceholder ? styles["testimonial-card--placeholder"] : "",
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const rootClass = [styles["testimonial-card"], className].filter(Boolean).join(" ");
 
   return (
     <figure className={rootClass}>
-      {isPlaceholder ? (
-        <span className={styles["testimonial-card__draft-label"]}>
-          {testimonial.locale === "de" ? "Platzhalter" : "Placeholder"}
-        </span>
-      ) : null}
       <blockquote className={styles["testimonial-card__quote"]}>
         <p>{quote}</p>
       </blockquote>

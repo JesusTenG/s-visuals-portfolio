@@ -34,7 +34,7 @@ export type Dictionary = {
     links: {
       work: string;
       services: string;
-      about: string;
+      process: string;
       contact: string;
     };
     cta: string;
@@ -64,20 +64,31 @@ export type Dictionary = {
       icon: "smartphone" | "monitor-play" | "megaphone" | "camera";
     }>;
   };
-  identity: {
+  approach: {
     eyebrow: string;
     title: string;
-    paragraphs: string[];
+    subtitle: string;
+    body: string;
+    principles: Array<{
+      title: string;
+      description: string;
+      icon: "timer" | "palette" | "list-checks";
+    }>;
   };
-  about: {
+  process: {
     eyebrow: string;
     title: string;
     intro: string;
-    steps: Array<{ title: string; description: string }>;
+    steps: Array<{
+      title: string;
+      description: string;
+      icon: "send" | "scissors" | "message-circle" | "package-check";
+    }>;
   };
   faq: {
     eyebrow: string;
     title: string;
+    intro: string;
     items: Array<{ question: string; answer: string }>;
   };
   work: {
@@ -99,19 +110,44 @@ export type Dictionary = {
   testimonials: {
     eyebrow: string;
     title: string;
+    intro: string;
   };
   clientStories: {
     eyebrow: string;
     title: string;
     intro: string;
-    viewCase: string;
+    learnMore: string;
+  };
+  clientStoryDetail: {
+    back: string;
+    eyebrow: string;
+    publishedEditsHeading: string;
   };
   contact: {
     title: string;
-    description: string;
-    cta: string;
-    instagramLabel: string;
-    instagramCta: string;
+    info: {
+      body: string;
+      channelsIntro: string;
+      whatsAppLabel: string;
+      instagramLabel: string;
+    };
+    form: {
+      nameLabel: string;
+      emailLabel: string;
+      messageLabel: string;
+      namePlaceholder: string;
+      emailPlaceholder: string;
+      messagePlaceholder: string;
+      submit: string;
+      errors: {
+        nameRequired: string;
+        emailRequired: string;
+        emailInvalid: string;
+        messageRequired: string;
+      };
+      /** Shown until a server/API submit route is configured. */
+      submitUnavailable: string;
+    };
   };
   caseDetail: {
     back: string;
@@ -132,8 +168,10 @@ export type Dictionary = {
     links: {
       work: string;
       services: string;
-      about: string;
+      approach: string;
+      process: string;
       contact: string;
+      faq: string;
       impressum: string;
       datenschutz: string;
     };
@@ -158,10 +196,10 @@ const dictionaries: Record<Locale, Dictionary> = {
       links: {
         work: "WORK",
         services: "SERVICES",
-        about: "ABOUT",
+        process: "PROCESS",
         contact: "CONTACT",
       },
-      cta: "CONTACT",
+      cta: "SEND INQUIRY",
       langSwitchLabel: "DE",
       heroVideoPreviewToggle: "Video Preview",
       heroImageToggle: "Image Hero",
@@ -179,105 +217,145 @@ const dictionaries: Record<Locale, Dictionary> = {
       secondaryCtaHref: "#work",
       scrollLabel: "SCROLL",
     },
-    identity: {
-      eyebrow: "PREMIUM SOCIAL EDITOR",
-      title: "About Simon",
-      paragraphs: [
-        "Simon Saad Visuals is a premium video editing and production portfolio for creators, influencers and brands that need social-native content with a high-end look.",
-        "Based in Germany and working remotely nationwide, Simon focuses on short-form edits, YouTube, commercial cuts and on-set filming — with clear communication and an editor-first mindset.",
-        "This is not budget bulk editing. Every project is shaped for impact, rhythm and brand clarity.",
-      ],
-    },
     services: {
       eyebrow: "SERVICES",
-      title: "Editing built for impact",
+      title: "Turning raw footage\ninto clear content",
       intro:
-        "Reels, TikToks, YouTube, commercial videos and filming — cleanly edited, clearly structured and built to feel premium.",
+        "Reels, TikToks, YouTube videos, ads and filming. Precisely edited, clearly structured and produced with a high-end finish.",
       items: [
         {
           title: "Shortform Editing",
           description:
-            "Reels, TikToks and YouTube Shorts with fast pacing, clean cuts and a look built for social — ideal when you want short-form video editing for creators and brands.",
+            "Reels, TikToks and YouTube Shorts with a strong hook, fast pacing and a look that sticks in the feed.",
           icon: "smartphone",
         },
         {
           title: "YouTube & Longform",
           description:
-            "Longer videos, interviews and episodes, including trailers and podcast formats, with clean structure, flow and clear viewer guidance.",
+            "Longer videos, interviews, episodes, trailers and podcast formats with clear structure, clean flow and precise viewer guidance.",
           icon: "monitor-play",
         },
         {
-          title: "Ads & Campaign Cuts",
+          title: "Ad Videos",
           description:
-            "Commercial and campaign videos with strong hooks — social media ads and product films with fast visual impact.",
+            "Ads and product videos with a strong opening, clear message and editing that turns attention into action.",
           icon: "megaphone",
         },
         {
           title: "Filming",
           description:
-            "On-set capture for brands, creators and campaigns — social media video production with footage built to edit well.",
+            "Filming for brands and creators with planned shots, clean footage and a look that can be shaped into strong final content.",
           icon: "camera",
         },
       ],
     },
-    about: {
-      eyebrow: "PROCESS",
-      title: "How we work",
+    approach: {
+      eyebrow: "Approach",
+      title: "For content that feels like a brand.",
+      subtitle:
+        "Not every clip needs more effects. Often it needs better timing, stronger structure and an editor who understands where the brand is heading.",
+      body: "Simon Saad Visuals creates social content that is not just cut fast, but built with intent: a clear hook, sharp pacing, a cohesive look and a strong sense for the brand behind the video. The goal is not loud editing for the sake of it, but content that feels premium and works on the right platforms.",
+      principles: [
+        {
+          title: "Timing over guesswork",
+          description:
+            "Cuts, rhythm and hooks are shaped to make content land quickly while still feeling premium.",
+          icon: "timer",
+        },
+        {
+          title: "A look with direction",
+          description:
+            "Color, music, typography and editing style are aligned with the brand, audience and platform.",
+          icon: "palette",
+        },
+        {
+          title: "A clear process",
+          description:
+            "Structured communication, clean handoffs and reliable execution instead of chaotic freelancer roulette.",
+          icon: "list-checks",
+        },
+      ],
+    },
+    process: {
+      eyebrow: "Process",
+      title: "How it works",
       intro:
-        "From first message to final export — a clear process built for premium collaborations with creators and brands.",
+        "A clear path from your first message to the finished export, structured for premium collaborations with creators and brands.",
       steps: [
         {
-          title: "01 — Project inquiry",
+          title: "Project inquiry",
           description:
-            "You share goal, formats, references and timeline. We align on scope before editing starts.",
+            "You share your goal, formats, references and timeline. We align on scope and direction before editing begins.",
+          icon: "send",
         },
         {
-          title: "02 — Edit & direction",
+          title: "Edit & direction",
           description:
-            "Simon shapes pacing, structure and visual direction — story-first, platform-aware.",
+            "Simon shapes pacing, structure and visual direction with a story-first, platform-aware edit aligned to your brand.",
+          icon: "scissors",
         },
         {
-          title: "03 — Feedback rounds",
-          description: "Clear revision loops with focused notes — fewer rounds, stronger results.",
+          title: "Feedback rounds",
+          description:
+            "Focused revision loops with clear notes. Fewer rounds, stronger results, no chaotic back-and-forth.",
+          icon: "message-circle",
         },
         {
-          title: "04 — Delivery",
+          title: "Delivery",
           description:
-            "Final exports optimized for your platforms — ready to publish or run as ads.",
+            "Final exports optimized for your platforms, ready to publish, post or run as ads.",
+          icon: "package-check",
         },
       ],
     },
     faq: {
-      eyebrow: "QUESTIONS",
-      title: "FAQ",
+      eyebrow: "FAQ",
+      title: "Frequently asked questions.",
+      intro:
+        "Short answers about process, footage, pricing and long-term collaborations.",
       items: [
         {
-          question: "Do you edit reels, TikToks and YouTube Shorts?",
+          question: "What type of videos does Simon Saad Visuals edit?",
           answer:
-            "Yes. Short-form editing for Instagram, TikTok and YouTube Shorts is a core service — including hooks, pacing and platform-native structure.",
+            "Simon Saad Visuals edits social ads, reels, shorts, TikToks, YouTube content and campaign visuals for creators, brands and agencies. The focus is on premium social content with a clear hook, sharp pacing and an on-brand look.",
         },
         {
-          question: "Do you work with clients across Germany?",
+          question: "Who is the collaboration for?",
           answer:
-            "Yes. Collaborations run remotely across Germany. Filming can be planned where needed.",
+            "The collaboration is built for creators, personal brands, companies and agencies that want to publish high-quality social content regularly. It is especially useful when raw footage needs to become a clear, professional and recognizable visual presence.",
         },
         {
-          question: "What is the difference between editing and filming?",
+          question: "How does a project work?",
           answer:
-            "Editing covers cutting and finishing existing footage. Filming includes on-set capture so the project is planned for a strong edit from day one.",
+            "Every project starts with the goal, platform, visual direction and available footage. After that, a first edit is created around timing, story, hook and look. Feedback is handled in a structured way until the clip is ready to publish.",
         },
         {
-          question: "Who is Simon Saad Visuals not for?",
+          question: "What do I need to provide for the edit?",
           answer:
-            "Wedding-only requests, bulk budget editing or photography-first projects are not a fit. The focus is premium social and commercial video for creators and brands.",
+            "Raw footage, desired format, platform, video goal and, if available, references, brand assets, music directions or existing captions are needed. The clearer the direction, the more efficient the edit becomes.",
+        },
+        {
+          question: "How long does a video edit take?",
+          answer:
+            "It depends on the scope. A single social edit can often be delivered much faster than a larger campaign package or a YouTube video. After reviewing the footage, the timeline can be estimated realistically.",
+        },
+        {
+          question: "Are long-term collaborations possible?",
+          answer:
+            "Yes. In addition to single projects, recurring collaborations are possible for creators, brands or agencies with regular content needs. This creates a consistent look, faster workflows and a better understanding of the brand and audience.",
+        },
+        {
+          question: "How much does a video editing project cost?",
+          answer:
+            "Single reels start at €80 per reel. The final price depends on scope, raw footage, length, editing depth, platform and deadline. Social ads, YouTube videos, campaign packages and long-term collaborations are priced individually.",
         },
       ],
     },
     work: {
       eyebrow: "SELECTED WORK",
-      title: "Proof in motion",
+      title: "What Great Editing\nMakes Visible",
       intro:
-        "A first look at pacing, rhythm and visual direction across social edits, brand content and creator-focused videos.",
+        "A first look at pacing, rhythm and visual direction across social edits, brand content and creator videos.",
       collaborationsCtaLabel: "View deeper collaborations",
       collaborationsCtaHref: "#collaborations",
       viewMoreWork: "View more",
@@ -292,7 +370,6 @@ const dictionaries: Record<Locale, Dictionary> = {
           lightboxSrc: "/assets/videos/lightbox/random/PIZZZZZA-lightbox.mp4",
           alt: "Poster frame for Prep My Meal commercial edit by Simon Saad Visuals",
           videoAriaLabel: "Open Prep My Meal commercial edit",
-          caseSlug: "prep-my-meal-leon-haegele",
         },
         {
           title: "Educational Reel",
@@ -308,14 +385,42 @@ const dictionaries: Record<Locale, Dictionary> = {
           title: "Cinematic Gym Edit",
           description:
             "Cinematic edit with @leon.haegele, focused on gym atmosphere, movement and a premium look.",
-          posterSrc: "/assets/videos/posters/random/VERSION2-poster.webp",
+          posterSrc: "/assets/clients/leon-haegele-hd.webp",
           previewSrc: "/assets/videos/preview/random/VERSION2-web.mp4",
           lightboxSrc: "/assets/videos/lightbox/random/VERSION2-lightbox.mp4",
-          alt: "Poster frame for cinematic gym edit",
+          alt: "Poster frame for cinematic gym edit with Leon Hägele",
           videoAriaLabel: "Open cinematic gym edit",
         },
       ],
       moreItems: [
+        {
+          title: "Kool Savas × Ayo Reel",
+          description:
+            "Social ad for Kool Savas and Ayo with a fast hook, clear visual rhythm and brand-ready pacing for the feed.",
+          posterSrc: "/assets/videos/posters/savas/AYO X KOOLSAVAS-poster.webp",
+          previewSrc: "/assets/videos/preview/savas/AYO X KOOLSAVAS-web.mp4",
+          lightboxSrc: "/assets/videos/lightbox/savas/AYO X KOOLSAVAS-lightbox.mp4",
+          alt: "Poster frame for Kool Savas and Ayo social ad edit by Simon Saad Visuals",
+          videoAriaLabel: "Open Kool Savas and Ayo social ad edit",
+        },
+        {
+          title: "Energy Reel",
+          description: "High-energy social reel with punchy rhythm and a bold visual attitude.",
+          posterSrc: "/assets/videos/posters/diamten/bracen-poster.webp",
+          previewSrc: "/assets/videos/preview/diamten/bracen-web.mp4",
+          lightboxSrc: "/assets/videos/lightbox/diamten/bracen-lightbox.mp4",
+          alt: "Poster frame for energy reel edit",
+          videoAriaLabel: "Open energy reel edit",
+        },
+        {
+          title: "Podcast Trailer",
+          description: "Podcast trailer with moody visuals and clean atmospheric cuts.",
+          posterSrc: "/assets/videos/posters/podcast trailer/PT_FINAL-poster.webp",
+          previewSrc: "/assets/videos/preview/podcast trailer/PT_FINAL-web.mp4",
+          lightboxSrc: "/assets/videos/lightbox/podcast trailer/PT_FINAL-lightbox.mp4",
+          alt: "Poster frame for podcast trailer edit",
+          videoAriaLabel: "Open podcast trailer edit",
+        },
         {
           title: "Diamond Campaign",
           description: "Premium campaign cut built around layered reveals and controlled tension.",
@@ -335,49 +440,23 @@ const dictionaries: Record<Locale, Dictionary> = {
           videoAriaLabel: "Open training reel edit",
         },
         {
-          title: "Podcast Trailer",
-          description: "Podcast trailer with moody visuals and clean atmospheric cuts.",
-          posterSrc: "/assets/videos/posters/podcast trailer/PT_FINAL-poster.webp",
-          previewSrc: "/assets/videos/preview/podcast trailer/PT_FINAL-web.mp4",
-          lightboxSrc: "/assets/videos/lightbox/podcast trailer/PT_FINAL-lightbox.mp4",
-          alt: "Poster frame for podcast trailer edit",
-          videoAriaLabel: "Open podcast trailer edit",
+          title: "Andreas Ad Edit",
+          description:
+            "Vertical social ad with a fast opening, clear visual flow and brand-ready pacing for short-form delivery.",
+          posterSrc: "/assets/videos/posters/random/adres_edit-poster.webp",
+          previewSrc: "/assets/videos/preview/random/adres_edit-web.mp4",
+          lightboxSrc: "/assets/videos/lightbox/random/adres_edit-lightbox.mp4",
+          alt: "Poster frame for Andreas social ad edit by Simon Saad Visuals",
+          videoAriaLabel: "Open Andreas social ad edit",
         },
         {
           title: "Creator Reel",
-          description: "Creator reel with retention-focused pacing for social delivery.",
+          description: "Creator reel with retention-focused pacing and a strong hook for social.",
           posterSrc: "/assets/videos/posters/random/ayo-poster.webp",
           previewSrc: "/assets/videos/preview/random/ayo-web.mp4",
           lightboxSrc: "/assets/videos/lightbox/random/ayo-lightbox.mp4",
           alt: "Poster frame for creator reel edit",
           videoAriaLabel: "Open creator reel edit",
-        },
-        {
-          title: "Energy Reel",
-          description: "High-energy social reel with punchy rhythm and a bold visual attitude.",
-          posterSrc: "/assets/videos/posters/diamten/bracen-poster.webp",
-          previewSrc: "/assets/videos/preview/diamten/bracen-web.mp4",
-          lightboxSrc: "/assets/videos/lightbox/diamten/bracen-lightbox.mp4",
-          alt: "Poster frame for energy reel edit",
-          videoAriaLabel: "Open energy reel edit",
-        },
-        {
-          title: "Creator Cut",
-          description: "Performance-led creator cut with social-native pacing and framing.",
-          posterSrc: "/assets/videos/posters/diamten/mario festhalten neu-poster.webp",
-          previewSrc: "/assets/videos/preview/diamten/mario festhalten neu-web.mp4",
-          lightboxSrc: "/assets/videos/lightbox/diamten/mario festhalten neu-lightbox.mp4",
-          alt: "Poster frame for creator cut edit",
-          videoAriaLabel: "Open creator cut edit",
-        },
-        {
-          title: "Mood Edit",
-          description: "Mood-driven edit with contrast-led tone and deliberate pacing.",
-          posterSrc: "/assets/videos/posters/diamten/negative final-poster.webp",
-          previewSrc: "/assets/videos/preview/diamten/negative final-web.mp4",
-          lightboxSrc: "/assets/videos/lightbox/diamten/negative final-lightbox.mp4",
-          alt: "Poster frame for mood edit",
-          videoAriaLabel: "Open mood edit",
         },
         {
           title: "Series Trailer",
@@ -462,22 +541,49 @@ const dictionaries: Record<Locale, Dictionary> = {
     },
     testimonials: {
       eyebrow: "TRUST",
-      title: "What clients say about working together",
+      title: "When the edit convinces",
+      intro:
+        "Real feedback from creator and brand projects where rhythm, finish and reliable collaboration made the difference.",
     },
     clientStories: {
-      eyebrow: "COLLABORATIONS",
-      title: "Long-term visual systems for creators and brands",
+      eyebrow: "Collaborations",
+      title: "Built over time.",
       intro:
-        "Explore collaborations with recurring edits, campaign visuals and content built around a consistent visual direction.",
-      viewCase: "View case",
+        "A closer look at recurring projects, creator partnerships and published social edits.",
+      learnMore: "Learn more",
+    },
+    clientStoryDetail: {
+      back: "Back to collaborations",
+      eyebrow: "Collaboration",
+      publishedEditsHeading: "Published edits",
     },
     contact: {
-      title: "Let’s build something sharp.",
-      description:
-        "Tell me about your project, timeline and references — I’ll reply with next steps. Project inquiries via Instagram DM.",
-      cta: "START A PROJECT",
-      instagramLabel: "@simon__saad",
-      instagramCta: "Message on Instagram",
+      title: "Ready to collaborate?",
+      info: {
+        body:
+          "A short message is enough: format, intended use and available footage can be included. Further details are clarified in conversation.",
+        channelsIntro: "Inquiries are also welcome directly via WhatsApp or Instagram.",
+        whatsAppLabel: "WhatsApp",
+        instagramLabel: "Instagram",
+      },
+      form: {
+        nameLabel: "Name",
+        emailLabel: "Email address",
+        messageLabel: "Message",
+        namePlaceholder: "Name",
+        emailPlaceholder: "email@example.com",
+        messagePlaceholder:
+          "Brief description: format, goal, footage and timing.",
+        submit: "Send request",
+        errors: {
+          nameRequired: "Please enter your name.",
+          emailRequired: "Please enter your email address.",
+          emailInvalid: "Please enter a valid email address.",
+          messageRequired: "Please enter a short message.",
+        },
+        submitUnavailable:
+          "Online sending is not set up yet. WhatsApp or Instagram can be used below.",
+      },
     },
     caseDetail: {
       back: "Back to selected work",
@@ -498,8 +604,10 @@ const dictionaries: Record<Locale, Dictionary> = {
       links: {
         work: "WORK",
         services: "SERVICES",
-        about: "ABOUT",
+        approach: "APPROACH",
+        process: "PROCESS",
         contact: "CONTACT",
+        faq: "FAQ",
         impressum: "IMPRINT",
         datenschutz: "PRIVACY",
       },
@@ -556,12 +664,12 @@ const dictionaries: Record<Locale, Dictionary> = {
       logoTop: "SIMON SAAD",
       logoBottom: "VISUALS",
       links: {
-        work: "ARBEIT",
+        work: "PROJEKTE",
         services: "LEISTUNGEN",
-        about: "PROZESS",
+        process: "ABLAUF",
         contact: "KONTAKT",
       },
-      cta: "KONTAKT",
+      cta: "ANFRAGE SENDEN",
       langSwitchLabel: "EN",
       heroVideoPreviewToggle: "Video Preview",
       heroImageToggle: "Bild-Hero",
@@ -579,103 +687,143 @@ const dictionaries: Record<Locale, Dictionary> = {
       secondaryCtaHref: "#work",
       scrollLabel: "SCROLL",
     },
-    identity: {
-      eyebrow: "PREMIUM SOCIAL EDITOR",
-      title: "Über Simon",
-      paragraphs: [
-        "Simon Saad Visuals ist ein Premium-Portfolio für Video Editing und Produktion — für Creator, Influencer und Marken, die social-native Inhalte mit hochwertigem Look brauchen.",
-        "Aus Deutschland, deutschlandweit remote: Fokus auf Short-Form-Schnitt, YouTube, Werbevideos und Dreharbeiten — mit klarer Kommunikation und Editor-First-Denken.",
-        "Kein Budget-Massen-Schnitt. Jedes Projekt wird auf Wirkung, Rhythmus und Markenklarheit ausgelegt.",
-      ],
-    },
     services: {
       eyebrow: "LEISTUNGEN",
-      title: "Schnitt, der Content stärker macht",
+      title: "Aus Content wird \nmessbare Wirkung",
       intro:
-        "Reels, TikToks, YouTube, Werbevideos und Dreharbeiten — präzise geschnitten, klar geführt, hochwertig umgesetzt.",
+        "Reels, TikToks, YouTube-Videos, Werbevideos und Dreharbeiten. Präzise geschnitten, klar geführt und hochwertig umgesetzt.",
       items: [
         {
           title: "Shortform-Schnitt",
           description:
-            "Reels, TikToks und YouTube Shorts schneiden lassen — mit schnellem Pacing, klaren Cuts und einem Look für Social Media.",
+            "Reels, TikToks und YouTube Shorts mit starkem Hook, schnellem Pacing und einem Look, der im Feed hängen bleibt.",
           icon: "smartphone",
         },
         {
           title: "YouTube & Longform",
           description:
-            "Längere Videos, Interviews und Episoden inkl. Trailer und Podcast-Formate mit sauberer Struktur, Flow und klarer Zuschauerführung.",
+            "Längere Videos, Interviews, Episoden, Trailer und Podcast-Formate mit klarer Struktur, sauberem Flow und präziser Zuschauerführung.",
           icon: "monitor-play",
         },
         {
           title: "Werbevideos",
           description:
-            "Werbevideo schneiden oder erstellen lassen — Kampagnen- und Produktvideos mit starken Hooks und klarer Botschaft für Paid Social.",
+            "Ads und Produktvideos mit starkem Einstieg, klarer Botschaft und einem Schnitt, der Aufmerksamkeit in Handlung verwandelt.",
           icon: "megaphone",
         },
         {
           title: "Filming",
           description:
-            "Dreharbeiten und Social Media Video Produktion für Brands und Creator — geplante Shots, sauberes Material, Look der sich gut schneiden lässt.",
+            "Dreharbeiten für Brands und Creator mit geplanten Shots, sauberem Material und einem Look, der sich stark weiterverarbeiten lässt.",
           icon: "camera",
         },
       ],
     },
-    about: {
-      eyebrow: "PROZESS",
-      title: "So läuft die Zusammenarbeit",
+    approach: {
+      eyebrow: "Arbeitsweise",
+      title: "Für Content, der nach Marke aussieht.",
+      subtitle:
+        "Nicht jeder Clip braucht mehr Effekte. Oft braucht er besseres Timing, stärkere Struktur und einen Editor, der versteht, worauf die Marke hinauswill.",
+      body: "Simon Saad Visuals steht für Social-Content, der nicht nur schnell geschnitten ist, sondern bewusst aufgebaut wird: mit klarer Hook, sauberem Rhythmus, stimmigem Look und einem Gefühl für die Marke hinter dem Video. Ziel ist kein lauter Effekt-Schnitt, sondern Content, der hochwertig wirkt und auf den richtigen Plattformen funktioniert.",
+      principles: [
+        {
+          title: "Timing statt Zufall",
+          description:
+            "Schnitte, Rhythmus und Hook werden so gesetzt, dass Inhalte schnell greifen und trotzdem hochwertig bleiben.",
+          icon: "timer",
+        },
+        {
+          title: "Look mit Richtung",
+          description:
+            "Farben, Musik, Typografie und Editing-Stil werden auf Marke, Zielgruppe und Plattform abgestimmt.",
+          icon: "palette",
+        },
+        {
+          title: "Klarer Prozess",
+          description:
+            "Strukturierte Kommunikation, saubere Übergaben und verlässliche Umsetzung statt chaotischer Freelancer-Lotterie.",
+          icon: "list-checks",
+        },
+      ],
+    },
+    process: {
+      eyebrow: "Prozess",
+      title: "So läuft's ab",
       intro:
-        "Von der ersten Anfrage bis zum finalen Export — ein klarer Ablauf für Premium-Projekte mit Creators und Marken.",
+        "Ein klarer Ablauf von der ersten Nachricht bis zum finalen Export, strukturiert für Premium-Projekte mit Creators und Marken.",
       steps: [
         {
-          title: "01 — Projektanfrage",
+          title: "Projektanfrage",
           description:
-            "Du teilst Ziel, Formate, Referenzen und Timeline. Scope wird vor dem Schnitt abgestimmt.",
+            "Du teilst Ziel, Formate, Referenzen und Timeline. Scope und Richtung werden abgestimmt, bevor der Schnitt startet.",
+          icon: "send",
         },
         {
-          title: "02 — Schnitt & Richtung",
+          title: "Schnitt & Richtung",
           description:
-            "Simon formt Pacing, Struktur und visuelle Richtung — story-first und plattformgerecht.",
+            "Simon formt Pacing, Struktur und visuelle Richtung mit story-firstem, plattformgerechtem Schnitt und klarem Markenbezug.",
+          icon: "scissors",
         },
         {
-          title: "03 — Feedback",
-          description: "Klare Revisionsschleifen mit fokussiertem Feedback — weniger Runden, stärkere Ergebnisse.",
+          title: "Feedback",
+          description:
+            "Klare Revisionsschleifen mit fokussiertem Feedback. Weniger Runden, stärkere Ergebnisse, kein endloses Hin und Her.",
+          icon: "message-circle",
         },
         {
-          title: "04 — Delivery",
+          title: "Auslieferung",
           description:
-            "Finale Exporte für deine Plattformen — ready to publish oder als Ads einsetzbar.",
+            "Finale Exporte für deine Plattformen, bereit zum Veröffentlichen, Posten oder als Ads.",
+          icon: "package-check",
         },
       ],
     },
     faq: {
-      eyebrow: "FRAGEN",
+      eyebrow: "FAQ",
       title: "Häufige Fragen",
+      intro:
+        "Kurze Antworten zu Ablauf, Material, Kosten und langfristiger Zusammenarbeit.",
       items: [
         {
-          question: "Schneidest du Reels, TikToks und YouTube Shorts?",
+          question: "Welche Art von Videos schneidet Simon Saad Visuals?",
           answer:
-            "Ja. Short-Form-Editing für Instagram, TikTok und YouTube Shorts gehört zum Kernangebot — inklusive Hooks, Pacing und plattformgerechter Struktur.",
+            "Simon Saad Visuals schneidet Social Ads, Reels, Shorts, TikToks, YouTube-Content und Kampagnen-Visuals für Creator, Marken und Agenturen. Der Fokus liegt auf hochwertigem Social Content mit klarer Hook, sauberem Rhythmus und markentauglichem Look.",
         },
         {
-          question: "Arbeitest du deutschlandweit?",
+          question: "Für wen ist die Zusammenarbeit geeignet?",
           answer:
-            "Ja. Zusammenarbeit läuft remote in ganz Deutschland. Dreharbeiten können bei Bedarf geplant werden.",
+            "Die Zusammenarbeit eignet sich für Creator, Personal Brands, Unternehmen und Agenturen, die regelmäßig hochwertigen Social Content veröffentlichen möchten. Besonders sinnvoll ist sie, wenn aus Rohmaterial ein klarer, professioneller und wiedererkennbarer Auftritt entstehen soll.",
         },
         {
-          question: "Was ist der Unterschied zwischen Editing und Filming?",
+          question: "Wie läuft ein Projekt ab?",
           answer:
-            "Editing ist der Schnitt und Finish aus vorhandenem Material. Filming umfasst Dreharbeiten, damit das Projekt von Anfang an auf einen starken Schnitt ausgelegt ist.",
+            "Am Anfang stehen Ziel, Plattform, Stilrichtung und vorhandenes Material. Danach entsteht ein erster Edit, der auf Timing, Story, Hook und Look abgestimmt wird. Feedback wird strukturiert eingearbeitet, bis der Clip veröffentlichungsbereit ist.",
         },
         {
-          question: "Für wen ist Simon Saad Visuals nicht geeignet?",
+          question: "Was muss ich für den Schnitt bereitstellen?",
           answer:
-            "Hochzeitsvideos, Billig-Massen-Schnitt oder Fotografie-first-Projekte passen nicht. Fokus: Premium Social- und Werbevideo für Creator und Marken.",
+            "Benötigt werden Rohmaterial, gewünschtes Format, Plattform, Ziel des Videos und wenn vorhanden Referenzen, Brand Assets, Musikvorgaben oder bestehende Captions. Je klarer die Richtung, desto effizienter wird der Schnitt.",
+        },
+        {
+          question: "Wie lange dauert ein Video-Edit?",
+          answer:
+            "Das hängt vom Umfang ab. Ein einzelner Social Edit kann oft deutlich schneller umgesetzt werden als ein größeres Kampagnenpaket oder ein YouTube-Video. Nach Sichtung des Materials lässt sich der Zeitrahmen realistisch einschätzen.",
+        },
+        {
+          question: "Sind langfristige Kooperationen möglich?",
+          answer:
+            "Ja. Neben einzelnen Projekten sind auch wiederkehrende Zusammenarbeiten möglich, zum Beispiel für Creator, Marken oder Agenturen mit regelmäßigem Content-Bedarf. Dadurch entstehen ein konsistenter Look, schnellere Abläufe und ein besseres Verständnis für Marke und Zielgruppe.",
+        },
+        {
+          question: "Was kostet ein Video-Editing-Projekt?",
+          answer:
+            "Einzelne Reels starten ab 80 € pro Reel. Der finale Preis hängt von Umfang, Rohmaterial, Länge, Bearbeitungstiefe, Plattform und Deadline ab. Social Ads, YouTube-Videos, Kampagnenpakete und langfristige Kooperationen werden individuell kalkuliert.",
         },
       ],
     },
     work: {
       eyebrow: "AUSGEWÄHLTE ARBEIT",
-      title: "Proof in Motion",
+      title: "Was guter Schnitt\nsichtbar macht",
       intro:
         "Ein erster Blick auf Pacing, Rhythmus und visuelle Richtung in Social Edits, Brand Content und Creator-Videos.",
       collaborationsCtaLabel: "Mehr Collaborations",
@@ -692,7 +840,6 @@ const dictionaries: Record<Locale, Dictionary> = {
           lightboxSrc: "/assets/videos/lightbox/random/PIZZZZZA-lightbox.mp4",
           alt: "Posterbild für Prep My Meal Werbespot von Simon Saad Visuals",
           videoAriaLabel: "Prep My Meal Werbespot öffnen",
-          caseSlug: "prep-my-meal-leon-haegele",
         },
         {
           title: "Educational Reel",
@@ -708,14 +855,42 @@ const dictionaries: Record<Locale, Dictionary> = {
           title: "Cinematic Gym Edit",
           description:
             "Cinematic Edit mit @leon.haegele, fokussiert auf Gym-Atmosphäre, Bewegung und einen hochwertigen Look.",
-          posterSrc: "/assets/videos/posters/random/VERSION2-poster.webp",
+          posterSrc: "/assets/clients/leon-haegele-hd.webp",
           previewSrc: "/assets/videos/preview/random/VERSION2-web.mp4",
           lightboxSrc: "/assets/videos/lightbox/random/VERSION2-lightbox.mp4",
-          alt: "Posterbild für Cinematic Gym Edit",
+          alt: "Posterbild für Cinematic Gym Edit mit Leon Hägele",
           videoAriaLabel: "Cinematic Gym Edit öffnen",
         },
       ],
       moreItems: [
+        {
+          title: "Kool Savas × Ayo Reel",
+          description:
+            "Social Ad für Kool Savas und Ayo mit schnellem Einstieg, klarer visueller Führung und markenfähigem Schnitt für den Feed.",
+          posterSrc: "/assets/videos/posters/savas/AYO X KOOLSAVAS-poster.webp",
+          previewSrc: "/assets/videos/preview/savas/AYO X KOOLSAVAS-web.mp4",
+          lightboxSrc: "/assets/videos/lightbox/savas/AYO X KOOLSAVAS-lightbox.mp4",
+          alt: "Posterbild für Kool Savas und Ayo Social Ad von Simon Saad Visuals",
+          videoAriaLabel: "Kool Savas und Ayo Social Ad öffnen",
+        },
+        {
+          title: "Energy Reel",
+          description: "Energiegeladenes Social-Reel mit direktem Rhythmus und klarer Haltung.",
+          posterSrc: "/assets/videos/posters/diamten/bracen-poster.webp",
+          previewSrc: "/assets/videos/preview/diamten/bracen-web.mp4",
+          lightboxSrc: "/assets/videos/lightbox/diamten/bracen-lightbox.mp4",
+          alt: "Posterbild für Energy Reel",
+          videoAriaLabel: "Energy Reel öffnen",
+        },
+        {
+          title: "Podcast Trailer",
+          description: "Podcast-Trailer mit moody Visuals und klaren atmosphärischen Cuts.",
+          posterSrc: "/assets/videos/posters/podcast trailer/PT_FINAL-poster.webp",
+          previewSrc: "/assets/videos/preview/podcast trailer/PT_FINAL-web.mp4",
+          lightboxSrc: "/assets/videos/lightbox/podcast trailer/PT_FINAL-lightbox.mp4",
+          alt: "Posterbild für Podcast Trailer",
+          videoAriaLabel: "Podcast Trailer öffnen",
+        },
         {
           title: "Diamond Campaign",
           description:
@@ -736,49 +911,23 @@ const dictionaries: Record<Locale, Dictionary> = {
           videoAriaLabel: "Training Reel öffnen",
         },
         {
-          title: "Podcast Trailer",
-          description: "Podcast-Trailer mit moody Visuals und klaren atmosphärischen Cuts.",
-          posterSrc: "/assets/videos/posters/podcast trailer/PT_FINAL-poster.webp",
-          previewSrc: "/assets/videos/preview/podcast trailer/PT_FINAL-web.mp4",
-          lightboxSrc: "/assets/videos/lightbox/podcast trailer/PT_FINAL-lightbox.mp4",
-          alt: "Posterbild für Podcast Trailer",
-          videoAriaLabel: "Podcast Trailer öffnen",
+          title: "Andreas Ad Edit",
+          description:
+            "Vertikale Social Ad mit schnellem Einstieg, klarer visueller Führung und markenfähigem Schnitt für Short-Form.",
+          posterSrc: "/assets/videos/posters/random/adres_edit-poster.webp",
+          previewSrc: "/assets/videos/preview/random/adres_edit-web.mp4",
+          lightboxSrc: "/assets/videos/lightbox/random/adres_edit-lightbox.mp4",
+          alt: "Posterbild für Andreas Social Ad von Simon Saad Visuals",
+          videoAriaLabel: "Andreas Social Ad öffnen",
         },
         {
           title: "Creator Reel",
-          description: "Creator-Reel mit retention-fokussiertem Pacing für Social.",
+          description: "Creator-Reel mit retention-fokussiertem Pacing und starkem Hook für Social.",
           posterSrc: "/assets/videos/posters/random/ayo-poster.webp",
           previewSrc: "/assets/videos/preview/random/ayo-web.mp4",
           lightboxSrc: "/assets/videos/lightbox/random/ayo-lightbox.mp4",
           alt: "Posterbild für Creator Reel",
           videoAriaLabel: "Creator Reel öffnen",
-        },
-        {
-          title: "Energy Reel",
-          description: "Energiegeladenes Social-Reel mit direktem Rhythmus und klarer Haltung.",
-          posterSrc: "/assets/videos/posters/diamten/bracen-poster.webp",
-          previewSrc: "/assets/videos/preview/diamten/bracen-web.mp4",
-          lightboxSrc: "/assets/videos/lightbox/diamten/bracen-lightbox.mp4",
-          alt: "Posterbild für Energy Reel",
-          videoAriaLabel: "Energy Reel öffnen",
-        },
-        {
-          title: "Creator Cut",
-          description: "Performance-orientierter Creator-Cut mit social-nativem Pacing.",
-          posterSrc: "/assets/videos/posters/diamten/mario festhalten neu-poster.webp",
-          previewSrc: "/assets/videos/preview/diamten/mario festhalten neu-web.mp4",
-          lightboxSrc: "/assets/videos/lightbox/diamten/mario festhalten neu-lightbox.mp4",
-          alt: "Posterbild für Creator Cut",
-          videoAriaLabel: "Creator Cut öffnen",
-        },
-        {
-          title: "Mood Edit",
-          description: "Stimmungsgetriebener Edit mit kontrastreicher Tonführung und Pacing.",
-          posterSrc: "/assets/videos/posters/diamten/negative final-poster.webp",
-          previewSrc: "/assets/videos/preview/diamten/negative final-web.mp4",
-          lightboxSrc: "/assets/videos/lightbox/diamten/negative final-lightbox.mp4",
-          alt: "Posterbild für Mood Edit",
-          videoAriaLabel: "Mood Edit öffnen",
         },
         {
           title: "Series Trailer",
@@ -863,22 +1012,49 @@ const dictionaries: Record<Locale, Dictionary> = {
     },
     testimonials: {
       eyebrow: "VERTRAUEN",
-      title: "Was Kunden über die Zusammenarbeit sagen",
+      title: "Wenn der Schnitt überzeugt",
+      intro:
+        "Echte Rückmeldungen aus Creator- und Brand-Projekten, in denen Rhythmus, Finish und verlässliche Zusammenarbeit zählen.",
     },
     clientStories: {
-      eyebrow: "KOOPERATIONEN",
-      title: "Langfristige Visual-Systeme für Creator und Marken",
+      eyebrow: "Kooperationen",
+      title: "Langfristige Zusammenarbeit",
       intro:
-        "Tiefere Einblicke in Zusammenarbeiten mit wiederkehrenden Edits, Kampagnen-Visuals und klarer visueller Richtung.",
-      viewCase: "Case ansehen",
+        "Einblicke in wiederkehrende Projekte, Creator-Partnerschaften und veröffentlichte Social-Edits.",
+      learnMore: "Mehr erfahren",
+    },
+    clientStoryDetail: {
+      back: "Zurück zu Kooperationen",
+      eyebrow: "Kooperation",
+      publishedEditsHeading: "Veröffentlichte Edits",
     },
     contact: {
-      title: "Lass uns etwas Präzises bauen.",
-      description:
-        "Schreib mir zu Projekt, Timeline und Referenzen — ich melde mich mit den nächsten Schritten. Projektanfragen per Instagram-DM.",
-      cta: "PROJEKT STARTEN",
-      instagramLabel: "@simon__saad",
-      instagramCta: "Auf Instagram schreiben",
+      title: "Bereit für Zusammenarbeit?",
+      info: {
+        body:
+          "Eine kurze Nachricht genügt: Format, Einsatzzweck und vorhandenes Material können angegeben werden. Weitere Details werden im Gespräch geklärt.",
+        channelsIntro: "Anfragen sind auch direkt per WhatsApp oder Instagram möglich.",
+        whatsAppLabel: "WhatsApp",
+        instagramLabel: "Instagram",
+      },
+      form: {
+        nameLabel: "Name",
+        emailLabel: "E-Mail-Adresse",
+        messageLabel: "Nachricht",
+        namePlaceholder: "Name",
+        emailPlaceholder: "name@beispiel.de",
+        messagePlaceholder:
+          "Kurzbeschreibung: Format, Ziel, Material und Timing.",
+        submit: "Anfrage senden",
+        errors: {
+          nameRequired: "Bitte gib deinen Namen ein.",
+          emailRequired: "Bitte gib deine E-Mail-Adresse ein.",
+          emailInvalid: "Bitte gib eine gültige E-Mail-Adresse ein.",
+          messageRequired: "Bitte schreib eine kurze Nachricht.",
+        },
+        submitUnavailable:
+          "Der Versand über das Formular ist noch nicht eingerichtet. WhatsApp oder Instagram können unten genutzt werden.",
+      },
     },
     caseDetail: {
       back: "Zurück zu ausgewählter Arbeit",
@@ -897,10 +1073,12 @@ const dictionaries: Record<Locale, Dictionary> = {
       copyright: "© Simon Saad Visuals",
       instagramLabel: "@simon__saad",
       links: {
-        work: "ARBEIT",
+        work: "PROJEKTE",
         services: "LEISTUNGEN",
-        about: "PROZESS",
+        approach: "ANSATZ",
+        process: "ABLAUF",
         contact: "KONTAKT",
+        faq: "FAQ",
         impressum: "IMPRESSUM",
         datenschutz: "DATENSCHUTZ",
       },

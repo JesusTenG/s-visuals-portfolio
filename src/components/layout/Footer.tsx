@@ -27,9 +27,11 @@ export function Footer({ locale, dict }: Props) {
           </a>
         </div>
         <nav className={styles.links} aria-label="Footer">
-          <a href={`${home}#work`}>{dict.footer.links.work}</a>
           <a href={`${home}#services`}>{dict.footer.links.services}</a>
-          <a href={`${home}#about`}>{dict.footer.links.about}</a>
+          <a href={`${home}#work`}>{dict.footer.links.work}</a>
+          <a href={`${home}#approach`}>{dict.footer.links.approach}</a>
+          <a href={`${home}#process`}>{dict.footer.links.process}</a>
+          <a href={`${home}#faq`}>{dict.footer.links.faq}</a>
           <a href={`${home}#contact`}>{dict.footer.links.contact}</a>
           <a href={`/${locale}/impressum`}>{dict.footer.links.impressum}</a>
           <a href={`/${locale}/datenschutz`}>{dict.footer.links.datenschutz}</a>

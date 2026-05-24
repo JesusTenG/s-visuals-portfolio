@@ -13,6 +13,8 @@ export type Testimonial = {
   instagramHandle?: string;
   instagramUrl?: string;
   relatedCaseSlug?: string;
+  /** Links testimonial to a client-stories detail page slug */
+  clientStorySlug?: string;
   /** True = draft placeholder copy; replace before launch. */
   isPlaceholder?: boolean;
 };
@@ -28,26 +30,28 @@ export const testimonials: Testimonial[] = [
     brandName: "Enhanced Coach",
     instagramHandle: "@leon.haegele",
     instagramUrl: "https://www.instagram.com/leon.haegele/",
-    avatarSrc: "/assets/testimonials/leon-haegele.webp",
+    avatarSrc: "/assets/clients/leon-haegele-hd.webp",
+    clientStorySlug: "leon-haegele",
     isPlaceholder: false,
   },
   {
     id: "de-placeholder-02",
     locale: "de",
     quote:
-      "[Platzhalter] Kurzes Feedback zu Timing, Look und Zusammenarbeit. Diesen Text vor dem Launch durch ein echtes Zitat ersetzen.",
-    authorName: "[Platzhalter] Name",
-    authorRole: "Rolle",
-    companyOrChannel: "[Platzhalter] Kanal / Brand",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    authorName: "Lorem Ipsum",
+    authorRole: "Platzhalter",
+    brandName: "Dolor Sit",
     isPlaceholder: true,
   },
   {
     id: "de-placeholder-03",
     locale: "de",
     quote:
-      "[Platzhalter] Zweites Zitat für die mittlere Karte. Kein echtes Kundenfeedback, nur Layout-Platzhalter.",
-    authorName: "[Platzhalter] Name",
-    authorRole: "Rolle",
+      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    authorName: "Amet Consetetur",
+    authorRole: "Platzhalter",
+    brandName: "Elitr Sed",
     isPlaceholder: true,
   },
   {
@@ -60,26 +64,28 @@ export const testimonials: Testimonial[] = [
     brandName: "Enhanced Coach",
     instagramHandle: "@leon.haegele",
     instagramUrl: "https://www.instagram.com/leon.haegele/",
-    avatarSrc: "/assets/testimonials/leon-haegele.webp",
+    avatarSrc: "/assets/clients/leon-haegele-hd.webp",
+    clientStorySlug: "leon-haegele",
     isPlaceholder: false,
   },
   {
     id: "en-placeholder-02",
     locale: "en",
     quote:
-      "[Placeholder] Short feedback on timing, look and collaboration. Replace this text with a real quote before launch.",
-    authorName: "[Placeholder] Name",
-    authorRole: "Role",
-    companyOrChannel: "[Placeholder] Channel / brand",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    authorName: "Lorem Ipsum",
+    authorRole: "Placeholder",
+    brandName: "Dolor Sit",
     isPlaceholder: true,
   },
   {
     id: "en-placeholder-03",
     locale: "en",
     quote:
-      "[Placeholder] Second quote for the center card. Not a real client review, layout placeholder only.",
-    authorName: "[Placeholder] Name",
-    authorRole: "Role",
+      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    authorName: "Amet Consetetur",
+    authorRole: "Placeholder",
+    brandName: "Elitr Sed",
     isPlaceholder: true,
   },
 ];
@@ -87,7 +93,21 @@ export const testimonials: Testimonial[] = [
 const SECTION_CARD_COUNT = 3;
 
 export function getSectionTestimonials(locale: Locale): Testimonial[] {
-  return testimonials
-    .filter((item) => item.locale === locale && !item.isPlaceholder)
-    .slice(0, SECTION_CARD_COUNT);
+  const forLocale = testimonials.filter((item) => item.locale === locale);
+  const real = forLocale.filter((item) => !item.isPlaceholder);
+  const placeholders = forLocale.filter((item) => item.isPlaceholder);
+
+  return [...real, ...placeholders].slice(0, SECTION_CARD_COUNT);
+}
+
+export function getTestimonialForClientStory(
+  slug: string,
+  locale: Locale,
+): Testimonial | undefined {
+  return testimonials.find(
+    (item) =>
+      item.locale === locale &&
+      !item.isPlaceholder &&
+      item.clientStorySlug === slug,
+  );
 }

@@ -1,9 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 
-import type { Locale } from "@/i18n/config";
 import type { WorkVideoItem } from "@/i18n/dictionaries";
 
 import { VideoLightbox, type VideoLightboxItem } from "./VideoLightbox.client";
@@ -34,12 +32,10 @@ function getServerMobileLayoutSnapshot() {
 }
 
 type Props = Readonly<{
-  locale: Locale;
   featuredItems: WorkVideoItem[];
   moreItems: WorkVideoItem[];
   viewMoreWork: string;
   showLessWork: string;
-  viewCaseLabel: string;
 }>;
 
 function toLightboxItem(item: WorkVideoItem): VideoLightboxItem {
@@ -51,12 +47,10 @@ function toLightboxItem(item: WorkVideoItem): VideoLightboxItem {
 }
 
 export function WorkVideoGrid({
-  locale,
   featuredItems,
   moreItems,
   viewMoreWork,
   showLessWork,
-  viewCaseLabel,
 }: Props) {
   const [activeVideo, setActiveVideo] = useState<VideoLightboxItem | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -110,14 +104,6 @@ export function WorkVideoGrid({
         isLightboxOpen={isLightboxOpen}
         onOpen={() => setActiveVideo(toLightboxItem(item))}
       />
-      {item.caseSlug ? (
-        <Link
-          href={`/${locale}/work/${item.caseSlug}`}
-          className={styles["work-section__case-link"]}
-        >
-          {viewCaseLabel}
-        </Link>
-      ) : null}
     </div>
   );
 

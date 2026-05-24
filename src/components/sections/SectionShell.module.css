@@ -1,10 +1,9 @@
-/* Premium section shell — dark base, faint rule, optional accent glow */
+/* Premium section shell — dark base, optional accent glow */
 .shell {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   padding-block: var(--sv-section-padding);
-  border-top: 1px solid var(--color-border-faint);
   color: var(--color-text-primary);
   font-family: var(--font-ui, system-ui, sans-serif);
   background: var(--color-gray-950);
@@ -29,4 +28,10 @@
 .shell__inner {
   position: relative;
   z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .shell {
+    padding-block: clamp(3rem, 5.5vw, 4rem);
+  }
 }

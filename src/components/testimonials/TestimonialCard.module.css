@@ -36,26 +36,6 @@
   transition: opacity var(--sv-transition-card-hover);
 }
 
-.testimonial-card--placeholder {
-  border-style: dashed;
-  border-color: color-mix(in srgb, var(--color-accent) 28%, transparent);
-}
-
-.testimonial-card__draft-label {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  padding: 0.2rem 0.45rem;
-  border-radius: 4px;
-  font-size: 0.58rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--color-accent) 88%, var(--color-white));
-  background: color-mix(in srgb, var(--color-accent) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--color-accent) 32%, transparent);
-}
-
 @media (hover: hover) {
   .testimonial-card:hover {
     border-color: var(--color-border-strong);
