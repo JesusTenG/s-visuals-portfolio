@@ -33,7 +33,7 @@ export function ServicesSection({ dict }: Props) {
   return (
     <section
       id="services"
-      className={`${shellStyles.shell} ${styles["services-section"]}`}
+      className={`${shellStyles.shell} section-flow section-flow--aurora ${styles["services-section"]}`}
       aria-labelledby="services-section-title"
     >
       <div className={styles["services-section__bleed"]} aria-hidden="true">

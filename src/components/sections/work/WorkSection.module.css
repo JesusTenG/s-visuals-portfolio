@@ -2,11 +2,12 @@
 .work-section {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
   padding-block: var(--sv-section-padding);
   color: var(--color-text-primary);
   font-family: var(--font-ui, system-ui, sans-serif);
-  background: var(--color-gray-950);
+  /* Background: sectionAtmosphere.css */
 }
 
 .work-section__inner {
@@ -193,10 +194,32 @@
 @media (max-width: 768px) {
   .work-section {
     padding-block: clamp(3rem, 5.5vw, 4rem);
+    overflow-x: clip;
+  }
+
+  .work-section__inner {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .work-section__grid,
+  .work-section__more-grid {
+    width: 100%;
+    max-width: 100%;
+    gap: clamp(1rem, 2vw, 1.35rem);
+    justify-items: stretch;
   }
 
   .work-section__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .work-section__grid > [data-work-reveal-card],
+  .work-section__more-grid > [data-work-reveal-card] {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 
   /* Touch: Cards sofort sichtbar — hohe Section erreicht 40%-Reveal oft nie */

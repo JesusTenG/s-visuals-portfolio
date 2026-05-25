@@ -27,10 +27,12 @@ export function ProcessSection({ dict }: Props) {
   return (
     <section
       id="process"
-      className={shellStyles.shell}
+      className={`${shellStyles.shell} ${styles["process-section"]} section-flow section-flow--signal`}
       aria-labelledby="process-section-title"
     >
-      <div className={`${shellStyles.shell__inner} ${editorialLayout["editorial-section-inner"]}`}>
+      <div
+        className={`${shellStyles.shell__inner} ${editorialLayout["editorial-section-inner"]} ${styles["process-section__inner"]}`}
+      >
         <SectionIntro
           eyebrow={process.eyebrow}
           title={process.title}

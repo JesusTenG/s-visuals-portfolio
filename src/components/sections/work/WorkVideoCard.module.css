@@ -4,39 +4,22 @@
   isolation: isolate;
   display: flex;
   flex-direction: column;
-  gap: var(--sv-space-4);
+  gap: 0;
   border-radius: var(--sv-radius-card);
   border: 1px solid var(--color-border-faint);
-  background: var(--gradient-glass-card);
+  background: #000;
   box-shadow: var(--shadow-glass-card);
-  padding: var(--sv-space-4);
+  padding: 0;
+  overflow: visible;
   transition:
     border-color var(--sv-transition-card-hover),
-    box-shadow var(--sv-transition-card-hover),
-    transform var(--sv-transition-card-hover);
-}
-
-.work-video-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  pointer-events: none;
-  box-shadow: var(--shadow-card-hover-glow);
-  opacity: 0;
-  transition: opacity var(--sv-transition-card-hover);
+    box-shadow var(--sv-transition-card-hover);
 }
 
 @media (hover: hover) {
   .work-video-card:hover {
     border-color: var(--color-border-strong);
-    box-shadow: var(--shadow-card-hover-depth);
-    transform: translateY(-2px);
-  }
-
-  .work-video-card:hover::before {
-    opacity: 1;
+    box-shadow: var(--shadow-glass-card), var(--shadow-card-hover-glow);
   }
 }
 
@@ -49,10 +32,7 @@
   background: transparent;
   cursor: pointer;
   text-align: inherit;
-  border-radius: var(--sv-radius-ui);
-  transition:
-    transform var(--sv-transition-card-hover),
-    box-shadow var(--sv-transition-card-hover);
+  border-radius: 0;
 }
 
 .work-video-card__label {
@@ -74,7 +54,7 @@
   position: absolute;
   inset: -35% 0 0;
   z-index: -1;
-  border-radius: 0 0 var(--sv-radius-ui) var(--sv-radius-ui);
+  border-radius: 0;
   background: linear-gradient(
     180deg,
     transparent 0%,
@@ -100,10 +80,6 @@
   text-wrap: pretty;
 }
 
-.work-video-card__media-trigger:hover {
-  transform: scale(1.015);
-}
-
 .work-video-card__media-trigger:focus-visible {
   outline: 2px solid var(--color-accent-outline-focus);
   outline-offset: 3px;
@@ -114,15 +90,10 @@
   width: 100%;
   aspect-ratio: 9 / 16;
   min-height: 12rem;
-  border-radius: var(--sv-radius-ui);
+  border-radius: 0;
   overflow: hidden;
-  border: 1px solid var(--color-border-faint);
-  background: var(--color-gray-925, #141414);
-  transition: border-color var(--sv-transition-card-hover);
-}
-
-.work-video-card__media-trigger:hover .work-video-card__media {
-  border-color: var(--color-border-strong);
+  border: none;
+  background: #000;
 }
 
 .work-video-card__play {
@@ -161,18 +132,11 @@
   z-index: 1;
   object-fit: cover;
   opacity: 1;
-  transition:
-    opacity var(--sv-transition-card-hover),
-    transform var(--sv-transition-card-hover);
+  transition: opacity var(--sv-transition-card-hover);
 }
 
 .work-video-card__poster-layer--hidden {
   opacity: 0;
-}
-
-.work-video-card__media-trigger:hover .work-video-card__poster-layer,
-.work-video-card__media-trigger:focus-visible .work-video-card__poster-layer {
-  transform: scale(1.02);
 }
 
 .work-video-card__video-preview {
@@ -205,6 +169,41 @@
   }
 }
 
+/*//////////////WORK VIDEO CARD — MOBILE (≤768px)//////////////////*/
+@media (max-width: 768px) {
+  .work-video-card {
+    width: 100%;
+    max-width: 100%;
+    margin-inline: 0;
+  }
+
+  .work-video-card__media {
+    aspect-ratio: 9 / 16;
+    min-height: 11rem;
+    max-height: none;
+  }
+
+  .work-video-card__play {
+    min-width: 3rem;
+    min-height: 3rem;
+    font-size: 0.72rem;
+  }
+
+  .work-video-card__label {
+    padding: clamp(1.75rem, 4vw, 2.25rem) clamp(0.85rem, 2.5vw, 1rem)
+      clamp(0.85rem, 2.5vw, 1rem);
+  }
+
+  .work-video-card__label-title {
+    font-size: clamp(0.8rem, 3.2vw, 0.9rem);
+  }
+
+  .work-video-card__label-description {
+    font-size: clamp(0.66rem, 2.6vw, 0.72rem);
+    line-height: 1.48;
+  }
+}
+
 @media (max-width: 768px), (hover: none) {
   .work-video-card__label {
     opacity: 0.92;
@@ -220,7 +219,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .work-video-card,
-  .work-video-card::before,
   .work-video-card__media-trigger,
   .work-video-card__media,
   .work-video-card__play,
@@ -230,16 +228,7 @@
   }
 
   .work-video-card:hover {
-    transform: none;
-  }
-
-  .work-video-card:hover::before {
-    opacity: 1;
-  }
-
-  .work-video-card__media-trigger:hover .work-video-card__poster-layer,
-  .work-video-card__media-trigger:focus-visible .work-video-card__poster-layer {
-    transform: none;
+    box-shadow: var(--shadow-glass-card), var(--shadow-card-hover-glow);
   }
 
   .work-video-card__media-trigger:hover .work-video-card__play,

@@ -1,4 +1,4 @@
-/* Attention curve — thin editorial proof strip */
+/* Impact — reveal animation; accent on headline line 3 + sparkline */
 .kpiSection {
   position: relative;
   padding-block: clamp(2rem, 4.5vw, 3.25rem);
@@ -28,12 +28,28 @@
 }
 
 .kpiCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(1.15rem, 2.5vw, 1.65rem);
   min-width: 0;
+}
+
+.kpiCtaWrap {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 20rem;
 }
 
 @media (max-width: 899px) {
   .kpiCopy {
+    align-items: center;
     text-align: center;
+  }
+
+  .kpiCtaWrap {
+    margin-inline: auto;
   }
 
   .kpiHeadlineLine {
@@ -42,6 +58,8 @@
 }
 
 .kpiHeadline {
+  position: relative;
+  z-index: 3;
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -49,6 +67,7 @@
   font-weight: 700;
   line-height: 1.02;
   letter-spacing: -0.045em;
+  overflow: visible;
 }
 
 @media (max-width: 899px) {
@@ -61,12 +80,29 @@
   display: block;
   white-space: nowrap;
   font-size: clamp(1.65rem, 4.2vw, 2.75rem);
-  color: var(--color-text-primary);
+  line-height: 1.1;
+  padding-bottom: 0.14em;
+  background-image: var(--gradient-headline-silver);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-box-trim: none;
+  text-box-edge: cap alphabetic;
   opacity: 0;
   transform: translateY(10px);
   transition:
     opacity 0.45s cubic-bezier(0.25, 0.1, 0.25, 1),
     transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.kpiHeadlineLineAccent {
+  background-image: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: var(--color-accent);
+  color: var(--color-accent);
+  text-shadow: 0 0 28px var(--color-accent-glow-medium);
 }
 
 .kpiHeadlineLine:nth-child(1) {
@@ -79,10 +115,6 @@
 
 .kpiHeadlineLine:nth-child(3) {
   transition-delay: 0.16s;
-}
-
-.kpiHeadlineLineAccent {
-  color: var(--color-purple-500);
 }
 
 .kpiSection--revealed .kpiHeadlineLine {
@@ -100,6 +132,7 @@
 
 .kpiCurveChart {
   position: relative;
+  z-index: 1;
   width: 100%;
   height: clamp(6.5rem, 16vw, 9.5rem);
   min-height: clamp(6.5rem, 16vw, 9.5rem);
@@ -124,14 +157,20 @@
 
 .kpiCurvePath {
   fill: none;
-  stroke: #8659ce;
+  stroke: color-mix(in srgb, var(--color-white) 36%, var(--color-gray-600));
   stroke-width: 3;
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--color-purple-500) 38%, transparent));
+  filter: none;
+  transition: stroke 0.65s ease;
+}
+
+.kpiSection--revealed .kpiCurvePath {
+  stroke: var(--color-purple-500);
+  filter: drop-shadow(0 0 16px color-mix(in srgb, var(--color-purple-500) 42%, transparent));
 }
 
 .kpiCurveWrap--drawing .kpiCurvePath {
@@ -156,14 +195,20 @@
 
 .kpiCurveArrowHead {
   fill: none;
-  stroke: #8659ce;
+  stroke: color-mix(in srgb, var(--color-white) 40%, var(--color-gray-600));
   stroke-width: 3.25;
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--color-purple-500) 42%, transparent));
+  filter: none;
+  transition: stroke 0.65s ease;
+}
+
+.kpiSection--revealed .kpiCurveArrowHead {
+  stroke: var(--color-purple-500);
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--color-purple-500) 45%, transparent));
 }
 
 .kpiCurveWrap--drawing .kpiCurveArrowHead {
@@ -192,6 +237,8 @@
 }
 
 .kpiNode {
+  position: relative;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -217,8 +264,15 @@
   display: block;
   width: clamp(1.35rem, 2.4vw, 1.65rem);
   height: clamp(1.35rem, 2.4vw, 1.65rem);
-  color: color-mix(in srgb, var(--color-purple-500) 94%, var(--color-text-muted));
-  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--color-purple-500) 35%, transparent));
+  color: color-mix(in srgb, var(--color-white) 46%, var(--color-text-muted));
+  transition:
+    color 0.55s ease,
+    filter 0.55s ease;
+}
+
+.kpiSection--revealed .kpiIcon {
+  color: var(--color-accent);
+  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--color-purple-500) 38%, transparent));
 }
 
 .kpiLabel {
@@ -226,7 +280,7 @@
   font-weight: 650;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--color-purple-500) 52%, var(--color-text-muted));
+  color: color-mix(in srgb, var(--color-white) 40%, var(--color-text-muted));
   line-height: 1.2;
 }
 
@@ -236,16 +290,60 @@
   line-height: 1.05;
   letter-spacing: -0.035em;
   font-variant-numeric: tabular-nums;
-  color: var(--color-text-primary);
+  color: color-mix(in srgb, var(--color-white) 88%, var(--color-text-muted));
 }
 
+/*//////////////IMPACT — MOBILE (≤768px)//////////////////*/
 @media (max-width: 768px) {
-  .kpiShell {
-    padding-inline: clamp(1.1rem, 4.5vw, 1.5rem);
-  }
-
   .kpiSection {
     padding-block: clamp(2.25rem, 4vw, 2.85rem);
+    overflow-x: clip;
+  }
+
+  .kpiShell {
+    width: 100%;
+    max-width: 100%;
+    padding-inline: clamp(1.25rem, 5vw, 1.75rem);
+    box-sizing: border-box;
+  }
+
+  .kpiInner,
+  .kpiCurveArea,
+  .kpiCopy {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .kpiHeadline {
+    width: 100%;
+    max-width: 100%;
+    line-height: 1.08;
+  }
+
+  .kpiHeadlineLine {
+    max-width: 100%;
+    white-space: normal;
+    text-wrap: balance;
+    font-size: clamp(1.85rem, 8.2vw, 2.6rem);
+    letter-spacing: -0.03em;
+    overflow-wrap: break-word;
+  }
+
+  .kpiNodesRow {
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(0.35rem, 2vw, 0.65rem);
+  }
+
+  .kpiLabel {
+    font-size: 0.5625rem;
+    letter-spacing: 0.08em;
+  }
+
+  .kpiValue {
+    font-size: clamp(0.92rem, 3.2vw, 1.15rem);
   }
 }
 
@@ -260,15 +358,9 @@
   }
 }
 
-@media (max-width: 768px) {
-  .kpiHeadlineLine {
-    font-size: clamp(1.55rem, 7.5vw, 2.15rem);
-  }
-}
-
 @media (max-width: 430px) {
   .kpiHeadlineLine {
-    font-size: clamp(1.48rem, 8vw, 2rem);
+    font-size: clamp(1.8rem, 8.5vw, 2.55rem);
   }
 }
 

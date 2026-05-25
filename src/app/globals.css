@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "../styles/sectionAtmosphere.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -211,6 +212,37 @@
     var(--color-accent) 0%,
     color-mix(in srgb, var(--color-accent) 72%, var(--color-white)) 100%
   );
+  /* Headline metal — horizontal linear silver (no center band) */
+  --gradient-headline-silver: linear-gradient(
+    90deg,
+    #7e7f8c 0%,
+    #a4a5b0 24%,
+    #c8c9d4 52%,
+    #ececf2 78%,
+    #f6f6f8 100%
+  );
+  --gradient-headline-fill: var(--gradient-headline-silver);
+  --gradient-headline-hover-shift: linear-gradient(
+    90deg,
+    #8a8298 0%,
+    #b0a8c0 30%,
+    #d8d2e4 58%,
+    #f2f0f6 100%
+  );
+  --gradient-headline-growth: linear-gradient(
+    90deg,
+    #9a8eb4 0%,
+    color-mix(in srgb, var(--color-purple-400) 62%, #c8c2d8) 48%,
+    #e8e4f0 76%,
+    #f8f8fa 100%
+  );
+  --gradient-eyebrow-silver: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-white) 78%, #b8b8c4) 0%,
+    color-mix(in srgb, var(--color-white) 48%, #888894) 100%
+  );
+
+  --atmosphere-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 
   /*//////////////SHADOW TOKENS//////////////////*/
   --shadow-nav-bar: inset 0 1px 0 color-mix(in srgb, var(--color-white) 8%, transparent),
@@ -574,6 +606,17 @@
   section[id] {
     scroll-margin-top: calc(var(--sv-navbar-height) + 0.75rem);
   }
+
+  /*//////////////MOBILE — NO HORIZONTAL SCROLL//////////////////*/
+  @media (max-width: 768px) {
+    html {
+      overflow-x: clip;
+    }
+
+    body {
+      overflow-x: clip;
+    }
+  }
 }
 
 /*//////////////GLOBAL UTILITIES//////////////////*/
@@ -599,7 +642,16 @@
   }
 
   /*//////////////CONTAINER — RESPONSIVE//////////////////*/
-  @media (min-width: 520px) {
+  @media (max-width: 768px) {
+    .container-base {
+      width: 100%;
+      max-width: 100%;
+      padding-left: clamp(1.25rem, 5vw, 1.75rem);
+      padding-right: clamp(1.25rem, 5vw, 1.75rem);
+    }
+  }
+
+  @media (min-width: 769px) {
     .container-base {
       padding-left: 1.5rem;
       padding-right: 1.5rem;
@@ -613,6 +665,24 @@
     text-transform: uppercase;
     color: var(--color-text-section-title);
     text-wrap: balance;
+  }
+
+  /*
+   * Gradient headlines — text-box-edge keeps descenders (g, y, p) inside the
+   * paint box when using background-clip: text (no line-height padding hacks).
+   */
+  .headline-gradient-fill {
+    display: inline-block;
+    overflow: visible;
+    line-height: 1.1;
+    padding-bottom: 0.14em;
+    background-image: var(--gradient-headline-silver);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    text-box-trim: none;
+    text-box-edge: cap alphabetic;
   }
 
   .glass-card {

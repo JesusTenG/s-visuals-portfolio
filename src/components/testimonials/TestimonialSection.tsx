@@ -23,7 +23,7 @@ export function TestimonialSection({ locale, dict }: Props) {
   return (
     <section
       id="testimonials"
-      className={shellStyles.shell}
+      className={`${shellStyles.shell} section-flow section-flow--echo`}
       aria-labelledby="testimonials-title"
     >
       <div className={shellStyles.shell__glow} aria-hidden="true" />

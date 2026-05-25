@@ -35,19 +35,21 @@ export default async function LangHomePage({ params }: Props) {
     <HeroVisualModeProvider>
       <JsonLd data={jsonLd} />
       <Navbar locale={locale} dict={dict} introAnimation />
-      <main className="flex-1">
-        <HeroSection dict={dict} />
-        <ServicesSection dict={dict} />
-        <WorkSection dict={dict} />
-        <ImpactSnapshotSection dict={dict} locale={locale} />
-        <ApproachSection dict={dict} />
-        <ProcessSection dict={dict} />
-        <TestimonialSection locale={locale} dict={dict} />
-        <ClientStoriesSection locale={locale} dict={dict} />
-        <FaqSection dict={dict} />
-        <FinalCtaSection dict={dict} />
-      </main>
-      <Footer locale={locale} dict={dict} />
+      <div className="page-spectrum flex flex-1 flex-col">
+        <main className="flex flex-1 flex-col">
+          <HeroSection dict={dict} />
+          <ServicesSection dict={dict} />
+          <WorkSection dict={dict} />
+          <ProcessSection dict={dict} />
+          <ApproachSection dict={dict} />
+          <TestimonialSection locale={locale} dict={dict} />
+          <ImpactSnapshotSection dict={dict} locale={locale} />
+          <ClientStoriesSection locale={locale} dict={dict} />
+          <FaqSection dict={dict} />
+          <FinalCtaSection dict={dict} />
+        </main>
+        <Footer locale={locale} dict={dict} />
+      </div>
     </HeroVisualModeProvider>
   );
 }

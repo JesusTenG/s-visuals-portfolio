@@ -2,7 +2,7 @@
  * Per-section center-line offsets for SectionIntro (tablet + desktop).
  * Positive → center line moves right (more space on the left).
  * Negative → center line moves left (more space on the right).
- * Split-axis and shifts apply from 980px; below that, CSS resets shifts to 0.
+ * Split-axis and shifts apply from 980px; below that, stack layout + no shifts (see SectionIntro).
  */
 export const sectionIntroTuning = {
   services: {

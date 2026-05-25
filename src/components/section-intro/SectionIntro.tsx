@@ -1,5 +1,14 @@
+"use client";
+
 import type { CSSProperties } from "react";
 
+import { ScrollReveal } from "@/components/animation/ScrollReveal";
+
+import {
+  sectionIntroRevealDirections,
+  sectionIntroRevealDirectionsStack,
+} from "./sectionIntroReveal";
+import { useSectionIntroStackLayout } from "./useSectionIntroStackLayout";
 import styles from "./SectionIntro.module.css";
 
 export type SectionIntroHeadlineSide = "left" | "right";
@@ -36,9 +45,15 @@ export function SectionIntro({
   titleId,
   className,
 }: Props) {
+  const isStackLayout = useSectionIntroStackLayout();
+  const reveal = isStackLayout
+    ? sectionIntroRevealDirectionsStack()
+    : sectionIntroRevealDirections(headlineSide);
+
   const rootClass = [
     styles["section-intro"],
     styles[`section-intro--headline-${headlineSide}`],
+    isStackLayout ? styles["section-intro--stack"] : "",
     className,
   ]
     .filter(Boolean)
@@ -59,26 +74,45 @@ export function SectionIntro({
       : {}),
   } as CSSProperties;
 
-  const hasShiftStyle = centerShift !== undefined || centerShiftDesktop !== undefined;
+  const hasShiftStyle =
+    !isStackLayout && (centerShift !== undefined || centerShiftDesktop !== undefined);
 
   return (
     <header className={rootClass} style={hasShiftStyle ? style : undefined}>
-      <p className={styles["section-intro__eyebrow"]}>{eyebrow}</p>
+      <ScrollReveal
+        direction={reveal.eyebrow}
+        delay={0}
+        className={styles["section-intro__eyebrow-reveal"]}
+      >
+        <p className={styles["section-intro__eyebrow"]}>{eyebrow}</p>
+      </ScrollReveal>
 
       <div className={styles["section-intro__grid"]}>
         <div className={styles["section-intro__headline-col"]}>
-          <h2 id={titleId} className={styles["section-intro__title"]}>
-            {lines.map((line) => (
-              <span key={line} className={titleLineClass}>
-                {line}
-              </span>
-            ))}
-          </h2>
+          <ScrollReveal
+            direction={reveal.headline}
+            delay={80}
+            className={styles["section-intro__headline-reveal"]}
+          >
+            <h2 id={titleId} className={styles["section-intro__title"]}>
+              {lines.map((line) => (
+                <span key={line} className={titleLineClass}>
+                  {line}
+                </span>
+              ))}
+            </h2>
+          </ScrollReveal>
         </div>
 
         {subtitle ? (
           <div className={styles["section-intro__subtitle-col"]}>
-            <p className={styles["section-intro__subtitle"]}>{subtitle}</p>
+            <ScrollReveal
+              direction={reveal.subtitle}
+              delay={140}
+              className={styles["section-intro__subtitle-reveal"]}
+            >
+              <p className={styles["section-intro__subtitle"]}>{subtitle}</p>
+            </ScrollReveal>
           </div>
         ) : null}
       </div>

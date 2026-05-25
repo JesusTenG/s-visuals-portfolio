@@ -1,3 +1,7 @@
+"use client";
+
+import { ScrollReveal } from "@/components/animation/ScrollReveal";
+
 import styles from "./SectionHeader.module.css";
 
 type Props = Readonly<{
@@ -25,13 +29,25 @@ export function SectionHeader({
     .filter(Boolean)
     .join(" ");
 
+  const textDirection = align === "start" ? "left" : "fade";
+
   return (
     <header className={rootClass}>
-      {eyebrow ? <p className={styles.eyebrow}>{eyebrow}</p> : null}
-      <h2 id={titleId} className={styles.title}>
-        {title}
-      </h2>
-      {intro ? <p className={styles.intro}>{intro}</p> : null}
+      {eyebrow ? (
+        <ScrollReveal direction={textDirection} delay={0}>
+          <p className={styles.eyebrow}>{eyebrow}</p>
+        </ScrollReveal>
+      ) : null}
+      <ScrollReveal direction={textDirection} delay={eyebrow ? 80 : 0}>
+        <h2 id={titleId} className={styles.title}>
+          {title}
+        </h2>
+      </ScrollReveal>
+      {intro ? (
+        <ScrollReveal direction={textDirection} delay={eyebrow ? 140 : 80}>
+          <p className={styles.intro}>{intro}</p>
+        </ScrollReveal>
+      ) : null}
     </header>
   );
 }

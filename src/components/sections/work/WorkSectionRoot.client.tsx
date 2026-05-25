@@ -72,7 +72,7 @@ export function WorkSectionRoot({ children }: Props) {
     <section
       ref={sectionRef}
       id="work"
-      className={`${styles["work-section"]} ${isRevealed ? styles["work-section--revealed"] : ""}`}
+      className={`${styles["work-section"]} section-flow section-flow--nocturne ${isRevealed ? styles["work-section--revealed"] : ""}`}
       aria-labelledby="work-section-title"
     >
       {children}

@@ -98,7 +98,7 @@ export function ClientStoriesSection({ locale, dict }: Props) {
   return (
     <section
       id="collaborations"
-      className={shellStyles.shell}
+      className={`${shellStyles.shell} section-flow section-flow--cinema`}
       aria-labelledby="client-stories-title"
     >
       <div className={`${shellStyles.shell__inner} ${editorialLayout["editorial-section-inner"]}`}>

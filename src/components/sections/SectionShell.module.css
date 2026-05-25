@@ -2,11 +2,12 @@
 .shell {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
   padding-block: var(--sv-section-padding);
   color: var(--color-text-primary);
   font-family: var(--font-ui, system-ui, sans-serif);
-  background: var(--color-gray-950);
+  /* Background: sectionAtmosphere.css (.section-flow--*) */
 }
 
 .shell__glow {
@@ -18,11 +19,11 @@
   border-radius: 999px;
   background: radial-gradient(
     ellipse 70% 65% at 50% 40%,
-    color-mix(in srgb, var(--color-purple-500) 16%, transparent),
+    color-mix(in srgb, var(--color-purple-500) 10%, transparent),
     transparent 72%
   );
   filter: blur(52px);
-  opacity: 0.7;
+  opacity: 0;
 }
 
 .shell__inner {
@@ -33,5 +34,13 @@
 @media (max-width: 768px) {
   .shell {
     padding-block: clamp(3rem, 5.5vw, 4rem);
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
+  .shell__inner {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 }

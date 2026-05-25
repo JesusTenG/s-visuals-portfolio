@@ -14,14 +14,12 @@ import SVisualsButton from "@/components/ui/SVisualsButton";
 
 import { introCssProperties } from "@/lib/introAnimationTiming";
 import { switchLocalePath } from "@/lib/locale-path";
+import { BRAND_LOGO_SRC } from "@/lib/site";
 
 import { MobileNavMenu } from "./MobileNavMenu.client";
 import styles from "./Navbar.module.css";
 
 const MOBILE_NAV_PANEL_ID = "mobile-navigation-panel";
-/** Bump when replacing `public/assets/logo/logo1.png` (avoids stale browser / Next image cache). */
-const NAV_LOGO_ASSET_VERSION = "2";
-const NAV_LOGO_SRC = `/assets/logo/logo1.png?v=${NAV_LOGO_ASSET_VERSION}`;
 const HERO_SECTION_ID = "hero";
 const DESKTOP_SCROLL_FALLBACK_PX = 32;
 
@@ -176,7 +174,7 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
             onClick={handleWordmarkClick}
           >
             <Image
-              src={NAV_LOGO_SRC}
+              src={BRAND_LOGO_SRC}
               alt=""
               width={172}
               height={46}

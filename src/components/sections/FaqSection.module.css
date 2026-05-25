@@ -4,6 +4,7 @@
   margin-inline: auto;
   border-radius: var(--sv-radius-card);
   border: 1px solid var(--color-border-faint);
+  border-top-color: color-mix(in srgb, var(--color-accent) 14%, var(--color-border-faint));
   background: color-mix(in srgb, var(--color-gray-910) 55%, transparent);
   box-shadow: var(--shadow-glass-card);
   overflow: hidden;
@@ -109,17 +110,26 @@
 }
 
 @media (max-width: 768px) {
+  .faq-section__accordion {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
   .faq-section__trigger {
     min-height: 3.5rem;
-    padding-inline: 1.1rem;
+    padding-inline: clamp(1rem, 4vw, 1.15rem);
   }
 
   .faq-section__question {
     font-size: clamp(1rem, 3.2vw, 1.08rem);
+    line-height: 1.35;
+    text-wrap: balance;
+    overflow-wrap: break-word;
   }
 
   .faq-section__answer {
-    padding-inline: 1.1rem;
+    padding-inline: clamp(1rem, 4vw, 1.15rem);
     max-width: none;
   }
 }

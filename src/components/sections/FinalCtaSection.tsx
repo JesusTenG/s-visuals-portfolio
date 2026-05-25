@@ -37,7 +37,11 @@ export function FinalCtaSection({ dict }: Props) {
   const whatsAppUrl = buildWhatsAppUrl();
 
   return (
-    <section id="contact" className={shellStyles.shell} aria-labelledby="contact-section-title">
+    <section
+      id="contact"
+      className={`${shellStyles.shell} section-flow section-flow--crescendo`}
+      aria-labelledby="contact-section-title"
+    >
       <div className={`${shellStyles.shell__inner} ${editorialLayout["editorial-section-inner"]}`}>
         <div className={styles["contact-section__panel"]}>
           <div className={styles["contact-section__panel-body"]}>

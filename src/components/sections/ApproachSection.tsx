@@ -26,7 +26,7 @@ export function ApproachSection({ dict }: Props) {
   return (
     <section
       id="approach"
-      className={shellStyles.shell}
+      className={`${shellStyles.shell} section-flow section-flow--velvet`}
       aria-labelledby="approach-section-title"
     >
       <div className={`${shellStyles.shell__inner} ${editorialLayout["editorial-section-inner"]}`}>

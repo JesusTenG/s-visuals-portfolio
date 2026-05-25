@@ -17,5 +17,9 @@ export function buildWhatsAppUrl(number: string | null = WHATSAPP_WA_ME_NUMBER):
 
 export const SITE_NAME = "Simon Saad Visuals";
 
+/** Bump when replacing `public/assets/logo/logo1.png`. */
+export const BRAND_LOGO_VERSION = "2";
+export const BRAND_LOGO_SRC = `/assets/logo/logo1.png?v=${BRAND_LOGO_VERSION}`;
+
 /** Default Open Graph image (1200×630 SVG). Replace with a raster OG asset when available. */
 export const DEFAULT_OG_IMAGE_PATH = "/og/og-default.svg";

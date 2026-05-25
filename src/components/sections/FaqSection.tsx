@@ -20,7 +20,11 @@ export function FaqSection({ dict }: Props) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="faq" className={shellStyles.shell} aria-labelledby="faq-section-title">
+    <section
+      id="faq"
+      className={`${shellStyles.shell} section-flow section-flow--slate`}
+      aria-labelledby="faq-section-title"
+    >
       <div className={`${shellStyles.shell__inner} ${editorialLayout["editorial-section-inner"]}`}>
         <SectionIntro
           eyebrow={faq.eyebrow}

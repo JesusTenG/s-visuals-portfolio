@@ -105,6 +105,8 @@ export type Dictionary = {
   impactSnapshot: {
     ariaLabel: string;
     statementLines: readonly [string, string, string];
+    ctaLabel: string;
+    ctaHref: string;
     cards: ImpactSnapshotCardDict[];
   };
   testimonials: {
@@ -163,15 +165,24 @@ export type Dictionary = {
     ctaHref: string;
   };
   footer: {
+    tagline: string;
     copyright: string;
     instagramLabel: string;
-    links: {
-      work: string;
-      services: string;
-      approach: string;
-      process: string;
+    columns: {
+      navigation: string;
       contact: string;
+      legal: string;
+    };
+    links: {
+      services: string;
+      work: string;
+      process: string;
+      approach: string;
+      testimonials: string;
+      collaborations: string;
+      impact: string;
       faq: string;
+      contact: string;
       impressum: string;
       datenschutz: string;
     };
@@ -508,6 +519,8 @@ const dictionaries: Record<Locale, Dictionary> = {
     impactSnapshot: {
       ariaLabel: "Engagement metrics — likes, views, comments and shares",
       statementLines: ["More likes.", "More views.", "More attention."] as const,
+      ctaLabel: "Start your next edit",
+      ctaHref: "#contact",
       cards: [
         {
           label: "Likes",
@@ -599,17 +612,26 @@ const dictionaries: Record<Locale, Dictionary> = {
       ctaHref: "#contact",
     },
     footer: {
+      tagline: "Premium video editing and production for brands and creators.",
       copyright: "© Simon Saad Visuals",
       instagramLabel: "@simon__saad",
+      columns: {
+        navigation: "Navigation",
+        contact: "Contact",
+        legal: "Legal",
+      },
       links: {
-        work: "WORK",
-        services: "SERVICES",
-        approach: "APPROACH",
-        process: "PROCESS",
-        contact: "CONTACT",
+        services: "Services",
+        work: "Work",
+        process: "Process",
+        approach: "Approach",
+        testimonials: "Testimonials",
+        collaborations: "Client stories",
+        impact: "Impact",
         faq: "FAQ",
-        impressum: "IMPRINT",
-        datenschutz: "PRIVACY",
+        contact: "Get in touch",
+        impressum: "Imprint",
+        datenschutz: "Privacy",
       },
     },
     legal: {
@@ -979,6 +1001,8 @@ const dictionaries: Record<Locale, Dictionary> = {
     impactSnapshot: {
       ariaLabel: "Engagement-Kennzahlen — Likes, Aufrufe, Kommentare und Shares",
       statementLines: ["Mehr Likes.", "Mehr Views.", "Mehr Wachstum."] as const,
+      ctaLabel: "Jetzt Anfragen",
+      ctaHref: "#contact",
       cards: [
         {
           label: "Likes",
@@ -1070,17 +1094,26 @@ const dictionaries: Record<Locale, Dictionary> = {
       ctaHref: "#contact",
     },
     footer: {
+      tagline: "Premium Video-Editing und Produktion für Brands und Creator.",
       copyright: "© Simon Saad Visuals",
       instagramLabel: "@simon__saad",
+      columns: {
+        navigation: "Navigation",
+        contact: "Kontakt",
+        legal: "Rechtliches",
+      },
       links: {
-        work: "PROJEKTE",
-        services: "LEISTUNGEN",
-        approach: "ANSATZ",
-        process: "ABLAUF",
-        contact: "KONTAKT",
+        services: "Leistungen",
+        work: "Projekte",
+        process: "Ablauf",
+        approach: "Ansatz",
+        testimonials: "Stimmen",
+        collaborations: "Collaborations",
+        impact: "Impact",
         faq: "FAQ",
-        impressum: "IMPRESSUM",
-        datenschutz: "DATENSCHUTZ",
+        contact: "Anfrage senden",
+        impressum: "Impressum",
+        datenschutz: "Datenschutz",
       },
     },
     legal: {

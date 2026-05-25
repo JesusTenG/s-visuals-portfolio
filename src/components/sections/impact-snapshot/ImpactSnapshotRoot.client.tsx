@@ -6,6 +6,9 @@ import { Eye, Heart, MessageCircle, Send } from "lucide-react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary, ImpactSnapshotCardDict, ImpactSnapshotCardIcon } from "@/i18n/dictionaries";
 
+import SVisualsButton from "@/components/ui/SVisualsButton";
+import { contactCtaClassNames } from "@/components/ui/contactCtaButton";
+
 import { ImpactKpiLineChart } from "./ImpactKpiLineChart.client";
 import {
   IMPACT_KPI_COUNT_DURATION_MS,
@@ -179,26 +182,40 @@ export function ImpactSnapshotRoot({ dict, locale }: Props) {
 
   return (
     <section
+      id="impact"
       ref={sectionRef}
-      className={sectionClass}
+      className={`${sectionClass} section-flow section-flow--meridian`}
       aria-labelledby="impact-snapshot-heading"
     >
       <p className="sr-only">{snap.ariaLabel}</p>
       <div className={styles.kpiShell}>
         <div className={styles.kpiInner}>
-          <div className={styles.kpiCopy}>
-            <h2 id="impact-snapshot-heading" className={styles.kpiHeadline}>
-              <span className={styles.kpiHeadlineLine}>{lineA}</span>
-              <span className={styles.kpiHeadlineLine}>{lineB}</span>
-              <span className={`${styles.kpiHeadlineLine} ${styles.kpiHeadlineLineAccent}`}>
-                {lineC}
-              </span>
-            </h2>
+          <div className={`${styles.kpiHotspot} ${styles["kpiHotspot--copy"]}`}>
+            <div className={styles.kpiCopy}>
+              <h2 id="impact-snapshot-heading" className={styles.kpiHeadline}>
+                <span className={styles.kpiHeadlineLine}>{lineA}</span>
+                <span className={styles.kpiHeadlineLine}>{lineB}</span>
+                <span className={`${styles.kpiHeadlineLine} ${styles.kpiHeadlineLineAccent}`}>
+                  {lineC}
+                </span>
+              </h2>
+              <div className={styles.kpiCtaWrap}>
+              <SVisualsButton
+                href={snap.ctaHref}
+                showIcon={false}
+                className={`${contactCtaClassNames.primary} ${contactCtaClassNames.prominent}`}
+              >
+                {snap.ctaLabel}
+              </SVisualsButton>
+              </div>
+            </div>
           </div>
 
           <div className={styles.kpiCurveArea}>
-            <div className={styles.kpiCurveChart}>
-              <ImpactKpiLineChart isRevealed={isRevealed} reducedMotion={reducedMotion} />
+            <div className={`${styles.kpiHotspot} ${styles["kpiHotspot--curve"]}`}>
+              <div className={styles.kpiCurveChart}>
+                <ImpactKpiLineChart isRevealed={isRevealed} reducedMotion={reducedMotion} />
+              </div>
             </div>
 
             <div className={styles.kpiNodesRow}>
@@ -209,25 +226,29 @@ export function ImpactSnapshotRoot({ dict, locale }: Props) {
                 return (
                   <div
                     key={metric.icon}
-                    className={[
-                      styles.kpiNode,
-                      isVisible ? styles["kpiNode--visible"] : "",
-                    ]
-                      .filter(Boolean)
-                      .join(" ")}
-                    style={{
-                      ["--reveal-delay" as string]: `${index * IMPACT_KPI_STAGGER_MS}ms`,
-                    }}
-                    aria-label={`${metric.label}: ${formatMetric(metric.targetValue, locale, metric.decimals, metric.suffix)}`}
+                    className={`${styles.kpiHotspot} ${styles["kpiHotspot--node"]}`}
                   >
-                    <ImpactNodeIcon icon={metric.icon} />
-                    <span className={styles.kpiLabel}>{metric.label}</span>
-                    <MetricValue
-                      card={metric}
-                      locale={locale}
-                      active={isVisible}
-                      showFinal={showFinal}
-                    />
+                    <div
+                      className={[
+                        styles.kpiNode,
+                        isVisible ? styles["kpiNode--visible"] : "",
+                      ]
+                        .filter(Boolean)
+                        .join(" ")}
+                      style={{
+                        ["--reveal-delay" as string]: `${index * IMPACT_KPI_STAGGER_MS}ms`,
+                      }}
+                      aria-label={`${metric.label}: ${formatMetric(metric.targetValue, locale, metric.decimals, metric.suffix)}`}
+                    >
+                      <ImpactNodeIcon icon={metric.icon} />
+                      <span className={styles.kpiLabel}>{metric.label}</span>
+                      <MetricValue
+                        card={metric}
+                        locale={locale}
+                        active={isVisible}
+                        showFinal={showFinal}
+                      />
+                    </div>
                   </div>
                 );
               })}
