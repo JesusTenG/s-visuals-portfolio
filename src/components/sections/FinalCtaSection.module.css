@@ -7,11 +7,10 @@
   margin-inline: auto;
   overflow: visible;
   border-radius: var(--sv-radius-card);
-  border: 1px solid color-mix(in srgb, var(--color-accent) 14%, var(--color-border-faint));
-  background: var(--gradient-final-cta-panel);
+  border: 1px solid var(--color-border-faint);
+  background: color-mix(in srgb, var(--color-gray-910) 55%, transparent);
   box-shadow: var(--shadow-glass-card);
   animation: contact-section-panel-pulse var(--contact-panel-pulse-duration) ease-in-out infinite;
-  -webkit-backdrop-filter: blur(var(--glass-backdrop-blur));
 }
 
 .contact-section__panel::before {
@@ -51,12 +50,6 @@
 
   50% {
     opacity: 0.42;
-  }
-}
-
-@supports (backdrop-filter: blur(1px)) {
-  .contact-section__panel {
-    backdrop-filter: blur(var(--glass-backdrop-blur));
   }
 }
 

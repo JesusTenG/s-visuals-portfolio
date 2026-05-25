@@ -10,7 +10,6 @@
   padding: clamp(1.25rem, 2.4vw, 1.6rem);
   border-radius: var(--sv-radius-ui);
   border: 1px solid var(--color-border-faint);
-  border-top-color: color-mix(in srgb, var(--color-accent) 14%, var(--color-border-faint));
   background:
     linear-gradient(
       165deg,

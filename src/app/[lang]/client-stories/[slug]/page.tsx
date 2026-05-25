@@ -8,6 +8,7 @@ import {
   clientStories,
   getClientStoryBySlug,
   getClientStoryContent,
+  getClientStoryPageTitle,
 } from "@/data/client-stories";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -30,9 +31,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const story = getClientStoryBySlug(slug);
   if (!story) notFound();
 
+  const dict = await getDictionary(lang);
   const content = getClientStoryContent(story, lang);
   const pathname = `/client-stories/${slug}`;
-  const title = `${story.name} — ${SITE_NAME}`;
+  const title = `${getClientStoryPageTitle(story, dict)} — ${SITE_NAME}`;
 
   return buildPageMetadata({
     locale: lang,
@@ -55,7 +57,7 @@ export default async function ClientStoryPage({ params }: Props) {
   return (
     <>
       <Navbar locale={locale} dict={dict} />
-      <main className="flex-1">
+      <main className="flex-1 section-flow">
         <div className="container-base">
           <ClientStoryDetailView locale={locale} dict={dict} story={story} />
         </div>

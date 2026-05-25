@@ -75,17 +75,17 @@ export const clientStories: ClientStory[] = [
         intro:
           "Recurring social ads and performance edits with a consistent premium look across the feed.",
         collaborationText:
-          "The collaboration with Leon runs across social ads, campaign-style edits and performance content. The focus is a clear visual direction that stays premium in the feed — with hooks, pacing and finish tuned for Instagram and paid delivery, without losing flexibility across formats.",
+          "For Leon Hägele, recurring reels, social ads, cinematic edits, educational short-form content and podcast trailers are produced, cut and edited for Instagram and other digital touchpoints — with a consistently premium look, clear pacing and flexible adaptation across different formats.",
         metaDescription:
-          "Long-term video editing partnership with creator Leon Hägele — social ads, performance edits and premium brand visuals by Simon Saad Visuals.",
+          "Inside the collaboration with Leon Hägele — recurring Instagram reels, social ads, cinematic edits, educational content and podcast trailers by Simon Saad Visuals.",
       },
       de: {
         intro:
           "Wiederkehrende Social Ads und Performance-Edits mit konsistentem Premium-Look im Feed.",
         collaborationText:
-          "Die Zusammenarbeit mit Leon läuft über Social Ads, kampagnenartige Edits und Performance-Content. Im Mittelpunkt steht eine klare visuelle Richtung, die im Feed premium wirkt — mit Hooks, Pacing und Finish für Instagram und Paid, ohne an Flexibilität über Formate hinweg zu verlieren.",
+          "Für Leon Hägele entstehen regelmäßig Reels, Social Ads, Cinematic Edits, lehrreiche Kurzformate und Podcast-Trailer. Die Zusammenarbeit umfasst die Produktion, den Schnitt und die Bearbeitung von Content für Instagram und weitere digitale Touchpoints — mit einem konsistent hochwertigen Look, klarer Dramaturgie und flexibler Anpassung an unterschiedliche Formate.",
         metaDescription:
-          "Langfristige Video-Editing-Partnerschaft mit Creator Leon Hägele — Social Ads, Performance-Edits und Premium-Brand-Visuals von Simon Saad Visuals.",
+          "Einblick in die Kooperation mit Leon Hägele — wiederkehrende Instagram-Reels, Social Ads, Cinematic Edits, lehrreiche Inhalte und Podcast-Trailer von Simon Saad Visuals.",
       },
     },
   },
@@ -111,7 +111,7 @@ export const clientStories: ClientStory[] = [
         intro:
           "Recurring social edits shaped for recognition, calm pacing and platform-native rhythm.",
         collaborationText:
-          "With Ramon, the work is built around ongoing social content rather than one-off projects. Edits stay clear and recognisable — educational and lifestyle reels with pacing that fits Instagram and short-form platforms.",
+          "For Ramon Limacher, recurring social content is produced and edited — educational and lifestyle reels with calm pacing and a recognisable rhythm for Instagram and short-form platforms.",
         metaDescription:
           "Ongoing social video editing for creator Ramon Limacher — recurring visuals and platform-native edits by Simon Saad Visuals.",
       },
@@ -119,7 +119,7 @@ export const clientStories: ClientStory[] = [
         intro:
           "Regelmäßige Social Edits mit Fokus auf Wiedererkennung, ruhigem Pacing und kanalgerechtem Rhythmus.",
         collaborationText:
-          "Mit Ramon entsteht fortlaufender Social Content statt Einzelprojekte. Die Schnitte bleiben klar und wiedererkennbar — Educational- und Lifestyle-Reels mit Pacing, das zu Instagram und Short-Form passt.",
+          "Für Ramon Limacher entsteht fortlaufend Social Content — Educational- und Lifestyle-Reels mit ruhigem Pacing und wiedererkennbarem Rhythmus für Instagram und Short-Form.",
         metaDescription:
           "Fortlaufender Social-Video-Schnitt für Creator Ramon Limacher — wiederkehrende Visuals und plattformgerechte Edits von Simon Saad Visuals.",
       },
@@ -147,7 +147,7 @@ export const clientStories: ClientStory[] = [
         intro:
           "Ongoing social content with clear visual direction and a consistent editing style.",
         collaborationText:
-          "The collaboration with Mario focuses on recurring social edits along a defined visual direction. Content should feel intentional in the feed — social-first pacing, brand-aware rhythm and a cohesive look across ongoing drops.",
+          "For Mario Scherthan, recurring social edits are produced along a defined visual direction — social-first pacing, brand-aware rhythm and a cohesive premium look across ongoing Instagram content.",
         metaDescription:
           "Long-term social content editing for Mario Scherthan — consistent visual direction and premium short-form edits by Simon Saad Visuals.",
       },
@@ -155,7 +155,7 @@ export const clientStories: ClientStory[] = [
         intro:
           "Fortlaufender Social Content mit klarer visueller Richtung und konsistentem Schnittstil.",
         collaborationText:
-          "Die Zusammenarbeit mit Mario konzentriert sich auf wiederkehrende Social Edits entlang einer definierten Bildsprache. Der Content soll im Feed bewusst wirken — social-first Pacing, markenbewusster Rhythmus und ein stimmiger Look über laufende Drops.",
+          "Für Mario Scherthan entstehen wiederkehrende Social Edits entlang einer definierten Bildsprache — social-first Pacing, markenbewusster Rhythmus und ein stimmiger Premium-Look über laufende Instagram-Inhalte.",
         metaDescription:
           "Langfristiger Social-Content-Schnitt für Mario Scherthan — konsistente visuelle Richtung und Premium-Short-Form-Edits von Simon Saad Visuals.",
       },
@@ -172,6 +172,10 @@ export function getClientStoryContent(
   locale: Locale,
 ): ClientStoryLocaleContent {
   return story.localized[locale];
+}
+
+export function getClientStoryPageTitle(story: ClientStory, dict: Dictionary): string {
+  return dict.clientStoryDetail.pageTitle.replace("{name}", story.name);
 }
 
 export function getAllClientStories(): ClientStory[] {
