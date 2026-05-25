@@ -320,6 +320,7 @@
   /*//////////////Z-INDEX TOKENS//////////////////*/
   --z-index-sheet-overlay: 50;
   --z-index-nav: 80;
+  --z-index-lightbox: 200;
 
   /*//////////////SHADCN + LEGACY ALIASES//////////////////*/
   --sv-brand-stop-start: var(--color-purple-500);

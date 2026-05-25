@@ -2,7 +2,8 @@
 .lightbox {
   position: fixed;
   inset: 0;
-  z-index: 100;
+  z-index: var(--z-index-lightbox, 200);
+  isolation: isolate;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,9 +17,9 @@
   padding: 0;
   border: none;
   cursor: pointer;
-  background: color-mix(in srgb, var(--color-black) 78%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: color-mix(in srgb, var(--color-black) 94%, transparent);
+  backdrop-filter: blur(18px) saturate(0.85);
+  -webkit-backdrop-filter: blur(18px) saturate(0.85);
 }
 
 .lightbox__panel {
@@ -59,8 +60,7 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   color: var(--color-text-primary);
-  font-size: 1.15rem;
-  line-height: 1;
+  line-height: 0;
   cursor: pointer;
   transition:
     border-color 0.2s ease,
@@ -79,6 +79,13 @@
 .lightbox__close:focus-visible {
   outline: 2px solid var(--color-accent-outline-focus);
   outline-offset: 2px;
+}
+
+.lightbox__close-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  pointer-events: none;
 }
 
 /*//////////////PLAYER//////////////////*/

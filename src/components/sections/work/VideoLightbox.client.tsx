@@ -1,6 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { X } from "lucide-react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 import { VideoLightboxPlayer } from "./VideoLightboxPlayer.client";
 import styles from "./VideoLightbox.module.css";
@@ -18,10 +20,15 @@ type Props = Readonly<{
 
 export function VideoLightbox({ video, onClose }: Props) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const [portalReady, setPortalReady] = useState(false);
 
   const handleClose = useCallback(() => {
     onClose();
   }, [onClose]);
+
+  useLayoutEffect(() => {
+    setPortalReady(true);
+  }, []);
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
@@ -39,7 +46,7 @@ export function VideoLightbox({ video, onClose }: Props) {
     };
   }, [handleClose]);
 
-  return (
+  const lightbox = (
     <div className={styles.lightbox} role="dialog" aria-modal="true" aria-label={video.label}>
       <button
         type="button"
@@ -56,7 +63,7 @@ export function VideoLightbox({ video, onClose }: Props) {
           aria-label="Close video"
           onClick={handleClose}
         >
-          <span aria-hidden="true">×</span>
+          <X className={styles["lightbox__close-icon"]} aria-hidden="true" strokeWidth={2} />
         </button>
 
         <VideoLightboxPlayer
@@ -68,4 +75,8 @@ export function VideoLightbox({ video, onClose }: Props) {
       </div>
     </div>
   );
+
+  if (!portalReady) return null;
+
+  return createPortal(lightbox, document.body);
 }

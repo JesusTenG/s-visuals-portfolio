@@ -44,18 +44,18 @@
   box-shadow: var(--shadow-button-primary);
 }
 
-/* Secondary — solid dark fill (see --color-bg-button-secondary in globals.css) */
+/* Secondary — solid dark fill; accent edge only on hover/focus */
 .svisuals-button--secondary {
   min-height: 2.75rem;
   padding: 0.55rem 1.75rem;
-  border-color: var(--color-accent-border-interactive);
+  border-color: color-mix(in srgb, var(--color-gray-600) 85%, transparent);
   background: var(--color-bg-button-secondary);
   background-color: var(--color-bg-button-secondary);
   color: var(--color-text-primary);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.14em;
-  box-shadow: 0 0 20px var(--color-accent-glow-soft);
+  box-shadow: none;
 }
 
 .svisuals-button--secondary::before {
@@ -117,7 +117,8 @@
   box-shadow: var(--shadow-button-primary-hover);
 }
 
-.svisuals-button--secondary:hover {
+.svisuals-button--secondary:hover,
+.svisuals-button--secondary:focus-visible {
   transform: translateY(-1px);
   filter: none;
   border-color: var(--color-accent-border-interactive);

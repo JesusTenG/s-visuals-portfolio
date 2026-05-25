@@ -127,6 +127,7 @@ export function WorkVideoGrid({
           type="button"
           variant="secondary"
           showIcon={false}
+          enableStarBorder={false}
           aria-expanded={isExpanded}
           aria-controls={isExpanded ? "work-section-expanded-grid" : undefined}
           onClick={() => setIsExpanded((open) => !open)}
