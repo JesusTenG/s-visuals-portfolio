@@ -22,7 +22,9 @@ function getInstagramAriaLabel(authorName: string): string {
 }
 
 export function TestimonialCard({ testimonial, className }: Props) {
-  const { quote, authorName, brandName, avatarSrc, instagramUrl } = testimonial;
+  const { quote, authorName, brandName, avatarSrc, instagramHandle, instagramUrl } = testimonial;
+  const showInstagramHandle =
+    !!instagramHandle && instagramHandle.trim().toLowerCase() !== brandName?.trim().toLowerCase();
 
   const rootClass = [styles["testimonial-card"], className].filter(Boolean).join(" ");
 
@@ -43,6 +45,14 @@ export function TestimonialCard({ testimonial, className }: Props) {
                   ·
                 </span>
                 <span className={styles["testimonial-card__brand"]}>{brandName}</span>
+              </>
+            ) : null}
+            {showInstagramHandle ? (
+              <>
+                <span className={styles["testimonial-card__identity-sep"]} aria-hidden="true">
+                  ·
+                </span>
+                <span className={styles["testimonial-card__handle"]}>{instagramHandle}</span>
               </>
             ) : null}
           </span>

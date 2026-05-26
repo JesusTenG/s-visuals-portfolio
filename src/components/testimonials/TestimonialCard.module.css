@@ -164,7 +164,8 @@
   color: color-mix(in srgb, var(--color-text-muted) 72%, transparent);
 }
 
-.testimonial-card__brand {
+.testimonial-card__brand,
+.testimonial-card__handle {
   font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.02em;

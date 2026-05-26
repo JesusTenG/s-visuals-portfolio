@@ -575,9 +575,9 @@ const dictionaries: Record<Locale, Dictionary> = {
       back: "Back",
       pageTitle: "Inside the collaboration with {name}",
       testimonialAriaLabel: "Client testimonial",
-      publishedEditsHeading: "Reels from the collaboration",
+      publishedEditsHeading: "Content created in this collaboration",
       publishedEditsIntro:
-        "A selection of produced, cut and edited content from the ongoing collaboration.",
+        "A selection of produced, cut and edited content from this collaboration.",
       ctaHeadline: "Want content with the same premium feel?",
       ctaBody: "Let’s talk about your next format.",
       ctaPrimary: "Send inquiry",
@@ -1064,9 +1064,9 @@ const dictionaries: Record<Locale, Dictionary> = {
       back: "Zurück",
       pageTitle: "Einblick in die Kooperation mit {name}",
       testimonialAriaLabel: "Kundenstimme",
-      publishedEditsHeading: "Reels aus der Kooperation",
+      publishedEditsHeading: "Content, der in dieser Kooperation entstanden ist",
       publishedEditsIntro:
-        "Eine Auswahl produzierter, geschnittener und editierter Inhalte aus der laufenden Zusammenarbeit.",
+        "Eine Auswahl produzierter, geschnittener und editierter Formate aus der Zusammenarbeit.",
       ctaHeadline: "Du willst Content, der genauso hochwertig wirkt?",
       ctaBody: "Dann lass uns über dein nächstes Format sprechen.",
       ctaPrimary: "Anfrage senden",

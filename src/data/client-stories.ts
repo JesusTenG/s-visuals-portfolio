@@ -69,6 +69,9 @@ export const clientStories: ClientStory[] = [
     workReelPreviewSrcs: [
       "/assets/videos/preview/random/PIZZZZZA-web.mp4",
       "/assets/videos/preview/random/VERSION2-web.mp4",
+      "/assets/videos/preview/podcast trailer/PODCAST_TRAILER-web.mp4",
+      "/assets/videos/preview/podcast trailer/Podvast10.05-web.mp4",
+      "/assets/videos/preview/podcast trailer/PT_FINAL-web.mp4",
     ],
     localized: {
       en: {
@@ -141,7 +144,15 @@ export const clientStories: ClientStory[] = [
         url: TODO_SOCIAL_URL,
       },
     ],
-    workReelPreviewSrcs: [],
+    workReelPreviewSrcs: [
+      "/assets/videos/preview/podcast trailer/trailer f15-web.mp4",
+      "/assets/videos/preview/podcast trailer/trailer folge 14-web.mp4",
+      "/assets/videos/preview/diamten/bracen-web.mp4",
+      "/assets/videos/preview/diamten/diamanten_2-web.mp4",
+      "/assets/videos/preview/diamten/sinnvoll_final-web.mp4",
+      "/assets/videos/preview/diamten/mario festhalten neu-web.mp4",
+      "/assets/videos/preview/diamten/negative final-web.mp4",
+    ],
     localized: {
       en: {
         intro:
@@ -190,15 +201,63 @@ export function getClientStoriesForHomeSection(): ClientStory[] {
     .filter((story): story is ClientStory => story !== undefined);
 }
 
+function humanizePreviewFilename(previewSrc: string): string {
+  const fileName = previewSrc.split("/").pop() ?? "Video";
+  return fileName
+    .replace(/-web\.mp4$/i, "")
+    .replace(/\.mp4$/i, "")
+    .replace(/[-_]/g, " ")
+    .trim();
+}
+
+function buildWorkVideoItemFromPreviewSrc(
+  previewSrc: string,
+  locale: Locale,
+): WorkVideoItem {
+  const match = previewSrc.match(
+    /^\/assets\/videos\/preview\/(.+)\/(.+)-web\.mp4$/i,
+  );
+  const folder = match?.[1] ?? "random";
+  const baseName = match?.[2] ?? humanizePreviewFilename(previewSrc);
+  const label = humanizePreviewFilename(previewSrc);
+
+  const posterSrc = `/assets/videos/posters/${folder}/${baseName}-poster.webp`;
+  const lightboxSrc = `/assets/videos/lightbox/${folder}/${baseName}-lightbox.mp4`;
+
+  if (locale === "de") {
+    return {
+      title: label,
+      description: "Edit aus dieser Kooperation.",
+      posterSrc,
+      previewSrc,
+      lightboxSrc,
+      alt: `Vorschaubild für ${label}`,
+      videoAriaLabel: `${label} öffnen`,
+    };
+  }
+
+  return {
+    title: label,
+    description: "Edit from this collaboration.",
+    posterSrc,
+    previewSrc,
+    lightboxSrc,
+    alt: `Poster frame for ${label}`,
+    videoAriaLabel: `Open ${label}`,
+  };
+}
+
 export function getWorkItemsForClientStory(
   story: ClientStory,
   dict: Dictionary,
+  locale: Locale,
 ): WorkVideoItem[] {
   if (story.workReelPreviewSrcs.length === 0) return [];
 
   const allItems = [...dict.work.items, ...dict.work.moreItems];
 
-  return story.workReelPreviewSrcs
-    .map((previewSrc) => allItems.find((item) => item.previewSrc === previewSrc))
-    .filter((item): item is WorkVideoItem => item !== undefined);
+  return story.workReelPreviewSrcs.map((previewSrc) => {
+    const existing = allItems.find((item) => item.previewSrc === previewSrc);
+    return existing ?? buildWorkVideoItemFromPreviewSrc(previewSrc, locale);
+  });
 }

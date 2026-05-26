@@ -2,7 +2,7 @@ import type { CSSProperties, ReactNode } from "react";
 
 import styles from "./StarBorderButton.module.css";
 
-const DEFAULT_ACCENT = "var(--color-accent, #8659ce)";
+const DEFAULT_ACCENT = "var(--color-accent)";
 const DEFAULT_SPEED = "5s";
 
 type Props = Readonly<{

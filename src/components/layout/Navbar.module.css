@@ -427,13 +427,13 @@
   min-height: 3.25rem;
   padding: 0 1.25rem;
   border-radius: var(--sv-radius-ui);
-  border: 1px solid color-mix(in srgb, var(--color-purple-500) 35%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
   background: linear-gradient(
     135deg,
     var(--color-accent) 0%,
-    color-mix(in srgb, var(--color-purple-400) 88%, var(--color-purple-700)) 100%
+    color-mix(in srgb, var(--color-accent-light) 88%, var(--color-accent-dark)) 100%
   );
-  box-shadow: 0 12px 40px color-mix(in srgb, var(--color-purple-500) 28%, transparent);
+  box-shadow: 0 12px 40px color-mix(in srgb, var(--color-accent) 28%, transparent);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.18em;

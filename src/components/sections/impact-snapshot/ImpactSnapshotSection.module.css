@@ -169,8 +169,8 @@
 }
 
 .kpiSection--revealed .kpiCurvePath {
-  stroke: var(--color-purple-500);
-  filter: drop-shadow(0 0 16px color-mix(in srgb, var(--color-purple-500) 42%, transparent));
+  stroke: var(--color-accent);
+  filter: drop-shadow(0 0 16px color-mix(in srgb, var(--color-accent) 42%, transparent));
 }
 
 .kpiCurveWrap--drawing .kpiCurvePath {
@@ -207,8 +207,8 @@
 }
 
 .kpiSection--revealed .kpiCurveArrowHead {
-  stroke: var(--color-purple-500);
-  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--color-purple-500) 45%, transparent));
+  stroke: var(--color-accent);
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--color-accent) 45%, transparent));
 }
 
 .kpiCurveWrap--drawing .kpiCurveArrowHead {
@@ -272,7 +272,7 @@
 
 .kpiSection--revealed .kpiIcon {
   color: var(--color-accent);
-  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--color-purple-500) 38%, transparent));
+  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--color-accent) 38%, transparent));
 }
 
 .kpiLabel {

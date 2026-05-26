@@ -27,6 +27,7 @@ export function LegalPageView({ locale, dict, page }: Props) {
         <SectionHeader
           title={content.title}
           align="start"
+          headingLevel="h1"
           className={styles.header}
         />
 

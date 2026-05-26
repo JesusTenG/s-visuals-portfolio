@@ -41,12 +41,14 @@ export default async function DatenschutzPage({ params }: Props) {
   return (
     <>
       <Navbar locale={locale} dict={dict} />
-      <main className="flex-1">
-        <div className="container-base">
-          <LegalPageView locale={locale} dict={dict} page="datenschutz" />
-        </div>
-      </main>
-      <Footer locale={locale} dict={dict} />
+      <div className="page-spectrum page-spectrum--subtle flex flex-1 flex-col">
+        <main className="flex flex-1 flex-col section-flow">
+          <div className="container-base">
+            <LegalPageView locale={locale} dict={dict} page="datenschutz" />
+          </div>
+        </main>
+        <Footer locale={locale} dict={dict} />
+      </div>
     </>
   );
 }

@@ -18,6 +18,9 @@
 /out/
 /public/assets/videos/raw/
 
+# raw video sources (never deployed/public)
+/media-source/raw/
+
 # production
 /build
 

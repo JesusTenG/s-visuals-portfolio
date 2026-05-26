@@ -35,23 +35,29 @@ export const testimonials: Testimonial[] = [
     isPlaceholder: false,
   },
   {
-    id: "de-placeholder-02",
+    id: "de-placeholder-ramon",
     locale: "de",
     quote:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    authorName: "Lorem Ipsum",
-    authorRole: "Platzhalter",
-    brandName: "Dolor Sit",
+      "Hallo, ich bin Ramon Limacher und ich habe bestimmt auch was Tolles über unsere Zusammenarbeit zu sagen.",
+    authorName: "Ramon Limacher",
+    authorRole: "Creator",
+    instagramHandle: "@ramon_limacher",
+    instagramUrl: "https://www.instagram.com/ramon_limacher/",
+    avatarSrc: "/assets/videos/collaboration/ramon1.png",
+    clientStorySlug: "ramon-limacher",
     isPlaceholder: true,
   },
   {
-    id: "de-placeholder-03",
+    id: "de-placeholder-mario",
     locale: "de",
     quote:
-      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    authorName: "Amet Consetetur",
-    authorRole: "Platzhalter",
-    brandName: "Elitr Sed",
+      "Hallo, ich bin Mario Scherthan und ich habe bestimmt auch was Tolles über unsere Zusammenarbeit zu sagen.",
+    authorName: "Mario Scherthan",
+    authorRole: "Creator",
+    instagramHandle: "@marioscherthan",
+    instagramUrl: "https://www.instagram.com/marioscherthan/",
+    avatarSrc: "/assets/videos/collaboration/mario1.png",
+    clientStorySlug: "mario-scherthan",
     isPlaceholder: true,
   },
   {
@@ -69,23 +75,29 @@ export const testimonials: Testimonial[] = [
     isPlaceholder: false,
   },
   {
-    id: "en-placeholder-02",
+    id: "en-placeholder-ramon",
     locale: "en",
     quote:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    authorName: "Lorem Ipsum",
-    authorRole: "Placeholder",
-    brandName: "Dolor Sit",
+      "Hi, I'm Ramon Limacher and I'm sure I'll have something great to say about our collaboration.",
+    authorName: "Ramon Limacher",
+    authorRole: "Creator",
+    instagramHandle: "@ramon_limacher",
+    instagramUrl: "https://www.instagram.com/ramon_limacher/",
+    avatarSrc: "/assets/videos/collaboration/ramon1.png",
+    clientStorySlug: "ramon-limacher",
     isPlaceholder: true,
   },
   {
-    id: "en-placeholder-03",
+    id: "en-placeholder-mario",
     locale: "en",
     quote:
-      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    authorName: "Amet Consetetur",
-    authorRole: "Placeholder",
-    brandName: "Elitr Sed",
+      "Hi, I'm Mario Scherthan and I'm sure I'll have something great to say about our collaboration.",
+    authorName: "Mario Scherthan",
+    authorRole: "Creator",
+    instagramHandle: "@marioscherthan",
+    instagramUrl: "https://www.instagram.com/marioscherthan/",
+    avatarSrc: "/assets/videos/collaboration/mario1.png",
+    clientStorySlug: "mario-scherthan",
     isPlaceholder: true,
   },
 ];
@@ -105,9 +117,6 @@ export function getTestimonialForClientStory(
   locale: Locale,
 ): Testimonial | undefined {
   return testimonials.find(
-    (item) =>
-      item.locale === locale &&
-      !item.isPlaceholder &&
-      item.clientStorySlug === slug,
+    (item) => item.locale === locale && item.clientStorySlug === slug,
   );
 }

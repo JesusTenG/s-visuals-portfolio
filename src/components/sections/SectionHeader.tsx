@@ -10,6 +10,7 @@ type Props = Readonly<{
   intro?: string;
   titleId?: string;
   align?: "center" | "start";
+  headingLevel?: "h1" | "h2";
   className?: string;
 }>;
 
@@ -19,6 +20,7 @@ export function SectionHeader({
   intro,
   titleId,
   align = "center",
+  headingLevel = "h2",
   className,
 }: Props) {
   const rootClass = [
@@ -30,6 +32,7 @@ export function SectionHeader({
     .join(" ");
 
   const textDirection = align === "start" ? "left" : "fade";
+  const HeadingTag = headingLevel;
 
   return (
     <header className={rootClass}>
@@ -39,9 +42,9 @@ export function SectionHeader({
         </ScrollReveal>
       ) : null}
       <ScrollReveal direction={textDirection} delay={eyebrow ? 80 : 0}>
-        <h2 id={titleId} className={styles.title}>
+        <HeadingTag id={titleId} className={styles.title}>
           {title}
-        </h2>
+        </HeadingTag>
       </ScrollReveal>
       {intro ? (
         <ScrollReveal direction={textDirection} delay={eyebrow ? 140 : 80}>

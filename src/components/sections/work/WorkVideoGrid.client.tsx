@@ -11,11 +11,29 @@ import SVisualsButton from "@/components/ui/SVisualsButton";
 import { WorkVideoCard } from "./WorkVideoCard";
 import styles from "./WorkSection.module.css";
 
-const INITIAL_PRELOAD_COUNT = 3;
+const INITIAL_PRELOAD_COUNT = 2;
 
 const MOBILE_MAX_PX = 768;
 const MORE_COUNT_DESKTOP = 9;
 const MORE_COUNT_MOBILE = 6;
+
+type IdleCallbackHandle = number;
+type IdleDeadline = { timeRemaining: () => number; didTimeout: boolean };
+
+function requestIdle(cb: () => void, timeoutMs = 1200): IdleCallbackHandle {
+  const ric = (window as unknown as { requestIdleCallback?: (fn: (d: IdleDeadline) => void, o?: { timeout: number }) => number })
+    .requestIdleCallback;
+  if (typeof ric === "function") {
+    return ric(() => cb(), { timeout: timeoutMs });
+  }
+  return window.setTimeout(cb, 350);
+}
+
+function cancelIdle(handle: IdleCallbackHandle) {
+  const cancelRic = (window as unknown as { cancelIdleCallback?: (id: number) => void }).cancelIdleCallback;
+  if (typeof cancelRic === "function") cancelRic(handle);
+  else window.clearTimeout(handle);
+}
 
 function subscribeMobileLayout(onStoreChange: () => void) {
   const mq = window.matchMedia(`(max-width: ${MOBILE_MAX_PX}px)`);
@@ -54,6 +72,7 @@ export function WorkVideoGrid({
 }: Props) {
   const [activeVideo, setActiveVideo] = useState<VideoLightboxItem | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [hasEnteredViewport, setHasEnteredViewport] = useState(false);
   const isMobileLayout = useSyncExternalStore(
     subscribeMobileLayout,
     getMobileLayoutSnapshot,
@@ -67,26 +86,66 @@ export function WorkVideoGrid({
 
   const isLightboxOpen = activeVideo !== null;
   const preloadedSrcsRef = useRef(new Set<string>());
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (hasEnteredViewport) return;
+    const el = gridRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setHasEnteredViewport(true);
+          observer.disconnect();
+        }
+      },
+      { root: null, rootMargin: "120px 0px 120px 0px", threshold: [0, 0.08, 0.2] },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasEnteredViewport]);
+
+  useEffect(() => {
+    if (!hasEnteredViewport) return;
+    if (isMobileLayout) return;
     const initialSrcs = featuredItems
       .slice(0, INITIAL_PRELOAD_COUNT)
       .map((item) => item.previewSrc)
       .filter((src) => !preloadedSrcsRef.current.has(src));
     if (initialSrcs.length === 0) return;
     for (const src of initialSrcs) preloadedSrcsRef.current.add(src);
-    return preloadPreviewVideos(initialSrcs, { delay: 400, concurrency: 1 });
-  }, [featuredItems]);
+    let cancelPreload = () => {};
+    const idleHandle = requestIdle(() => {
+      cancelPreload = preloadPreviewVideos(initialSrcs, { delay: 0, concurrency: 1 });
+    }, 1200);
+
+    return () => {
+      cancelIdle(idleHandle);
+      cancelPreload();
+    };
+  }, [featuredItems, hasEnteredViewport, isMobileLayout]);
 
   useEffect(() => {
     if (!isExpanded) return;
+    if (!hasEnteredViewport) return;
+    if (isMobileLayout) return;
     const moreSrcs = visibleMoreItems
       .map((item) => item.previewSrc)
       .filter((src) => !preloadedSrcsRef.current.has(src));
     if (moreSrcs.length === 0) return;
     for (const src of moreSrcs) preloadedSrcsRef.current.add(src);
-    return preloadPreviewVideos(moreSrcs, { delay: 150, concurrency: 1 });
-  }, [isExpanded, visibleMoreItems]);
+    let cancelPreload = () => {};
+    const idleHandle = requestIdle(() => {
+      cancelPreload = preloadPreviewVideos(moreSrcs, { delay: 0, concurrency: 1 });
+    }, 1200);
+
+    return () => {
+      cancelIdle(idleHandle);
+      cancelPreload();
+    };
+  }, [isExpanded, visibleMoreItems, hasEnteredViewport, isMobileLayout]);
 
   const renderCard = (item: WorkVideoItem) => (
     <div
@@ -109,7 +168,9 @@ export function WorkVideoGrid({
 
   return (
     <>
-      <div className={styles["work-section__grid"]}>{featuredItems.map(renderCard)}</div>
+      <div ref={gridRef} className={styles["work-section__grid"]}>
+        {featuredItems.map(renderCard)}
+      </div>
 
       {isExpanded ? (
         <div

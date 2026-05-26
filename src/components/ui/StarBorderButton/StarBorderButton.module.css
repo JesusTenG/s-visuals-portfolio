@@ -1,6 +1,6 @@
 /*//////////////STAR BORDER BUTTON — edge-traveling glow (clipped to button)//////////////////*/
 .star-border-button {
-  --star-border-glow-color: var(--color-accent, #8659ce);
+  --star-border-glow-color: var(--color-accent);
   --star-border-speed: 5s;
   --star-border-glow-strength: 0.72;
   --star-border-thickness: 1px;

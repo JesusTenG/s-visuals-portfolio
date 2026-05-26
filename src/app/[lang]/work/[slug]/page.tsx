@@ -74,17 +74,19 @@ export default async function WorkCasePage({ params }: Props) {
     <>
       <JsonLd data={jsonLd} />
       <Navbar locale={locale} dict={dict} />
-      <main className="flex-1">
-        <div className="container-base">
-          <WorkCaseDetailView
-            locale={locale}
-            dict={dict}
-            workCase={workCase}
-            content={content}
-          />
-        </div>
-      </main>
-      <Footer locale={locale} dict={dict} />
+      <div className="page-spectrum page-spectrum--subtle flex flex-1 flex-col">
+        <main className="flex flex-1 flex-col section-flow">
+          <div className="container-base">
+            <WorkCaseDetailView
+              locale={locale}
+              dict={dict}
+              workCase={workCase}
+              content={content}
+            />
+          </div>
+        </main>
+        <Footer locale={locale} dict={dict} />
+      </div>
     </>
   );
 }

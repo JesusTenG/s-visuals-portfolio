@@ -7,11 +7,21 @@
 
 /*//////////////DESIGN TOKENS//////////////////*/
 :root {
-  /*//////////////BRAND COLORS//////////////////*/
-  --color-purple-300: #b89cff;
-  --color-purple-400: #9468d8;
-  --color-purple-500: #8659ce;
-  --color-purple-700: #4f2d7f;
+  /*
+   * Brand accent — change ONLY this value to rebrand accent colors site-wide.
+   * Light/dark variants and legacy --color-purple-* aliases derive automatically.
+   */
+  --color-accent: #8659ce;
+  --color-accent-light: color-mix(in srgb, var(--color-accent) 68%, var(--color-white));
+  --color-accent-lighter: color-mix(in srgb, var(--color-accent) 42%, var(--color-white));
+  --color-accent-dark: color-mix(in srgb, var(--color-accent) 58%, var(--color-black));
+  --color-accent-darker: color-mix(in srgb, var(--color-accent) 72%, var(--color-black));
+
+  /* Legacy brand aliases (prefer --color-accent*) */
+  --color-purple-500: var(--color-accent);
+  --color-purple-400: var(--color-accent-light);
+  --color-purple-300: var(--color-accent-lighter);
+  --color-purple-700: var(--color-accent-dark);
 
   /*//////////////NEUTRAL COLORS//////////////////*/
   --color-black: #000000;
@@ -35,36 +45,35 @@
   --color-white: #ffffff;
   --color-shadow-base: #1a1a1a;
 
-  /*//////////////ACCENT COLORS//////////////////*/
-  --color-accent: var(--color-purple-500);
-  --color-accent-soft: color-mix(in srgb, var(--color-purple-500) 32%, transparent);
-  --color-accent-muted: color-mix(in srgb, var(--color-purple-500) 18%, transparent);
-  --color-accent-hover: var(--color-purple-400);
-  --color-accent-glow-soft: color-mix(in srgb, var(--color-purple-500) 24%, transparent);
-  --color-accent-glow-medium: color-mix(in srgb, var(--color-purple-500) 32%, transparent);
-  --color-accent-glow-strong: color-mix(in srgb, var(--color-purple-500) 42%, transparent);
-  --color-accent-border-interactive: color-mix(in srgb, var(--color-purple-500) 45%, transparent);
-  --color-accent-surface-hover: color-mix(in srgb, var(--color-purple-500) 12%, transparent);
-  --color-accent-outline-focus: color-mix(in srgb, var(--color-purple-500) 55%, transparent);
-  --color-accent-outline-strong: color-mix(in srgb, var(--color-purple-500) 65%, transparent);
-  --color-accent-border-muted: color-mix(in srgb, var(--color-purple-500) 35%, transparent);
-  --color-accent-surface-badge: color-mix(in srgb, var(--color-purple-500) 10%, transparent);
-  --color-accent-border-badge: color-mix(in srgb, var(--color-purple-500) 35%, transparent);
-  --color-accent-mix-nav-link: color-mix(in srgb, var(--color-purple-500) 42%, var(--color-white));
-  --color-accent-surface-hero-radial: color-mix(in srgb, var(--color-purple-500) 14%, transparent);
-  --color-accent-body-glow: color-mix(in srgb, var(--color-purple-500) 7%, transparent);
-  --color-accent-hero-eyebrow-glow: color-mix(in srgb, var(--color-purple-500) 35%, transparent);
-  --color-accent-hero-headline-ambient: color-mix(in srgb, var(--color-purple-500) 14%, transparent);
-  --color-accent-hero-headline-glow-mid: color-mix(in srgb, var(--color-purple-500) 9%, transparent);
+  /*//////////////ACCENT DERIVATIVES (from --color-accent)//////////////////*/
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 32%, transparent);
+  --color-accent-muted: color-mix(in srgb, var(--color-accent) 18%, transparent);
+  --color-accent-hover: var(--color-accent-light);
+  --color-accent-glow-soft: color-mix(in srgb, var(--color-accent) 24%, transparent);
+  --color-accent-glow-medium: color-mix(in srgb, var(--color-accent) 32%, transparent);
+  --color-accent-glow-strong: color-mix(in srgb, var(--color-accent) 42%, transparent);
+  --color-accent-border-interactive: color-mix(in srgb, var(--color-accent) 45%, transparent);
+  --color-accent-surface-hover: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  --color-accent-outline-focus: color-mix(in srgb, var(--color-accent) 55%, transparent);
+  --color-accent-outline-strong: color-mix(in srgb, var(--color-accent) 65%, transparent);
+  --color-accent-border-muted: color-mix(in srgb, var(--color-accent) 35%, transparent);
+  --color-accent-surface-badge: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  --color-accent-border-badge: color-mix(in srgb, var(--color-accent) 35%, transparent);
+  --color-accent-mix-nav-link: color-mix(in srgb, var(--color-accent) 42%, var(--color-white));
+  --color-accent-surface-hero-radial: color-mix(in srgb, var(--color-accent) 14%, transparent);
+  --color-accent-body-glow: color-mix(in srgb, var(--color-accent) 7%, transparent);
+  --color-accent-hero-eyebrow-glow: color-mix(in srgb, var(--color-accent) 35%, transparent);
+  --color-accent-hero-headline-ambient: color-mix(in srgb, var(--color-accent) 14%, transparent);
+  --color-accent-hero-headline-glow-mid: color-mix(in srgb, var(--color-accent) 9%, transparent);
   --color-glow-white-subtle: color-mix(in srgb, var(--color-white) 4%, transparent);
-  --color-accent-hero-service-dot: color-mix(in srgb, var(--color-purple-500) 42%, transparent);
-  --color-accent-hero-scroll-line: color-mix(in srgb, var(--color-purple-500) 78%, transparent);
-  --color-accent-hero-scroll-glow: color-mix(in srgb, var(--color-purple-500) 32%, transparent);
-  --color-accent-work-preview: color-mix(in srgb, var(--color-purple-500) 7%, transparent);
-  --color-accent-primary-button-glow-outer: color-mix(in srgb, var(--color-purple-500) 12%, transparent);
-  --color-accent-primary-button-glow-inner: color-mix(in srgb, var(--color-purple-500) 18%, transparent);
-  --color-accent-cta-nav: color-mix(in srgb, var(--color-purple-500) 16%, transparent);
-  --color-accent-quiet-button-hover: color-mix(in srgb, var(--color-purple-500) 92%, var(--color-white));
+  --color-accent-hero-service-dot: color-mix(in srgb, var(--color-accent) 42%, transparent);
+  --color-accent-hero-scroll-line: color-mix(in srgb, var(--color-accent) 78%, transparent);
+  --color-accent-hero-scroll-glow: color-mix(in srgb, var(--color-accent) 32%, transparent);
+  --color-accent-work-preview: color-mix(in srgb, var(--color-accent) 7%, transparent);
+  --color-accent-primary-button-glow-outer: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  --color-accent-primary-button-glow-inner: color-mix(in srgb, var(--color-accent) 18%, transparent);
+  --color-accent-cta-nav: color-mix(in srgb, var(--color-accent) 16%, transparent);
+  --color-accent-quiet-button-hover: color-mix(in srgb, var(--color-accent) 92%, var(--color-white));
 
   /*//////////////TEXT COLORS//////////////////*/
   --color-text-primary: var(--color-gray-100);
@@ -187,15 +196,15 @@
   );
   --gradient-sv-brand: linear-gradient(
     135deg,
-    var(--color-purple-500) 0%,
-    var(--color-purple-500) 45%,
-    var(--color-purple-500) 100%
+    var(--color-accent) 0%,
+    var(--color-accent) 45%,
+    var(--color-accent) 100%
   );
   --gradient-instagram: linear-gradient(
     90deg,
-    var(--color-purple-500) 0%,
-    var(--color-purple-500) 45%,
-    var(--color-purple-500) 100%
+    var(--color-accent) 0%,
+    var(--color-accent) 45%,
+    var(--color-accent) 100%
   );
   --gradient-glow: radial-gradient(
       520px circle at 40% 40%,
@@ -232,7 +241,7 @@
   --gradient-headline-growth: linear-gradient(
     90deg,
     #9a8eb4 0%,
-    color-mix(in srgb, var(--color-purple-400) 62%, #c8c2d8) 48%,
+    color-mix(in srgb, var(--color-accent-light) 62%, #c8c2d8) 48%,
     #e8e4f0 76%,
     #f8f8fa 100%
   );
@@ -253,7 +262,7 @@
   --shadow-lang-knob: 0 10px 22px color-mix(in srgb, var(--color-black) 28%),
     inset 0 1px 0 color-mix(in srgb, var(--color-white) 8%, transparent);
   --shadow-button-default: 0 10px 20px color-mix(in srgb, var(--color-black) 35%, transparent),
-    0 0 18px color-mix(in srgb, var(--color-purple-500) 55%, transparent);
+    0 0 18px color-mix(in srgb, var(--color-accent) 55%, transparent);
   --shadow-button-primary: 0 12px 28px color-mix(in srgb, var(--color-black) 42%, transparent),
     0 0 28px var(--color-accent-glow-soft), 0 0 48px var(--color-accent-primary-button-glow-outer);
   --shadow-button-primary-hover: 0 14px 32px color-mix(in srgb, var(--color-black) 46%, transparent),
@@ -323,9 +332,9 @@
   --z-index-lightbox: 200;
 
   /*//////////////SHADCN + LEGACY ALIASES//////////////////*/
-  --sv-brand-stop-start: var(--color-purple-500);
-  --sv-brand-stop-mid: var(--color-purple-500);
-  --sv-brand-stop-end: var(--color-purple-500);
+  --sv-brand-stop-start: var(--color-accent);
+  --sv-brand-stop-mid: var(--color-accent);
+  --sv-brand-stop-end: var(--color-accent);
   --sv-gradient-brand: var(--gradient-sv-brand);
   --background: var(--color-off-white);
   --foreground: var(--color-black);
@@ -333,32 +342,32 @@
   --card-foreground: var(--color-black);
   --popover: var(--color-white);
   --popover-foreground: var(--color-black);
-  --primary: var(--color-purple-500);
+  --primary: var(--color-accent);
   --primary-foreground: var(--color-white);
-  --secondary: var(--color-purple-500);
+  --secondary: var(--color-accent);
   --secondary-foreground: var(--color-white);
   --muted: var(--color-gray-150);
   --muted-foreground: var(--color-gray-600);
-  --accent: var(--color-purple-500);
+  --accent: var(--color-accent);
   --accent-foreground: var(--color-white);
-  --destructive: var(--color-purple-500);
+  --destructive: var(--color-accent);
   --destructive-foreground: var(--color-white);
   --border: var(--color-black);
   --input: var(--color-gray-500);
-  --ring: color-mix(in srgb, var(--color-purple-500) 55%, transparent);
-  --chart-1: var(--color-purple-500);
-  --chart-2: var(--color-purple-500);
-  --chart-3: var(--color-purple-500);
-  --chart-4: color-mix(in srgb, var(--color-purple-500) 55%, var(--color-purple-500));
-  --chart-5: color-mix(in srgb, var(--color-purple-500) 40%, var(--color-white));
+  --ring: color-mix(in srgb, var(--color-accent) 55%, transparent);
+  --chart-1: var(--color-accent);
+  --chart-2: var(--color-accent);
+  --chart-3: var(--color-accent);
+  --chart-4: color-mix(in srgb, var(--color-accent) 55%, var(--color-accent));
+  --chart-5: color-mix(in srgb, var(--color-accent) 40%, var(--color-white));
   --sidebar: var(--color-off-white);
   --sidebar-foreground: var(--color-black);
-  --sidebar-primary: var(--color-purple-500);
+  --sidebar-primary: var(--color-accent);
   --sidebar-primary-foreground: var(--color-white);
-  --sidebar-accent: var(--color-purple-500);
+  --sidebar-accent: var(--color-accent);
   --sidebar-accent-foreground: var(--color-white);
   --sidebar-border: var(--color-black);
-  --sidebar-ring: color-mix(in srgb, var(--color-purple-500) 45%, transparent);
+  --sidebar-ring: color-mix(in srgb, var(--color-accent) 45%, transparent);
   --shadow-x: 0px;
   --shadow-y: 0px;
   --shadow-blur: 0px;

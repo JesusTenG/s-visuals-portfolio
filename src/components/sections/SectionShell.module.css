@@ -19,7 +19,7 @@
   border-radius: 999px;
   background: radial-gradient(
     ellipse 70% 65% at 50% 40%,
-    color-mix(in srgb, var(--color-purple-500) 10%, transparent),
+    color-mix(in srgb, var(--color-accent) 10%, transparent),
     transparent 72%
   );
   filter: blur(52px);

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import styles from "./StarBorderButton.module.css";
 
-const DEFAULT_ACCENT = "var(--color-accent, #8659ce)";
+const DEFAULT_ACCENT = "var(--color-accent)";
 const DEFAULT_SPEED = "3s";
 
 type CommonProps = {

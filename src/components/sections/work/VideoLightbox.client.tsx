@@ -1,7 +1,7 @@
 "use client";
 
 import { X } from "lucide-react";
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import { VideoLightboxPlayer } from "./VideoLightboxPlayer.client";
@@ -20,19 +20,30 @@ type Props = Readonly<{
 
 export function VideoLightbox({ video, onClose }: Props) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const [portalReady, setPortalReady] = useState(false);
 
   const handleClose = useCallback(() => {
     onClose();
   }, [onClose]);
 
-  useLayoutEffect(() => {
-    setPortalReady(true);
-  }, []);
-
   useEffect(() => {
-    const previousOverflow = document.body.style.overflow;
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+
+    // Mobile-Browser-Sperre: Nicht nur `body`, sondern auch `html` sperren.
+    // Zusätzlich `touchmove` blocken (v. a. iOS), damit das Hintergrund-Scrolling nicht weiterläuft.
     document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    const preventTouchMove = (event: TouchEvent) => {
+      if (!event.cancelable) return;
+      event.preventDefault();
+    };
+
+    if (isTouchDevice) {
+      document.addEventListener("touchmove", preventTouchMove, { passive: false });
+    }
+
     closeButtonRef.current?.focus();
 
     const onKeyDown = (event: KeyboardEvent) => {
@@ -41,7 +52,11 @@ export function VideoLightbox({ video, onClose }: Props) {
 
     window.addEventListener("keydown", onKeyDown);
     return () => {
-      document.body.style.overflow = previousOverflow;
+      if (isTouchDevice) {
+        document.removeEventListener("touchmove", preventTouchMove);
+      }
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [handleClose]);
@@ -76,7 +91,8 @@ export function VideoLightbox({ video, onClose }: Props) {
     </div>
   );
 
-  if (!portalReady) return null;
+  // Client-only guard: avoids `document` access during SSR/prerender.
+  if (typeof document === "undefined") return null;
 
   return createPortal(lightbox, document.body);
 }

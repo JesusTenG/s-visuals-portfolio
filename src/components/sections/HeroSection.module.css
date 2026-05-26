@@ -399,15 +399,15 @@
   }
 
   .hero-content {
-    --hero-gap-eyebrow-headline: clamp(0.12rem, 0.8vw, 0.3rem);
-    --hero-gap-headline-subline: clamp(0.4rem, 2vw, 0.65rem);
-    --hero-gap-subline-services: clamp(0.75rem, 3vw, 1.1rem);
-    --hero-gap-services-actions: clamp(1rem, 4vw, 1.45rem);
-    --hero-eyebrow-size: clamp(0.62rem, 2.8vw, 0.82rem);
-    --hero-subline-size: clamp(0.56rem, 2.6vw, 0.78rem);
-    --hero-headline-size: clamp(2.15rem, 9.5vw, 3.65rem);
-    --hero-headline-cqw: 15.5;
-    --hero-service-size: clamp(0.5rem, 2.2vw, 0.62rem);
+    --hero-gap-eyebrow-headline: clamp(0.14rem, 0.9vw, 0.33rem);
+    --hero-gap-headline-subline: clamp(0.42rem, 2.1vw, 0.7rem);
+    --hero-gap-subline-services: clamp(0.8rem, 3.2vw, 1.15rem);
+    --hero-gap-services-actions: clamp(1.05rem, 4.2vw, 1.55rem);
+    --hero-eyebrow-size: clamp(0.66rem, 3vw, 0.88rem);
+    --hero-subline-size: clamp(0.6rem, 2.7vw, 0.85rem);
+    --hero-headline-size: clamp(2.4rem, 10.2vw, 3.9rem);
+    --hero-headline-cqw: 16.5;
+    --hero-service-size: clamp(0.54rem, 2.4vw, 0.68rem);
   }
 
   .hero-eyebrow {
@@ -433,6 +433,15 @@
   .hero-service-dot {
     width: 0.34rem;
     height: 0.34rem;
+  }
+
+  /* Hero CTA ~25% kleiner (ohne Scroll-Marker anzufassen). */
+  .hero-actions a {
+    min-width: min(100%, 14rem) !important;
+    min-height: 2.25rem !important;
+    padding: 0.66rem 1.38rem !important;
+    font-size: clamp(0.65rem, 1.05vw, 0.74rem) !important;
+    letter-spacing: 0.18em !important;
   }
 
 }

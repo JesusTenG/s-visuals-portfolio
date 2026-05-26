@@ -1,5 +1,6 @@
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
+import type { WorkVideoItem } from "@/i18n/dictionaries";
 import type { WorkCaseLocaleContent } from "@/data/work-cases";
 import { buildCanonical } from "@/lib/seo";
 import { INSTAGRAM_URL, SITE_NAME } from "@/lib/site";
@@ -123,5 +124,80 @@ export function buildCaseVideoJsonLd(
       contentUrl: new URL(drop.lightboxSrc!, buildCanonical(locale)).toString(),
       embedUrl: pageUrl,
       inLanguage: locale === "de" ? "de-DE" : "en-US",
+    }));
+}
+
+export function buildClientStoryJsonLd(
+  locale: Locale,
+  slug: string,
+  title: string,
+  description: string,
+) {
+  const url = buildCanonical(locale, `/client-stories/${slug}`);
+
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: title,
+      description,
+      url,
+      inLanguage: locale === "de" ? "de-DE" : "en-US",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: locale === "de" ? "Start" : "Home",
+          item: buildCanonical(locale),
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: locale === "de" ? "Kooperationen" : "Collaborations",
+          item: `${buildCanonical(locale)}#collaborations`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: title,
+          item: url,
+        },
+      ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      name: SITE_NAME,
+      url: buildCanonical(locale),
+      areaServed: { "@type": "Country", name: "Germany" },
+      description,
+    },
+  ];
+}
+
+export function buildClientStoryVideoJsonLd(
+  locale: Locale,
+  slug: string,
+  items: WorkVideoItem[],
+  fallbackDescription: string,
+) {
+  const pageUrl = buildCanonical(locale, `/client-stories/${slug}`);
+  const inLanguage = locale === "de" ? "de-DE" : "en-US";
+
+  return items
+    .filter((item) => Boolean(item.lightboxSrc && item.posterSrc))
+    .map((item) => ({
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      name: item.title,
+      description: item.description || fallbackDescription,
+      thumbnailUrl: new URL(item.posterSrc, buildCanonical(locale)).toString(),
+      contentUrl: new URL(item.lightboxSrc, buildCanonical(locale)).toString(),
+      embedUrl: pageUrl,
+      inLanguage,
     }));
 }
