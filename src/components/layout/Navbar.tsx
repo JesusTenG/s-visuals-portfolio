@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Globe } from "lucide-react";
@@ -14,7 +13,7 @@ import SVisualsButton from "@/components/ui/SVisualsButton";
 
 import { introCssProperties } from "@/lib/introAnimationTiming";
 import { switchLocalePath } from "@/lib/locale-path";
-import { BRAND_LOGO_SRC } from "@/lib/site";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 
 import { MobileNavMenu } from "./MobileNavMenu.client";
 import styles from "./Navbar.module.css";
@@ -173,15 +172,7 @@ export function Navbar({ locale, dict, introAnimation = false }: Props) {
             aria-label={dict.nav.wordmark}
             onClick={handleWordmarkClick}
           >
-            <Image
-              src={BRAND_LOGO_SRC}
-              alt=""
-              width={172}
-              height={46}
-              className={styles["nav-logo-image"]}
-              priority
-              unoptimized
-            />
+            <BrandLogo className={styles["nav-logo-image"]} priority />
           </Link>
 
           <nav className={`${styles["nav-links"]} ${styles["navbar-desktop-links"]}`} aria-label="Primary">

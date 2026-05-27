@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import dynamic from "next/dynamic";
 
 import { HeroImagePanels } from "./HeroImagePanels";
@@ -15,6 +16,13 @@ const HeroVideoPanels = dynamic(
 
 export function HeroSectionBackground() {
   const { mode } = useHeroVisualMode();
+
+  useEffect(() => {
+    const stack = document.querySelector("[data-hero-background]");
+    if (!stack) return;
+
+    stack.setAttribute("data-gradient-shell", mode === "image" ? "visible" : "hidden");
+  }, [mode]);
 
   /* Modi getauscht: mode "image" → Video-Panels, mode "video" → Bild-Panels */
   if (mode === "image") {

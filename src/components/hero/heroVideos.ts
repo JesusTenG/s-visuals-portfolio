@@ -1,24 +1,25 @@
 /**
  * Hero background clip pool.
  *
- * Place short, muted, optimized loops in `public/assets/videos/hero/`
- * (e.g. clip-01.mp4, ~5–15s, ≤720p, no audio).
- *
- * Until dedicated hero files exist, `src` may point at lightweight preview encodes
- * from `public/assets/videos/preview/` — never lightbox sources.
+ * Panels share the optimized hero preview encode; each panel uses playback
+ * offsets for variety. Sources load progressively after the performance gate.
  */
 export type HeroVideoClip = {
   id: string;
   src: string;
 };
 
+/** Web-optimized hero loop — see `VERSION2-hero-preview.mp4` (ffmpeg). */
+export const HERO_PRIMARY_VIDEO_SRC =
+  "/assets/videos/preview/random/VERSION2-hero-preview.mp4";
+
 export const HERO_VIDEO_CLIPS: readonly HeroVideoClip[] = [
-  { id: "clip-01", src: "/assets/videos/preview/random/VERSION2-web.mp4" },
-  { id: "clip-02", src: "/assets/videos/preview/random/VERSION2-web.mp4" },
-  { id: "clip-03", src: "/assets/videos/preview/random/VERSION2-web.mp4" },
-  { id: "clip-04", src: "/assets/videos/preview/random/VERSION2-web.mp4" },
-  { id: "clip-05", src: "/assets/videos/preview/random/VERSION2-web.mp4" },
-  { id: "clip-06", src: "/assets/videos/preview/random/VERSION2-web.mp4" },
+  { id: "clip-01", src: HERO_PRIMARY_VIDEO_SRC },
+  { id: "clip-02", src: HERO_PRIMARY_VIDEO_SRC },
+  { id: "clip-03", src: HERO_PRIMARY_VIDEO_SRC },
+  { id: "clip-04", src: HERO_PRIMARY_VIDEO_SRC },
+  { id: "clip-05", src: HERO_PRIMARY_VIDEO_SRC },
+  { id: "clip-06", src: HERO_PRIMARY_VIDEO_SRC },
 ] as const;
 
 export const HERO_PANEL_COUNT = 5;

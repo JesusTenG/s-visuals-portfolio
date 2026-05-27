@@ -16,6 +16,18 @@
     0 6px 28px color-mix(in srgb, var(--color-black) 82%, transparent);
 }
 
+/*//////////////HERO — BACKGROUND STACK (gradients + client videos)//////////////////*/
+.hero-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hero-background[data-gradient-shell="hidden"] .hero-gradient-shell {
+  visibility: hidden;
+}
+
 /*//////////////HERO — OVERLAY//////////////////*/
 .hero-overlay {
   position: absolute;

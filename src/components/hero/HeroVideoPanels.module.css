@@ -1,45 +1,4 @@
-/*//////////////HERO — VIDEO PANEL GRID//////////////////*/
-.hero-panels {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  overflow: hidden;
-  z-index: 0;
-}
-
-.hero-panel {
-  position: relative;
-  min-width: 0;
-  overflow: hidden;
-  opacity: 0;
-  filter: blur(16px);
-  animation: hero-panel-blur-reveal var(--intro-panel-duration, 1.25s)
-    var(--intro-ease-out, cubic-bezier(0.22, 1, 0.36, 1)) both;
-  animation-delay: calc(var(--hero-panel-ring, 0) * var(--intro-panel-stagger, 0.18s));
-  will-change: opacity, filter;
-}
-
-.hero-panel-media {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--color-black) 94%, transparent) 0%,
-    color-mix(in srgb, var(--color-black) 88%, transparent) 45%,
-    color-mix(in srgb, var(--color-black) 94%, transparent) 100%
-  );
-}
-
-.hero-panel-media--idle {
-  background: linear-gradient(
-    180deg,
-    #08080a 0%,
-    #101014 48%,
-    #08080a 100%
-  );
-}
-
+/*//////////////HERO — CLIENT VIDEO OVERLAY (gradients in HeroGradientPanels)//////////////////*/
 .hero-panel-video {
   position: absolute;
   inset: 0;
@@ -50,22 +9,12 @@
   z-index: 1;
   opacity: 0;
   pointer-events: none;
-  transition-property: opacity;
-  transition-timing-function: ease;
+  transition: opacity 520ms cubic-bezier(0.16, 1, 0.3, 1);
   filter: grayscale(1) contrast(1.04) brightness(1.28) saturate(0);
 }
 
 .hero-panel-video--visible {
   opacity: 0.38;
-}
-
-.hero-panel::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: var(--gradient-hero-panel-scrim);
-  pointer-events: none;
 }
 
 .hero-panel:nth-child(1) .hero-panel-video {
@@ -86,36 +35,4 @@
 
 .hero-panel:nth-child(5) .hero-panel-video {
   object-position: 50% center;
-}
-
-@keyframes hero-panel-blur-reveal {
-  from {
-    opacity: 0;
-    filter: blur(16px);
-  }
-
-  to {
-    opacity: 1;
-    filter: blur(0);
-  }
-}
-
-@media (max-width: 560px) {
-  .hero-panels {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .hero-panel:nth-child(2),
-  .hero-panel:nth-child(4) {
-    display: none;
-  }
-
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-panel {
-    opacity: 1;
-    animation: none;
-    filter: none;
-  }
 }

@@ -10,9 +10,16 @@ import {
 } from "react";
 
 import {
+  getHeroPanelVideoStaggerMs,
+  isCoarsePointerDevice,
   isHeroPanelVideoActive,
+  prefersReducedMotion,
+  scheduleAfterIdle,
   shouldDeferHeroVideoPlayback,
   HERO_MOBILE_LAYOUT_MAX_WIDTH_PX,
+  HERO_MOBILE_VISIBLE_PANEL_INDICES,
+  HERO_VIDEO_IDLE_DELAY_MOBILE_MS,
+  HERO_VIDEO_IDLE_DELAY_MS,
 } from "./heroPerformance";
 import {
   assertNoAdjacentDuplicates,
@@ -27,6 +34,7 @@ import {
   pickAllowedClipIdForPanel,
 } from "./heroVideos";
 
+import shellStyles from "./HeroPanelsShell.module.css";
 import styles from "./HeroVideoPanels.module.css";
 
 const HERO_IN_VIEW_RATIO = 0.12;
@@ -77,13 +85,28 @@ function createInitialPanelStates(): PanelSlotState[] {
   }));
 }
 
+function getVisiblePanelOrder(mobileLayout: boolean): readonly number[] {
+  return mobileLayout ? HERO_MOBILE_VISIBLE_PANEL_INDICES : [0, 1, 2, 3, 4];
+}
+
+function setPanelGradientHidden(panelIndex: number, hidden: boolean) {
+  const fill = document.querySelector<HTMLElement>(`[data-hero-gradient="${panelIndex}"]`);
+  if (!fill) return;
+  if (hidden) {
+    fill.setAttribute("data-gradient-hidden", "true");
+  } else {
+    fill.removeAttribute("data-gradient-hidden");
+  }
+}
+
 type HeroPanelProps = Readonly<{
   panelIndex: number;
   slot: PanelSlotState;
-  useVideo: boolean;
+  isVideoCapable: boolean;
+  panelVideoSrcAllowed: boolean;
   allowPlayback: boolean;
   hasClip: boolean;
-  mobileLite: boolean;
+  mobileLayout: boolean;
   onIncomingCanPlay: (panelIndex: number) => void;
   onCrossfadeComplete: (panelIndex: number) => void;
   onVideoError: (clipId: string) => void;
@@ -92,33 +115,39 @@ type HeroPanelProps = Readonly<{
 function HeroPanel({
   panelIndex,
   slot,
-  useVideo,
+  isVideoCapable,
+  panelVideoSrcAllowed,
   allowPlayback,
   hasClip,
-  mobileLite,
+  mobileLayout,
   onIncomingCanPlay,
   onCrossfadeComplete,
   onVideoError,
 }: HeroPanelProps) {
-  const isActiveMobilePanel = isHeroPanelVideoActive(panelIndex, mobileLite);
-  const showSecondLayer = !mobileLite || slot.pendingClipId !== null;
+  const showSecondLayer = !mobileLayout || slot.pendingClipId !== null;
   const videoARef = useRef<HTMLVideoElement>(null);
   const videoBRef = useRef<HTMLVideoElement>(null);
+  const [videoReady, setVideoReady] = useState(false);
 
   const applyVideo = useCallback(
     (video: HTMLVideoElement | null, layerClipId: string, shouldPlay: boolean) => {
-      if (!video || !useVideo || !layerClipId || !isActiveMobilePanel) {
-        if (video) video.pause();
+      if (!video || !isVideoCapable || !panelVideoSrcAllowed || !layerClipId) {
+        if (video) {
+          video.pause();
+          video.removeAttribute("src");
+          video.removeAttribute("data-loaded-src");
+        }
         return;
       }
+
       const layerClip = getHeroClipById(layerClipId);
       if (!layerClip) return;
 
       applyPlaybackRate(video);
 
       const encoded = encodePublicAssetSrc(layerClip.src);
-      if (video.dataset.src !== encoded) {
-        video.dataset.src = encoded;
+      if (video.dataset.loadedSrc !== encoded) {
+        video.dataset.loadedSrc = encoded;
         video.src = encoded;
         video.load();
       }
@@ -130,7 +159,7 @@ function HeroPanel({
         video.pause();
       }
     },
-    [allowPlayback, isActiveMobilePanel, panelIndex, useVideo],
+    [allowPlayback, isVideoCapable, panelIndex, panelVideoSrcAllowed],
   );
 
   const handleLoadedMetadata = useCallback(
@@ -142,8 +171,31 @@ function HeroPanel({
     [panelIndex],
   );
 
+  const markVideoReady = useCallback(() => {
+    setVideoReady(true);
+    setPanelGradientHidden(panelIndex, true);
+  }, [panelIndex]);
+
   useEffect(() => {
-    if (!useVideo || !hasClip) return;
+    if (!videoReady) {
+      setPanelGradientHidden(panelIndex, false);
+    }
+  }, [panelIndex, videoReady]);
+
+  useEffect(() => {
+    if (!isVideoCapable || !hasClip || !panelVideoSrcAllowed) {
+      if (videoARef.current) {
+        videoARef.current.pause();
+        videoARef.current.removeAttribute("src");
+        videoARef.current.removeAttribute("data-loaded-src");
+      }
+      if (videoBRef.current) {
+        videoBRef.current.pause();
+        videoBRef.current.removeAttribute("src");
+        videoBRef.current.removeAttribute("data-loaded-src");
+      }
+      return;
+    }
 
     const playA =
       slot.visibleLayer === "a" ||
@@ -158,16 +210,19 @@ function HeroPanel({
     } else if (videoBRef.current) {
       videoBRef.current.pause();
       videoBRef.current.removeAttribute("src");
+      videoBRef.current.removeAttribute("data-loaded-src");
     }
-  }, [applyVideo, hasClip, showSecondLayer, slot, useVideo]);
+  }, [applyVideo, hasClip, isVideoCapable, panelVideoSrcAllowed, showSecondLayer, slot]);
 
   const layerAVisible = slot.visibleLayer === "a";
   const layerBVisible = slot.visibleLayer === "b";
-  const showVideos = useVideo && hasClip && isActiveMobilePanel;
-  const panelPreload =
-    isActiveMobilePanel && allowPlayback ? "metadata" : "none";
+  const showVideos = isVideoCapable && hasClip && panelVideoSrcAllowed;
 
   const handleCanPlay = (layer: PanelLayer) => {
+    const isVisible =
+      slot.visibleLayer === layer ||
+      (slot.pendingLayer === layer && slot.pendingClipId !== null);
+    if (isVisible) markVideoReady();
     if (slot.pendingLayer === layer) onIncomingCanPlay(panelIndex);
   };
 
@@ -183,7 +238,7 @@ function HeroPanel({
 
   return (
     <div
-      className={styles["hero-panel"]}
+      className={shellStyles["hero-panel"]}
       style={
         {
           ["--hero-panel-ring" as string]: Math.abs(
@@ -192,21 +247,14 @@ function HeroPanel({
         } as CSSProperties
       }
     >
-      <div
-        className={[
-          styles["hero-panel-media"],
-          showVideos ? "" : styles["hero-panel-media--idle"],
-        ]
-          .filter(Boolean)
-          .join(" ")}
-      >
+      <div className={shellStyles["hero-panel-media"]}>
         {showVideos ? (
           <>
             <video
               ref={videoARef}
               className={[
                 styles["hero-panel-video"],
-                layerAVisible ? styles["hero-panel-video--visible"] : "",
+                layerAVisible && videoReady ? styles["hero-panel-video--visible"] : "",
               ]
                 .filter(Boolean)
                 .join(" ")}
@@ -214,10 +262,12 @@ function HeroPanel({
               muted
               playsInline
               loop
-              autoPlay
-              preload={panelPreload}
+              preload="none"
               aria-hidden="true"
               onLoadedMetadata={() => handleLoadedMetadata(videoARef.current)}
+              onLoadedData={() => {
+                if (layerAVisible) markVideoReady();
+              }}
               onCanPlay={() => handleCanPlay("a")}
               onTransitionEnd={handleFadeEnd("a")}
               onError={handleError(slot.layerClips.a)}
@@ -227,7 +277,7 @@ function HeroPanel({
                 ref={videoBRef}
                 className={[
                   styles["hero-panel-video"],
-                  layerBVisible ? styles["hero-panel-video--visible"] : "",
+                  layerBVisible && videoReady ? styles["hero-panel-video--visible"] : "",
                 ]
                   .filter(Boolean)
                   .join(" ")}
@@ -235,10 +285,12 @@ function HeroPanel({
                 muted
                 playsInline
                 loop
-                autoPlay
                 preload="none"
                 aria-hidden="true"
                 onLoadedMetadata={() => handleLoadedMetadata(videoBRef.current)}
+                onLoadedData={() => {
+                  if (layerBVisible) markVideoReady();
+                }}
                 onCanPlay={() => handleCanPlay("b")}
                 onTransitionEnd={handleFadeEnd("b")}
                 onError={handleError(slot.layerClips.b)}
@@ -251,13 +303,31 @@ function HeroPanel({
   );
 }
 
+function readAllowVideoEnhancement(): boolean {
+  if (typeof window === "undefined") return true;
+
+  const reduced = prefersReducedMotion();
+  let saveData = false;
+  try {
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } })
+      .connection;
+    saveData = Boolean(connection?.saveData);
+  } catch {
+    saveData = false;
+  }
+
+  return !reduced && !saveData;
+}
+
 export function HeroVideoPanels() {
   const rootRef = useRef<HTMLDivElement>(null);
+  const [allowVideoEnhancement] = useState(readAllowVideoEnhancement);
   const [slots, setSlots] = useState<PanelSlotState[]>(createInitialPanelStates);
-  const [useVideo, setUseVideo] = useState(false);
-  const [mobileLite, setMobileLite] = useState(false);
-  const [allowPlayback, setAllowPlayback] = useState(false);
+  const [mobileLayout, setMobileLayout] = useState(false);
+  const [idleVideoReady, setIdleVideoReady] = useState(false);
+  const [unlockedPanels, setUnlockedPanels] = useState<ReadonlySet<number>>(() => new Set());
   const [isInView, setIsInView] = useState(false);
+  const [allowPlayback, setAllowPlayback] = useState(false);
   const [failedClipIds, setFailedClipIds] = useState<ReadonlySet<string>>(() => new Set());
 
   const fadeStartedRef = useRef<Record<number, boolean>>({});
@@ -268,38 +338,67 @@ export function HeroVideoPanels() {
   }, [failedClipIds]);
 
   useEffect(() => {
-    const mqReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     const mqMobileLayout = window.matchMedia(
       `(max-width: ${HERO_MOBILE_LAYOUT_MAX_WIDTH_PX}px)`,
     );
 
     const sync = () => {
-      const reducedMotion = mqReduce.matches;
-      const saveDataOrSlow = shouldDeferHeroVideoPlayback();
-      setMobileLite(mqMobileLayout.matches);
-      setUseVideo(!reducedMotion && !saveDataOrSlow);
+      setMobileLayout(mqMobileLayout.matches);
     };
 
     sync();
-    mqReduce.addEventListener("change", sync);
     mqMobileLayout.addEventListener("change", sync);
+    return () => mqMobileLayout.removeEventListener("change", sync);
+  }, []);
 
-    const connection = (
-      navigator as Navigator & {
-        connection?: {
-          addEventListener?: (type: string, listener: () => void) => void;
-          removeEventListener?: (type: string, listener: () => void) => void;
-        };
+  const canScheduleVideo = allowVideoEnhancement;
+
+  useEffect(() => {
+    if (!canScheduleVideo) return;
+
+    const delayMs = isCoarsePointerDevice()
+      ? HERO_VIDEO_IDLE_DELAY_MOBILE_MS
+      : HERO_VIDEO_IDLE_DELAY_MS;
+
+    return scheduleAfterIdle(() => {
+      if (!shouldDeferHeroVideoPlayback()) {
+        setIdleVideoReady(true);
       }
-    ).connection;
-    connection?.addEventListener?.("change", sync);
+    }, delayMs);
+  }, [canScheduleVideo]);
+
+  const globalVideoGateOpen =
+    canScheduleVideo && idleVideoReady && !shouldDeferHeroVideoPlayback();
+
+  useEffect(() => {
+    if (!globalVideoGateOpen) return;
+
+    let cancelled = false;
+    const order = getVisiblePanelOrder(mobileLayout);
+    const timeoutIds: number[] = [
+      window.setTimeout(() => {
+        if (!cancelled) setUnlockedPanels(new Set());
+      }, 0),
+    ];
+
+    for (const [orderIndex, panelIndex] of order.entries()) {
+      timeoutIds.push(
+        window.setTimeout(() => {
+          if (cancelled) return;
+          setUnlockedPanels((prev) => {
+            const next = new Set(prev);
+            next.add(panelIndex);
+            return next;
+          });
+        }, getHeroPanelVideoStaggerMs(orderIndex)),
+      );
+    }
 
     return () => {
-      mqReduce.removeEventListener("change", sync);
-      mqMobileLayout.removeEventListener("change", sync);
-      connection?.removeEventListener?.("change", sync);
+      cancelled = true;
+      for (const id of timeoutIds) window.clearTimeout(id);
     };
-  }, []);
+  }, [globalVideoGateOpen, mobileLayout]);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -320,13 +419,15 @@ export function HeroVideoPanels() {
 
   useEffect(() => {
     const syncVisibility = () => {
-      setAllowPlayback(isInView && !document.hidden && useVideo);
+      setAllowPlayback(
+        globalVideoGateOpen && isInView && !document.hidden && allowVideoEnhancement,
+      );
     };
 
     syncVisibility();
     document.addEventListener("visibilitychange", syncVisibility);
     return () => document.removeEventListener("visibilitychange", syncVisibility);
-  }, [isInView, useVideo]);
+  }, [allowVideoEnhancement, globalVideoGateOpen, isInView]);
 
   const handleVideoError = useCallback((clipId: string) => {
     setFailedClipIds((prev) => {
@@ -339,7 +440,8 @@ export function HeroVideoPanels() {
 
   const startRotation = useCallback(
     (panelIndex: number) => {
-      if (!useVideo || !HERO_ROTATION_ENABLED) return;
+      if (!globalVideoGateOpen || !HERO_ROTATION_ENABLED) return;
+      if (!unlockedPanels.has(panelIndex)) return;
 
       setSlots((prev) => {
         const slot = prev[panelIndex];
@@ -374,7 +476,7 @@ export function HeroVideoPanels() {
         return next;
       });
     },
-    [useVideo],
+    [globalVideoGateOpen, unlockedPanels],
   );
 
   const revealIncoming = useCallback((panelIndex: number) => {
@@ -424,7 +526,9 @@ export function HeroVideoPanels() {
   }, []);
 
   useEffect(() => {
-    if (!useVideo || !allowPlayback || !HERO_ROTATION_ENABLED || mobileLite) return;
+    if (!globalVideoGateOpen || !allowPlayback || !HERO_ROTATION_ENABLED || mobileLayout) {
+      return;
+    }
 
     const intervalIds = HERO_PANEL_ROTATE_INTERVAL_MS.map((period, panelIndex) =>
       window.setInterval(() => startRotation(panelIndex), period),
@@ -433,22 +537,32 @@ export function HeroVideoPanels() {
     return () => {
       for (const id of intervalIds) window.clearInterval(id);
     };
-  }, [allowPlayback, mobileLite, startRotation, useVideo]);
+  }, [allowPlayback, globalVideoGateOpen, mobileLayout, startRotation]);
 
   return (
-    <div ref={rootRef} className={styles["hero-panels"]} aria-hidden="true">
+    <div
+      ref={rootRef}
+      className={`${shellStyles["hero-panels"]} ${shellStyles["hero-panels--videos"]}`}
+      aria-hidden="true"
+    >
       {slots.map((slot, panelIndex) => {
-        const hasClip = Boolean(slot.clipId && getHeroClipById(slot.clipId) && !failedClipIds.has(slot.clipId));
+        const hasClip = Boolean(
+          slot.clipId && getHeroClipById(slot.clipId) && !failedClipIds.has(slot.clipId),
+        );
+        const isVideoCapable = isHeroPanelVideoActive(panelIndex, mobileLayout);
+        const panelVideoSrcAllowed =
+          globalVideoGateOpen && unlockedPanels.has(panelIndex);
 
         return (
           <HeroPanel
-            key={panelIndex}
+            key={`${panelIndex}-${panelVideoSrcAllowed ? "on" : "off"}`}
             panelIndex={panelIndex}
             slot={slot}
-            useVideo={useVideo}
+            isVideoCapable={isVideoCapable}
+            panelVideoSrcAllowed={panelVideoSrcAllowed}
             allowPlayback={allowPlayback}
             hasClip={hasClip}
-            mobileLite={mobileLite}
+            mobileLayout={mobileLayout}
             onIncomingCanPlay={revealIncoming}
             onCrossfadeComplete={completeRotation}
             onVideoError={handleVideoError}
